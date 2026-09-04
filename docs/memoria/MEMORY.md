@@ -1,0 +1,25 @@
+# Memory Index
+
+- [Projeto: Quiz Destrave Metabólico](projeto-quiz-destrave.md) — arquivo principal e estrutura do funil-quiz
+- [Variante COPIA (público sem caneta)](variante-copia-sem-caneta.md) — pivô do quiz p/ quem não usa remédio; onde edito por padrão agora
+- [Landing Protocolo Hiper-Mounjaro](landing-hiper-mounjaro.md) — segundo funil (guia PDF), arquivo único e oferta R$37
+- [Projeto: Método Caneta Zero](projeto-caneta-zero.md) — terceiro funil, mecanismo Gatilho GLP-1 Natural, oferta e estado da landing v2
+- [Ebooks Caneta Zero](ebooks-caneta-zero.md) — os 9 entregáveis, padrão de estrutura, capas e como gerar os PDFs
+- [Oferta Destrave](oferta-destrave.md) — produto, 5 travas, persona, preço, configs Ticto/Pixel/domínio
+- [Copy VSL e funil](copy-vsl-funil.md) — mini-VSL, upsells, downsell e como escrever a copy
+- [Workflow 3 arquivos](workflow-3-arquivos.md) — toda edição do quiz sincroniza em 3 arquivos + publica no Vercel
+- [Deploy Vercel/Netlify](deploy-vercel-netlify.md) — hospedagem, repo GitHub e onde ficam os assets
+- [Preferências de edição de copy](preferencias-edicao-copy.md) — manter texto exato, sem hífen, avisar correções, compliance Meta
+- [Playbook VTurb Ouro](vturb-ouro-playbook.md) — base de copy/VSL/anúncios/funil/ofertas/escala (skill `vturb-ouro`)
+- [Capas sem assinatura](capas-sem-assinatura.md) — nunca pôr "Método Caneta Zero · Nutri Kelly" dentro das imagens
+- [Imagens: entregar prompt, não render](preferencia-imagens-prompt.md) — "crie uma imagem" = escrever o prompt de geração, sem montar HTML
+- [Área de membros e entregáveis](area-de-membros-e-entregaveis.md) — portal Ticto/Mozart, 6 ebooks (5 travas + protocolo), logo e estilo das capas
+- [Funil Caneta Zero](funil-caneta-zero.md) — projeto ativo: oferta, mecanismo GLP-1, arquivos e pendências
+- [Estrutura do quiz Caneta Zero](quiz-caneta-zero-estrutura.md) — ordem das perguntas, Índice GLP-1 e o que foi descartado
+- [Quiz Caneta Zero sem caneta](quiz-caneta-zero-sem-caneta.md) — funil paralelo p/ quem não usa canetinha, o que muda e o que falta no entregável
+- [Criativos Caneta Zero](criativos-caneta-zero.md) — formatos produzidos, destino de cada um e regras de CTA
+- [Regras de prova e claims](regras-prova-caneta-zero.md) — 82% tem fonte, depoimento fabricado não entra
+- [Oferta Caneta Zero](oferta-caneta-zero.md) — preços, ancoragem, bônus, bumps e links de checkout da Ticto
+- [Pop-up de saída: regras](popup-saida-regras.md) — gesto do usuário, pushState sem URL, uma camada só
+- [Rastreamento Caneta Zero](rastreamento-caneta-zero.md) — pixel, verificação de domínio, autoria do commit e imagens
+- [Teste de tráfego Caneta Zero](teste-trafego-caneta-zero.md) — estrutura 1-1-3, os 3 criativos da onda 1 e o que fazer antes de gastar
