@@ -724,8 +724,7 @@ FLOW.push({type:'intro'});
 QUESTIONS.forEach(q=>{
   FLOW.push({type:'question', q});
   if(INTERSTITIALS[q.id]) FLOW.push({type:'interstitial', id:q.id});
-  if(q.id==='colaterais'){                                  // análise + diagnóstico no meio do quiz
-    FLOW.push({type:'analyzing'});
+  if(q.id==='colaterais'){                                  // diagnóstico no meio do quiz (sem a tela de análise)
     FLOW.push({type:'diagnostico'});
   }
   if(q.id==='meta_kg') FLOW.push({type:'meta'});            // prova social (antes da reta final)
