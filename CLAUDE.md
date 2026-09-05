@@ -11,7 +11,7 @@ Foi separado do repositório antigo `Site_Kelly`, que misturava outros funis e t
 - Imagens usadas pelo quiz, todas na raiz: `FotoKelly.jpg`, `FotoSiteKelly.jpeg`,
   `Garantia7dias.png`, `pesquisa-mounjaro.jpeg`, `resultado-1.jpg`, `bg-vegetal.jpg`,
   `idade-18-29.jpg`, `idade-30-39.jpg`, `idade-40-49.jpg`, `idade-50-mais.jpg`,
-  `corpo-magra.jpg`, `corpo-definida.jpg`, `corpo-maromba.jpg`.
+  `corpo-magra.jpg`, `corpo-definida.jpg`, `corpo-curvas.jpg`, `corpo-media.jpg`.
 
 A landing do mesmo produto **não** está aqui: ela vive em
 `arthurvolzm-gif/caneta-zero-site` (Vercel) e é a fonte oficial da página de vendas.
@@ -37,7 +37,7 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
    (versão completa)** — só aqui aparece o alerta, o Índice de GLP-1, o "2 pontos
    identificados", os pontos numerados 1 e 2, e a frase original da solução
    ("potencializar o hormônio que produz o GLP-1").
-7. **Perguntas 18 a 21** — corpo dos sonhos (Magra/Definida/Maromba, cada opção com foto
+7. **Perguntas 18 a 21** — corpo dos sonhos (Magra/Definida/Com curvas/Média, cada opção com foto
    colada à esquerda — variação `.opts.photo`), peso, altura e meta de quilos a eliminar.
    Entram só depois do diagnóstico completo (a pedido do usuário) — veja
    `DEFERRED_APOS_DIAGNOSTICO` no código. Logo após `meta_kg` entra a tela de prova
