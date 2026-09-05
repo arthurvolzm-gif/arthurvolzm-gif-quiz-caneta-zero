@@ -754,10 +754,12 @@ QUESTIONS.forEach(q=>{
   if(q.id==='massa'){                                       // diagnóstico no meio do quiz (sem a tela de análise)
     FLOW.push({type:'diagnostico'});
   }
+  if(q.id==='estresse'){                                     // análise + diagnóstico completo (alerta + índice)
+    FLOW.push({type:'analyzing'});
+    FLOW.push({type:'diagnostico', full:true});
+  }
 });
 FLOW.push({type:'break2'});                                 // mecanismo GLP-1 (fecha o quiz e entrega o protocolo)
-FLOW.push({type:'analyzing'});                              // repete análise + diagnóstico antes da landing final
-FLOW.push({type:'diagnostico', full:true});                 // aqui sim com índice, alerta e os 3 pontos completos
 DEFERRED_APOS_DIAGNOSTICO.forEach(id=>{
   const q = QUESTIONS.find(x=>x.id===id);
   FLOW.push({type:'question', q});
@@ -1148,7 +1150,7 @@ function renderDiagnostico(full){
   const idx = calcIndiceGLP();
   const niv = nivelGLP(idx);
   const massaTxt = (a.massa||'').includes('Sim') ? 'e você já percebeu isso no espelho' : 'mesmo que você ainda não tenha percebido';
-  const progressoId = full ? 'compromisso' : 'massa';         // última pergunta respondida antes desta tela, em cada versão
+  const progressoId = full ? 'estresse' : 'massa';            // última pergunta respondida antes desta tela, em cada versão
 
   /* na 1ª aparição (meio do quiz) não revela nem o alerta, nem o índice, nem o
      "3 pontos identificados" — isso fica só pra 2ª aparição (full), antes da oferta */
@@ -1175,7 +1177,7 @@ function renderDiagnostico(full){
         <p style="color:var(--vermelho);font-weight:900;font-size:15px;letter-spacing:.5px;margin:0;">⚠️ 2 PONTOS FORAM IDENTIFICADOS</p>
       </div>`;
 
-  const heading2 = full ? '1 · Você tem 82% de chance de engordar ao parar a canetinha' : 'Você tem 82% de chance de engordar ao parar a canetinha';
+  const heading2 = full ? '1 · Você sabia que:' : 'Você sabia que:';
   const fraseFinal2 = !full ? '' : `<p style="font-size:13.5px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;">Mas existe uma forma de isso não acontecer com você, e ela começa antes de reduzir a dose.</p>`;
 
   const problema3 = !full ? '' : `
@@ -1196,7 +1198,6 @@ function renderDiagnostico(full){
 ${revelacao}
       <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
         <h4 style="margin-bottom:8px;">${heading2}</h4>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 14px;">Os estudos que acompanharam pessoas depois da suspensão desses medicamentos mostram que a maior parte recupera peso quando o corpo é devolvido sem nenhuma preparação. No seu caso, isso significa colocar em risco <strong>tudo o que você já investiu na aplicação até aqui</strong>.</p>
 
         <div class="prova-numero" style="font-size:56px;margin-top:6px;">82%</div>
         <p class="prova-numero-legenda" style="font-size:14px;margin-bottom:16px;">das pessoas que pararam o Mounjaro recuperaram parte do peso perdido em até um ano.</p>
@@ -1204,6 +1205,7 @@ ${revelacao}
         <div class="prova-noticia">
           <img src="pesquisa-mounjaro.jpeg" alt="Reportagem sobre reganho de peso após o fim do tratamento com Mounjaro" onerror="this.style.display='none'">
         </div>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;">Os estudos que acompanharam pessoas depois da suspensão desses medicamentos mostram que a maior parte recupera peso quando o corpo é devolvido sem nenhuma preparação. No seu caso, isso significa colocar em risco <strong>tudo o que você já investiu na aplicação até aqui</strong>.</p>
 ${fraseFinal2}
       </div>
 ${problema3}
