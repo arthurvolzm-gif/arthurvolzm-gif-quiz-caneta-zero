@@ -668,54 +668,48 @@ const QUESTIONS = [
     question:'Você concorda que não adianta gastar milhares de reais na aplicação para engordar tudo depois?',
     options:['Sim, preciso fazer esse investimento valer','Concordo, mas nunca soube o que fazer','Não tinha parado pra pensar nisso']
   },
-  {
-    id:'concorda_alimentacao', num:14,
-    question:'E você acredita que o que você come determina se o peso volta ou não depois da canetinha?',
-    options:['Sim, sem isso o resultado é temporário','Acho que sim, mas não sei por onde começar','Não, achava que era só o remédio']
-  },
-
   /* ===== N — NECESSIDADE ===== */
   {
-    id:'acompanhamento', num:15,
+    id:'acompanhamento', num:14,
     question:'Você tem acompanhamento de uma nutricionista durante o tratamento?',
     options:['❌ Nunca tive','🔄 Tive no começo, mas parei','🤷 Tenho, mas ela nunca falou sobre isso','✅ Tenho e me orienta bem']
   },
   {
-    id:'compromisso', num:16,
+    id:'compromisso', num:15,
     question:(a)=>`Você se compromete a seguir por 14 dias um método feito por uma nutricionista para ${beneficioPorDor(a)}?`,
     options:['Sim, me comprometo','Sim, quero pelo menos tentar','Ainda não sei se consigo']
   },
   {
-    id:'liberar', num:17,
+    id:'liberar', num:16,
     question:'Seu protocolo está pronto. Quer ver agora o método indicado para o seu perfil?',
     options:['🔓 Sim, quero ver o meu protocolo','📈 Sim, e quero saber como subir o meu índice']
   },
 
   /* ===== essas 4 renderizam só depois do diagnóstico completo (full), veja DEFERRED_APOS_DIAGNOSTICO ===== */
   {
-    id:'corpo_sonho', num:18,
+    id:'corpo_sonho', num:17,
     question:'Qual é o seu corpo dos sonhos?',
     options:['Magra','Definida','Com curvas','Média'],
     optionImages:['corpo-magra.jpg','corpo-definida.jpg','corpo-curvas.jpg','corpo-media.jpg']
   },
   {
-    id:'peso', num:19, type:'ruler',
+    id:'peso', num:18, type:'ruler',
     question:'Qual é o seu peso atual?',
     units:[{u:'kg',min:40,max:160,def:70,step:1},{u:'lb',min:88,max:352,def:154,step:1}]
   },
   {
-    id:'altura', num:20, type:'ruler',
+    id:'altura', num:19, type:'ruler',
     question:'Qual é a sua altura?',
     units:[{u:'cm',min:140,max:210,def:165,step:1},{u:'pol',min:55,max:83,def:65,step:1}]
   },
   {
-    id:'meta_kg', num:21,
+    id:'meta_kg', num:20,
     question:'Quantos quilos você ainda quer eliminar?',
     options:['🌱 Até 5 kg','🎯 De 6 a 10 kg','💪 De 11 a 15 kg','🔥 De 16 a 20 kg','🚀 Mais de 20 kg','✅ Só quero manter o que já perdi']
   },
   /* >>> META (prova social) entra aqui, depois do diagnóstico completo <<< */
   {
-    id:'outros_objetivos', num:22, type:'multi',
+    id:'outros_objetivos', num:21, type:'multi',
     question:'Além de emagrecer, quais são seus outros objetivos?',
     options:['Perder barriga/gordura localizada','Melhorar flacidez','Melhorar dores','Mais disposição e energia','Melhorar a saúde']
   }
