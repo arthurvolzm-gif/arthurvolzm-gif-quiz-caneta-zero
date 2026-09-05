@@ -28,22 +28,26 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
 2. **Perguntas 1 a 9** — nome, objetivo, canetinha, dose, tempo de uso, dor principal,
    quilos eliminados, exercícios, massa muscular.
 3. **Diagnóstico (versão curta)** — direto após `massa` (não após `colaterais`), sem
-   tela de análise antes. Não mostra o alerta nem o Índice de GLP-1: só o ponto "Você tem
-   82% de chance de engordar ao parar a canetinha" (sem numerar) e termina com um gancho
-   de curiosidade pra continuar o teste. Barra de progresso usa `pctAte('massa')` aqui.
+   tela de análise antes. Não mostra o alerta nem o Índice de GLP-1: só o ponto "1 ·
+   Você sabia que:" (sem numerar nessa versão) seguido do dado dos 82%, e termina com um
+   gancho de curiosidade pra continuar o teste. Barra de progresso usa `pctAte('massa')`.
 4. **Perguntas 10 a 15** — fome, sintomas (`colaterais`), e logo depois dela: proteína
    nas refeições, funcionamento do intestino, horas de sono, nível de estresse
    (`proteina_refeicoes`, `intestino`, `sono`, `estresse` — ainda não entram no cálculo
    do Índice de GLP-1, só personalização/dor).
-5. **Perguntas 16 a 20** — projeção de futuro, concordância sobre mudança de estilo de
+5. **"Analisando suas respostas…"** (5 s, barra com curva *smootherstep*) + **Diagnóstico
+   (versão completa)** — dispara logo depois de `estresse` (não depois do mecanismo). Só
+   aqui aparece o alerta "⚠️ Sua produção natural de GLP-1 está BAIXA", o Índice de
+   GLP-1, o "2 pontos identificados", os pontos numerados 1 e 2 ("1 · Você sabia que:" e
+   "2 · Parte do que sai da balança não é gordura") e a frase original da solução
+   ("potencializar o hormônio que produz o GLP-1"). No ponto 1, o parágrafo dos estudos
+   sobre reganho de peso fica **abaixo** da imagem da notícia, não acima. Barra de
+   progresso usa `pctAte('estresse')` (última pergunta respondida antes desta tela).
+6. **Perguntas 16 a 20** — projeção de futuro, concordância sobre mudança de estilo de
    vida (`concorda_habitos`), concordância de gasto, acompanhamento, compromisso
    (a pergunta de concordância sobre alimentação e a de "liberar" foram removidas).
-6. **"O hormônio da caneta não vem só da caneta"** — a tela do mecanismo (break2).
-7. **"Analisando suas respostas…"** (5 s, barra com curva *smootherstep*) + **Diagnóstico
-   (versão completa)** — só aqui aparece o alerta, o Índice de GLP-1, o "2 pontos
-   identificados", os pontos numerados 1 e 2, e a frase original da solução
-   ("potencializar o hormônio que produz o GLP-1"). Barra de progresso usa
-   `pctAte('compromisso')` aqui (última pergunta respondida antes desta tela).
+7. **"O hormônio da caneta não vem só da caneta"** — a tela do mecanismo (break2), agora
+   depois do diagnóstico completo, não antes.
 8. **Perguntas 21 a 25** — corpo dos sonhos (Magra/Definida/Com curvas/Média, cada opção
    com foto colada à esquerda — variação `.opts.photo`), peso, altura, meta de quilos a
    eliminar e, por fim, "Além de emagrecer, quais são seus outros objetivos?"
@@ -63,14 +67,14 @@ depois. Ainda não foi corrigida — avisar antes de mexer, é decisão do usuá
 - **Numeração**: cada pergunta tem `num`, e a barra de progresso é `num/TOTAL_Q`.
   Ao inserir, remover ou reordenar perguntas, renumere — e lembre que as telas de
   conteúdo (diagnóstico, prova social, mecanismo) usam `pctAte('<id da pergunta>')`.
-- **Gatilhos de tela** ficam no `FLOW.push`: o primeiro diagnóstico entra depois de
-  `massa` (dentro do `QUESTIONS.forEach`). `corpo_sonho`, `peso`, `altura`, `meta_kg` e
-  `outros_objetivos` NÃO seguem a posição delas no array `QUESTIONS` —
-  `DEFERRED_APOS_DIAGNOSTICO` as tira do forEach principal e as empurra pra depois do
-  diagnóstico completo, na ordem em que aparecem nesse array; a prova social (`meta`)
-  entra logo depois de `meta_kg` nesse ponto adiado. Sequência final:
-  `break2` (mecanismo) → `analyzing` → `diagnostico` (2ª vez, full) → `corpo_sonho` →
-  `peso` → `altura` → `meta_kg` → `meta` (prova social) → `outros_objetivos` → `result`.
+- **Gatilhos de tela** ficam no `FLOW.push`, todos dentro do `QUESTIONS.forEach`: o
+  diagnóstico curto entra depois de `massa`, e `analyzing` + `diagnostico(full)` entram
+  depois de `estresse`. `corpo_sonho`, `peso`, `altura`, `meta_kg` e `outros_objetivos`
+  NÃO seguem a posição delas no array `QUESTIONS` — `DEFERRED_APOS_DIAGNOSTICO` as tira
+  do forEach principal e as empurra pra depois do `break2`, na ordem em que aparecem
+  nesse array; a prova social (`meta`) entra logo depois de `meta_kg` nesse ponto adiado.
+  Sequência final: `...compromisso` → `break2` (mecanismo) → `corpo_sonho` → `peso` →
+  `altura` → `meta_kg` → `meta` (prova social) → `outros_objetivos` → `result`.
   `renderDiagnostico(full)` é a mesma função nas duas ocorrências: o `FLOW.push({type:'diagnostico'})` do meio chama sem
   `full` (versão curta), e o do fim usa `{type:'diagnostico', full:true}` (versão
   completa). Ao editar o texto do diagnóstico, veja se a mudança deve valer só numa
