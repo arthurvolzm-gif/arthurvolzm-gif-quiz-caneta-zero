@@ -23,18 +23,28 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
    protocolo específico para seu corpo…". Não há botão de CTA: clicar na foto ou no botão
    de uma faixa de idade inicia o quiz e dispara `QuizIniciado`.
 2. **Perguntas 1 a 11** — nome, objetivo, canetinha, dose, tempo de uso, dor principal,
-   quilos eliminados, massa muscular, exercícios, fome, sintomas.
+   quilos eliminados, exercícios, massa muscular, fome, sintomas.
 3. **Diagnóstico (versão curta)** — direto após `colaterais`, sem tela de análise antes.
-   Não mostra o alerta, o Índice de GLP-1 nem o "3 pontos identificados": só os pontos
-   1 e 2 (sem numerar o 2) e termina com um gancho de curiosidade pra continuar o teste.
-4. **Perguntas 12 a 20** — projeção de futuro, concordâncias, peso, altura, meta,
-   prova social, acompanhamento, compromisso, liberação.
+   Não mostra o alerta nem o Índice de GLP-1: só o ponto "Você tem 82% de chance de
+   engordar ao parar a canetinha" (sem numerar) e termina com um gancho de curiosidade
+   pra continuar o teste.
+4. **Perguntas 12 a 17** — projeção de futuro, concordâncias (gasto e alimentação),
+   acompanhamento, compromisso, liberação.
 5. **"O hormônio da caneta não vem só da caneta"** — a tela do mecanismo (break2).
 6. **"Analisando suas respostas…"** (5 s, barra com curva *smootherstep*) + **Diagnóstico
-   (versão completa)** — só aqui aparece o alerta, o Índice de GLP-1, o "3 pontos
-   identificados", o ponto 3 e a frase original da solução ("potencializar o hormônio
-   que produz o GLP-1").
-7. **Landing final** (`renderResult`) — oferta, bônus, garantia, FAQ e checkout.
+   (versão completa)** — só aqui aparece o alerta, o Índice de GLP-1, o "2 pontos
+   identificados", os pontos numerados 1 e 2, e a frase original da solução
+   ("potencializar o hormônio que produz o GLP-1").
+7. **Perguntas 18 a 20** — peso, altura e meta de quilos a eliminar. Entram só depois do
+   diagnóstico completo (a pedido do usuário) — veja `DEFERRED_APOS_DIAGNOSTICO` no
+   código. Logo após `meta_kg` entra a tela de prova social ("Sua meta é totalmente
+   possível...").
+8. **Landing final** (`renderResult`) — oferta, bônus, garantia, FAQ e checkout.
+
+⚠️ A frase da tela de prova social "Nas próximas etapas vamos calcular o seu Índice de
+GLP-1 Natural" (em `renderMeta`) ficou desatualizada com essa mudança: o índice já foi
+calculado e mostrado no diagnóstico completo, que agora vem *antes* dessa tela, não
+depois. Ainda não foi corrigida — avisar antes de mexer, é decisão do usuário.
 
 ### Regras que o código já respeita
 
@@ -42,13 +52,19 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
   Ao inserir, remover ou reordenar perguntas, renumere — e lembre que as telas de
   conteúdo (diagnóstico, prova social, mecanismo) usam `pctAte('<id da pergunta>')`.
 - **Gatilhos de tela** ficam no `FLOW.push`: o primeiro diagnóstico entra depois de
-  `colaterais` (dentro do `QUESTIONS.forEach`), a prova social depois de `meta_kg`. Fora
-  do forEach, na sequência final: `break2` (mecanismo) → `analyzing` → `diagnostico` (2ª
-  vez) → `result`. `renderDiagnostico(full)` é a mesma função nas duas ocorrências: o
-  `FLOW.push({type:'diagnostico'})` do meio chama sem `full` (versão curta), e o do fim
-  usa `{type:'diagnostico', full:true}` (versão completa). Ao editar o texto do
-  diagnóstico, veja se a mudança deve valer só numa versão (então entra dentro do
-  `full ? ... : ...`) ou nas duas.
+  `colaterais` (dentro do `QUESTIONS.forEach`). `peso`, `altura` e `meta_kg` NÃO seguem
+  a posição delas no array `QUESTIONS` — `DEFERRED_APOS_DIAGNOSTICO` as tira do forEach
+  principal e as empurra pra depois do diagnóstico completo; a prova social (`meta`)
+  entra logo depois de `meta_kg` nesse ponto adiado. Sequência final:
+  `break2` (mecanismo) → `analyzing` → `diagnostico` (2ª vez, full) → `peso` → `altura` →
+  `meta_kg` → `meta` (prova social) → `result`. `renderDiagnostico(full)` é a mesma
+  função nas duas ocorrências: o `FLOW.push({type:'diagnostico'})` do meio chama sem
+  `full` (versão curta), e o do fim usa `{type:'diagnostico', full:true}` (versão
+  completa). Ao editar o texto do diagnóstico, veja se a mudança deve valer só numa
+  versão (então entra dentro do `full ? ... : ...`) ou nas duas. Se mover mais alguma
+  pergunta pra depois do diagnóstico, adicione o `id` dela em
+  `DEFERRED_APOS_DIAGNOSTICO` — só reordenar no array `QUESTIONS` não move a tela, porque
+  o `forEach` principal roda inteiro antes do `break2`.
 - **O Índice de GLP-1** (`calcIndiceGLP`) lê os *textos* das alternativas. Se você mudar
   o texto de uma opção, ajuste o `includes()` correspondente ou a pontuação some
   silenciosamente. Hoje ele usa: tempo de uso, fome, massa, colaterais, objetivo e dose.
