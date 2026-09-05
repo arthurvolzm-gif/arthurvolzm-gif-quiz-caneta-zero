@@ -655,61 +655,81 @@ const QUESTIONS = [
     question:'Quais desses sintomas você já sentiu durante o tratamento?',
     options:['🤢 Enjoo ou dor no estômago','🚽 Intestino preso ou diarreia','😩 Cansaço que não passa','💇 Queda de cabelo','😞 Rosto abatido ou pele sem firmeza','✅ Nenhum desses']
   },
+  {
+    id:'proteina_refeicoes', num:12,
+    question:'Você costuma comer proteína em todas as refeições?',
+    options:['🥩 Sim, sempre','🍽️ Às vezes','🚫 Quase nunca']
+  },
+  {
+    id:'intestino', num:13,
+    question:'Como está o funcionamento do seu intestino?',
+    options:['✅ Regular','😣 Preso','💧 Solto']
+  },
+  {
+    id:'sono', num:14,
+    question:'Quantas horas você dorme por noite, em média?',
+    options:['⚠️ Menos de 5h','🌙 Entre 5 e 7h','😴 Mais de 7h']
+  },
+  {
+    id:'estresse', num:15,
+    question:'Como está seu nível de estresse no dia a dia?',
+    options:['😰 Alto','😐 Moderado','😌 Baixo']
+  },
   /* >>> BREAK 2 (mecanismo GLP-1) entra aqui <<< */
 
   /* ===== I — IMPLICAÇÃO ===== */
   {
-    id:'futuro', num:12, type:'multi',
+    id:'futuro', num:16, type:'multi',
     question:'Como seria a sua vida se você engordasse tudo de novo depois da canetinha?',
     options:['😞 Minha autoestima e confiança iriam lá embaixo','🏥 Minha saúde ia piorar de novo','👗 Voltaria o problema pra vestir e comprar roupa','💸 Sentiria que joguei fora todo o dinheiro que gastei','😢 Ia me sentir fracassada mais uma vez']
   },
   {
-    id:'concorda_habitos', num:13,
+    id:'concorda_habitos', num:17,
     question:'Você acredita que algumas mudanças simples no seu estilo de vida são determinantes para não engordar novamente depois da canetinha?',
     options:['✅ Sim, sem isso os resultados da canetinha são temporários','😟 Não, vou ser dependente desse remédio a vida toda']
   },
   {
-    id:'concorda_gasto', num:14,
+    id:'concorda_gasto', num:18,
     question:'Você concorda que não adianta gastar milhares de reais na aplicação para engordar tudo depois?',
     options:['Sim, preciso fazer esse investimento valer','Concordo, mas nunca soube o que fazer','Não tinha parado pra pensar nisso']
   },
   /* ===== N — NECESSIDADE ===== */
   {
-    id:'acompanhamento', num:15,
+    id:'acompanhamento', num:19,
     question:'Você tem acompanhamento de uma nutricionista durante o tratamento?',
     options:['❌ Nunca tive','🔄 Tive no começo, mas parei','🤷 Tenho, mas ela nunca falou sobre isso','✅ Tenho e me orienta bem']
   },
   {
-    id:'compromisso', num:16,
+    id:'compromisso', num:20,
     question:'Você se compromete a seguir no método da Dra. Kelly, que já ajudou mais de 500 pessoas a emagrecerem, para fazer cada aplicação valer a pena nos próximos 14 dias?',
     options:['Sim, me comprometo','Quero pelo menos tentar']
   },
 
   /* ===== essas 4 renderizam só depois do diagnóstico completo (full), veja DEFERRED_APOS_DIAGNOSTICO ===== */
   {
-    id:'corpo_sonho', num:17,
+    id:'corpo_sonho', num:21,
     question:'Qual é o seu corpo dos sonhos?',
     options:['Magra','Definida','Com curvas','Média'],
     optionImages:['corpo-magra.jpg','corpo-definida.jpg','corpo-curvas.jpg','corpo-media.jpg']
   },
   {
-    id:'peso', num:18, type:'ruler',
+    id:'peso', num:22, type:'ruler',
     question:'Qual é o seu peso atual?',
     units:[{u:'kg',min:40,max:160,def:70,step:1},{u:'lb',min:88,max:352,def:154,step:1}]
   },
   {
-    id:'altura', num:19, type:'ruler',
+    id:'altura', num:23, type:'ruler',
     question:'Qual é a sua altura?',
     units:[{u:'cm',min:140,max:210,def:165,step:1},{u:'pol',min:55,max:83,def:65,step:1}]
   },
   {
-    id:'meta_kg', num:20,
+    id:'meta_kg', num:24,
     question:'Quantos quilos você ainda quer eliminar?',
     options:['🌱 Até 5 kg','🎯 De 6 a 10 kg','💪 De 11 a 15 kg','🔥 De 16 a 20 kg','🚀 Mais de 20 kg','✅ Só quero manter o que já perdi']
   },
   /* >>> META (prova social) entra aqui, depois do diagnóstico completo <<< */
   {
-    id:'outros_objetivos', num:21, type:'multi',
+    id:'outros_objetivos', num:25, type:'multi',
     question:'Além de emagrecer, quais são seus outros objetivos?',
     options:['Perder barriga/gordura localizada','Melhorar flacidez','Melhorar dores','Mais disposição e energia','Melhorar a saúde']
   }
@@ -731,7 +751,7 @@ QUESTIONS.forEach(q=>{
   if(DEFERRED_APOS_DIAGNOSTICO.includes(q.id)) return;
   FLOW.push({type:'question', q});
   if(INTERSTITIALS[q.id]) FLOW.push({type:'interstitial', id:q.id});
-  if(q.id==='colaterais'){                                  // diagnóstico no meio do quiz (sem a tela de análise)
+  if(q.id==='massa'){                                       // diagnóstico no meio do quiz (sem a tela de análise)
     FLOW.push({type:'diagnostico'});
   }
 });
@@ -1128,6 +1148,7 @@ function renderDiagnostico(full){
   const idx = calcIndiceGLP();
   const niv = nivelGLP(idx);
   const massaTxt = (a.massa||'').includes('Sim') ? 'e você já percebeu isso no espelho' : 'mesmo que você ainda não tenha percebido';
+  const progressoId = full ? 'compromisso' : 'massa';         // última pergunta respondida antes desta tela, em cada versão
 
   /* na 1ª aparição (meio do quiz) não revela nem o alerta, nem o índice, nem o
      "3 pontos identificados" — isso fica só pra 2ª aparição (full), antes da oferta */
@@ -1171,7 +1192,7 @@ function renderDiagnostico(full){
   <div class="wrap fade">
     <div class="card-quiz">
       <div class="brand-sub" style="margin-bottom:12px;">Diagnóstico personalizado</div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${pctAte('colaterais')}%"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pctAte(progressoId)}%"></div></div>
 ${revelacao}
       <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
         <h4 style="margin-bottom:8px;">${heading2}</h4>
