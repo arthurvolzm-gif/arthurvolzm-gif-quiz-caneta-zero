@@ -1115,7 +1115,6 @@ function renderDiagnostico(full){
   const idx = calcIndiceGLP();
   const niv = nivelGLP(idx);
   const aprov = Math.min(92, idx + 22);          // aproveitamento da aplicação
-  const kg = (a.ja_eliminou||'').replace('De ','').replace(' kg','');
   const massaTxt = (a.massa||'').includes('Sim') ? 'e você já percebeu isso no espelho' : 'mesmo que você ainda não tenha percebido';
 
   /* na 1ª aparição (meio do quiz) não revela nem o alerta, nem o índice, nem o
@@ -1164,7 +1163,7 @@ function renderDiagnostico(full){
 ${revelacao}
       <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
         <h4 style="margin-bottom:8px;">1 · Você está aproveitando só parte da aplicação</h4>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 12px;">${kg&&!kg.includes('Ainda')?`Você já eliminou ${kg} kg, o que é ótimo. `:''}Pelo seu perfil, o aproveitamento estimado do tratamento hoje está em torno de <strong>${aprov}%</strong>. O restante se perde porque o estímulo que o seu corpo precisaria receber pelo prato não está acontecendo.</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 12px;">Você está tendo resultados, e isso é ótimo! Porém poderia emagrecer mais e mais rápido com alguns ajustes simples.</p>
         <div style="height:10px;border-radius:20px;background:#e3ede8;overflow:hidden;">
           <div style="height:100%;width:${aprov}%;background:linear-gradient(90deg,var(--verde-escuro),var(--verde-claro));border-radius:20px;"></div>
         </div>
