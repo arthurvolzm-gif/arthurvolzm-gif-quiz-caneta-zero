@@ -731,6 +731,8 @@ QUESTIONS.forEach(q=>{
   if(q.id==='meta_kg') FLOW.push({type:'meta'});            // prova social (antes da reta final)
 });
 FLOW.push({type:'break2'});                                 // mecanismo GLP-1 (fecha o quiz e entrega o protocolo)
+FLOW.push({type:'analyzing'});                              // repete análise + diagnóstico antes da landing final
+FLOW.push({type:'diagnostico'});
 FLOW.push({type:'result'});
 
 const app = document.getElementById('app');
