@@ -30,15 +30,15 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
    Não mostra o alerta nem o Índice de GLP-1: só o ponto "Você tem 82% de chance de
    engordar ao parar a canetinha" (sem numerar) e termina com um gancho de curiosidade
    pra continuar o teste.
-4. **Perguntas 12 a 17** — projeção de futuro, concordância sobre mudança de estilo de
-   vida (`concorda_habitos`), concordância de gasto, acompanhamento, compromisso,
-   liberação (a pergunta de concordância sobre alimentação foi removida).
+4. **Perguntas 12 a 16** — projeção de futuro, concordância sobre mudança de estilo de
+   vida (`concorda_habitos`), concordância de gasto, acompanhamento, compromisso
+   (a pergunta de concordância sobre alimentação e a de "liberar" foram removidas).
 5. **"O hormônio da caneta não vem só da caneta"** — a tela do mecanismo (break2).
 6. **"Analisando suas respostas…"** (5 s, barra com curva *smootherstep*) + **Diagnóstico
    (versão completa)** — só aqui aparece o alerta, o Índice de GLP-1, o "2 pontos
    identificados", os pontos numerados 1 e 2, e a frase original da solução
    ("potencializar o hormônio que produz o GLP-1").
-7. **Perguntas 18 a 22** — corpo dos sonhos (Magra/Definida/Com curvas/Média, cada opção com foto
+7. **Perguntas 17 a 21** — corpo dos sonhos (Magra/Definida/Com curvas/Média, cada opção com foto
    colada à esquerda — variação `.opts.photo`), peso, altura, meta de quilos a eliminar e,
    por fim, "Além de emagrecer, quais são seus outros objetivos?" (multi-escolha). Todas
    entram só depois do diagnóstico completo (a pedido do usuário) — veja
