@@ -22,29 +22,36 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
 
 1. **Abertura** — headline, a pergunta da idade já com as opções (2 por linha, cada uma
    com foto colada ao botão, cantos arredondados) e o texto "Faça o teste e receba um
-   protocolo específico para seu corpo…". Não há botão de CTA: clicar na foto ou no botão
-   de uma faixa de idade inicia o quiz e dispara `QuizIniciado`.
-2. **Perguntas 1 a 11** — nome, objetivo, canetinha, dose, tempo de uso, dor principal,
-   quilos eliminados, exercícios, massa muscular, fome, sintomas.
-3. **Diagnóstico (versão curta)** — direto após `colaterais`, sem tela de análise antes.
-   Não mostra o alerta nem o Índice de GLP-1: só o ponto "Você tem 82% de chance de
-   engordar ao parar a canetinha" (sem numerar) e termina com um gancho de curiosidade
-   pra continuar o teste.
-4. **Perguntas 12 a 16** — projeção de futuro, concordância sobre mudança de estilo de
+   diagnóstico gratuito. Ao final você ganhará um protocolo específico para seu corpo.".
+   Não há botão de CTA: clicar na foto ou no botão de uma faixa de idade inicia o quiz e
+   dispara `QuizIniciado`.
+2. **Perguntas 1 a 9** — nome, objetivo, canetinha, dose, tempo de uso, dor principal,
+   quilos eliminados, exercícios, massa muscular.
+3. **Diagnóstico (versão curta)** — direto após `massa` (não após `colaterais`), sem
+   tela de análise antes. Não mostra o alerta nem o Índice de GLP-1: só o ponto "Você tem
+   82% de chance de engordar ao parar a canetinha" (sem numerar) e termina com um gancho
+   de curiosidade pra continuar o teste. Barra de progresso usa `pctAte('massa')` aqui.
+4. **Perguntas 10 a 15** — fome, sintomas (`colaterais`), e logo depois dela: proteína
+   nas refeições, funcionamento do intestino, horas de sono, nível de estresse
+   (`proteina_refeicoes`, `intestino`, `sono`, `estresse` — ainda não entram no cálculo
+   do Índice de GLP-1, só personalização/dor).
+5. **Perguntas 16 a 20** — projeção de futuro, concordância sobre mudança de estilo de
    vida (`concorda_habitos`), concordância de gasto, acompanhamento, compromisso
    (a pergunta de concordância sobre alimentação e a de "liberar" foram removidas).
-5. **"O hormônio da caneta não vem só da caneta"** — a tela do mecanismo (break2).
-6. **"Analisando suas respostas…"** (5 s, barra com curva *smootherstep*) + **Diagnóstico
+6. **"O hormônio da caneta não vem só da caneta"** — a tela do mecanismo (break2).
+7. **"Analisando suas respostas…"** (5 s, barra com curva *smootherstep*) + **Diagnóstico
    (versão completa)** — só aqui aparece o alerta, o Índice de GLP-1, o "2 pontos
    identificados", os pontos numerados 1 e 2, e a frase original da solução
-   ("potencializar o hormônio que produz o GLP-1").
-7. **Perguntas 17 a 21** — corpo dos sonhos (Magra/Definida/Com curvas/Média, cada opção com foto
-   colada à esquerda — variação `.opts.photo`), peso, altura, meta de quilos a eliminar e,
-   por fim, "Além de emagrecer, quais são seus outros objetivos?" (multi-escolha). Todas
-   entram só depois do diagnóstico completo (a pedido do usuário) — veja
-   `DEFERRED_APOS_DIAGNOSTICO` no código. Logo após `meta_kg` entra a tela de prova
-   social ("Sua meta é totalmente possível..."), e `outros_objetivos` vem logo depois dela.
-8. **Landing final** (`renderResult`) — oferta, bônus, garantia, FAQ e checkout.
+   ("potencializar o hormônio que produz o GLP-1"). Barra de progresso usa
+   `pctAte('compromisso')` aqui (última pergunta respondida antes desta tela).
+8. **Perguntas 21 a 25** — corpo dos sonhos (Magra/Definida/Com curvas/Média, cada opção
+   com foto colada à esquerda — variação `.opts.photo`), peso, altura, meta de quilos a
+   eliminar e, por fim, "Além de emagrecer, quais são seus outros objetivos?"
+   (multi-escolha). Todas entram só depois do diagnóstico completo (a pedido do usuário)
+   — veja `DEFERRED_APOS_DIAGNOSTICO` no código. Logo após `meta_kg` entra a tela de
+   prova social ("Sua meta é totalmente possível..."), e `outros_objetivos` vem logo
+   depois dela.
+9. **Landing final** (`renderResult`) — oferta, bônus, garantia, FAQ e checkout.
 
 ⚠️ A frase da tela de prova social "Nas próximas etapas vamos calcular o seu Índice de
 GLP-1 Natural" (em `renderMeta`) ficou desatualizada com essa mudança: o índice já foi
@@ -57,13 +64,14 @@ depois. Ainda não foi corrigida — avisar antes de mexer, é decisão do usuá
   Ao inserir, remover ou reordenar perguntas, renumere — e lembre que as telas de
   conteúdo (diagnóstico, prova social, mecanismo) usam `pctAte('<id da pergunta>')`.
 - **Gatilhos de tela** ficam no `FLOW.push`: o primeiro diagnóstico entra depois de
-  `colaterais` (dentro do `QUESTIONS.forEach`). `peso`, `altura` e `meta_kg` NÃO seguem
-  a posição delas no array `QUESTIONS` — `DEFERRED_APOS_DIAGNOSTICO` as tira do forEach
-  principal e as empurra pra depois do diagnóstico completo; a prova social (`meta`)
+  `massa` (dentro do `QUESTIONS.forEach`). `corpo_sonho`, `peso`, `altura`, `meta_kg` e
+  `outros_objetivos` NÃO seguem a posição delas no array `QUESTIONS` —
+  `DEFERRED_APOS_DIAGNOSTICO` as tira do forEach principal e as empurra pra depois do
+  diagnóstico completo, na ordem em que aparecem nesse array; a prova social (`meta`)
   entra logo depois de `meta_kg` nesse ponto adiado. Sequência final:
-  `break2` (mecanismo) → `analyzing` → `diagnostico` (2ª vez, full) → `peso` → `altura` →
-  `meta_kg` → `meta` (prova social) → `result`. `renderDiagnostico(full)` é a mesma
-  função nas duas ocorrências: o `FLOW.push({type:'diagnostico'})` do meio chama sem
+  `break2` (mecanismo) → `analyzing` → `diagnostico` (2ª vez, full) → `corpo_sonho` →
+  `peso` → `altura` → `meta_kg` → `meta` (prova social) → `outros_objetivos` → `result`.
+  `renderDiagnostico(full)` é a mesma função nas duas ocorrências: o `FLOW.push({type:'diagnostico'})` do meio chama sem
   `full` (versão curta), e o do fim usa `{type:'diagnostico', full:true}` (versão
   completa). Ao editar o texto do diagnóstico, veja se a mudança deve valer só numa
   versão (então entra dentro do `full ? ... : ...`) ou nas duas. Se mover mais alguma
