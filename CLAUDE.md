@@ -18,19 +18,19 @@ A landing do mesmo produto **não** está aqui: ela vive em
 
 Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
 
-1. **Abertura** — headline, a pergunta da idade já com as opções (2 por linha, botões
-   verdes) e o texto "Faça o teste e receba um protocolo específico para seu corpo…".
-   Não há botão de CTA: clicar numa faixa de idade inicia o quiz e dispara `QuizIniciado`.
+1. **Abertura** — headline, a pergunta da idade já com as opções (2 por linha, cada uma
+   com foto colada ao botão, cantos arredondados) e o texto "Faça o teste e receba um
+   protocolo específico para seu corpo…". Não há botão de CTA: clicar na foto ou no botão
+   de uma faixa de idade inicia o quiz e dispara `QuizIniciado`.
 2. **Perguntas 1 a 11** — nome, objetivo, canetinha, dose, tempo de uso, dor principal,
    quilos eliminados, massa muscular, exercícios, fome, sintomas.
-3. **"Analisando suas respostas…"** — 5 s, barra com curva *smootherstep*, sem lista de
-   tópicos.
-4. **Diagnóstico** — Índice de GLP-1 Natural (0-100) + 3 pontos identificados + a caixa
-   verde clara "Mas isso tem solução…".
-5. **Perguntas 12 a 20** — projeção de futuro, concordâncias, peso, altura, meta,
+3. **Diagnóstico** — direto após `colaterais`, sem tela de análise antes. Índice de GLP-1
+   Natural (0-100) + 3 pontos identificados + a caixa verde clara "Mas isso tem solução…".
+4. **Perguntas 12 a 20** — projeção de futuro, concordâncias, peso, altura, meta,
    prova social, acompanhamento, compromisso, liberação.
-6. **"O hormônio da caneta não vem só da caneta"** — a tela do mecanismo, que agora
-   fecha o quiz e leva ao protocolo.
+5. **"O hormônio da caneta não vem só da caneta"** — a tela do mecanismo (break2).
+6. **"Analisando suas respostas…"** (5 s, barra com curva *smootherstep*) + **Diagnóstico**
+   de novo — a mesma tela do passo 3, repetida aqui como reforço logo antes da oferta.
 7. **Landing final** (`renderResult`) — oferta, bônus, garantia, FAQ e checkout.
 
 ### Regras que o código já respeita
@@ -38,8 +38,11 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
 - **Numeração**: cada pergunta tem `num`, e a barra de progresso é `num/TOTAL_Q`.
   Ao inserir, remover ou reordenar perguntas, renumere — e lembre que as telas de
   conteúdo (diagnóstico, prova social, mecanismo) usam `pctAte('<id da pergunta>')`.
-- **Gatilhos de tela** ficam no `FLOW.push` dentro do `QUESTIONS.forEach`: o diagnóstico
-  entra depois de `colaterais`, a prova social depois de `meta_kg`, o mecanismo no fim.
+- **Gatilhos de tela** ficam no `FLOW.push`: o primeiro diagnóstico entra depois de
+  `colaterais` (dentro do `QUESTIONS.forEach`), a prova social depois de `meta_kg`. Fora
+  do forEach, na sequência final: `break2` (mecanismo) → `analyzing` → `diagnostico` (2ª
+  vez) → `result`. `renderDiagnostico` e `renderAnalyzing` são as mesmas funções nas duas
+  ocorrências — não duplique o código, só a entrada no `FLOW`.
 - **O Índice de GLP-1** (`calcIndiceGLP`) lê os *textos* das alternativas. Se você mudar
   o texto de uma opção, ajuste o `includes()` correspondente ou a pontuação some
   silenciosamente. Hoje ele usa: tempo de uso, fome, massa, colaterais, objetivo e dose.
