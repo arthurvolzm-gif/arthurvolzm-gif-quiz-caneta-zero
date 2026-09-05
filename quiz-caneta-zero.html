@@ -358,6 +358,23 @@ body{
 .prova-noticia img{width:100%;height:auto;display:block;}
 .prova-fonte{font-size:11.5px;color:#999;padding:12px 16px;text-align:left;border-top:1px solid #f0f0f0;line-height:1.6;}
 .prova-texto{max-width:620px;margin:26px auto 0;font-size:16px;line-height:1.75;color:var(--cinza);text-align:left;}
+
+/* ===== PROJEÇÃO (tela final, depois de outros_objetivos) ===== */
+.proj-timeline{display:flex;justify-content:space-between;margin:26px 0 4px;position:relative;padding-top:8px;}
+.proj-timeline::before{content:'';position:absolute;left:6px;right:6px;top:15px;height:5px;border-radius:10px;background:linear-gradient(90deg,#e05a4e 0%,#f0c05a 50%,#4caf82 100%);z-index:0;}
+.proj-stop{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;flex:1;text-align:center;}
+.proj-stop .dot{width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--verde-escuro);margin-bottom:8px;}
+.proj-stop .fase{font-size:10px;font-weight:800;color:var(--verde-escuro);max-width:66px;line-height:1.25;}
+.proj-stop .dia{font-size:10px;color:#8a9a92;font-weight:700;margin-top:4px;}
+.proj-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0;}
+.proj-compare-col{border-radius:14px;padding:14px 12px;}
+.proj-compare-col.ruim{background:#fdecec;}
+.proj-compare-col.bom{background:#eef7f1;}
+.proj-compare-col h5{font-size:12.5px;font-weight:900;margin:0 0 8px;text-align:center;}
+.proj-compare-col.ruim h5{color:var(--vermelho);}
+.proj-compare-col.bom h5{color:var(--verde-escuro);}
+.proj-compare-col ul{list-style:none;padding:0;margin:0;font-size:12px;color:#4a4a4a;line-height:1.6;}
+.proj-compare-col li{margin-bottom:6px;}
 .prova-texto p{margin-bottom:14px;}
 .prova-texto p:last-child{margin-bottom:0;}
 @media(max-width:768px){.prova-numero{font-size:58px;}.prova-texto{font-size:15px;}}
@@ -765,6 +782,8 @@ DEFERRED_APOS_DIAGNOSTICO.forEach(id=>{
   FLOW.push({type:'question', q});
   if(q.id==='meta_kg') FLOW.push({type:'meta'});            // prova social (agora bem antes do result)
 });
+FLOW.push({type:'analyzing'});                              // 3ª vez: analisa tudo, inclusive outros_objetivos
+FLOW.push({type:'projecao'});                               // projeção final do protocolo, antes da oferta
 FLOW.push({type:'result'});
 
 const app = document.getElementById('app');
@@ -799,6 +818,7 @@ function render(){
     intro:renderIntro, question:()=>renderQuestion(step.q), break1:renderBreak1, break2:renderBreak2,
     interstitial:()=>renderInterstitial(step.id),
     analyzing:renderAnalyzing, diagnostico:()=>renderDiagnostico(step.full), prepitch:renderPrePitch, meta:renderMeta,
+    projecao:renderProjecao,
     offerLocked:renderOfferLocked, offerPrice:renderOfferPrice, result:renderResult
   };
   (map[step.type]||renderIntro)();
@@ -1043,6 +1063,66 @@ function renderBreak2(){
       <p class="inter-text">${tempoTxt} A canetinha não ensina o corpo a produzir saciedade, ela <strong style="color:#1a1a1a">substitui a produção</strong>. Enquanto ela substitui, a fábrica interna fica parada. Quando a dose cai, ela não está pronta para assumir.</p>
       <p class="inter-text" style="color:#1a1a1a;font-weight:800;">É isso que trava a balança na mesma dose. E é isso que faz o peso voltar. A boa notícia é que essa produção pode ser religada, e é exatamente isso que o seu protocolo faz.</p>
       <button class="btn" onclick="go(1)">Ver o meu protocolo →</button>
+    </div>
+  </div>`;
+}
+
+/* ---------- PROJEÇÃO FINAL (depois de outros_objetivos, antes do result) ---------- */
+function renderProjecao(){
+  const a = state.answers;
+  const nome = a.nome && a.nome!=='você' ? a.nome : '';
+  const idx = calcIndiceGLP();
+  const niv = nivelGLP(idx);
+  const dor = a.dor || 'a balança travada mesmo aplicando certinho';
+  const metaTxt = (a.meta_kg||'').replace(/^\S+\s/,'');
+  const metaFrase = metaTxt.toLowerCase().includes('manter')
+    ? 'manter o peso que você já perdeu, sem depender só da aplicação'
+    : `eliminar <strong>${metaTxt||'mais alguns quilos'}</strong> e manter o resultado sem depender só da aplicação`;
+
+  app.innerHTML = `
+  <div class="wrap fade">
+    <div class="card-quiz">
+      ${backBtn()}<div class="brand"><span class="brand-nome">Método Caneta Zero</span></div>
+      <div class="brand-sub">Diagnóstico personalizado</div>
+      <div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:100%"></div></div>
+
+      <h2 class="q-title" style="margin-top:18px;">${nome?nome+', a':'A'}qui está a sua projeção com o protocolo de 14 dias</h2>
+
+      <div class="proj-timeline">
+        <div class="proj-stop"><div class="dot"></div><div class="fase">Ponto de partida</div><div class="dia">Dia 1</div></div>
+        <div class="proj-stop"><div class="dot"></div><div class="fase">Ativação do hormônio</div><div class="dia">Dia 3 a 5</div></div>
+        <div class="proj-stop"><div class="dot"></div><div class="fase">Virada de chave</div><div class="dia">Dia 7 a 10</div></div>
+        <div class="proj-stop"><div class="dot"></div><div class="fase">Consolidação</div><div class="dia">Dia 14</div></div>
+      </div>
+      <p style="font-size:11.5px;color:#8a9a92;text-align:center;margin:8px 0 0;">Etapas educativas do protocolo. O ritmo de cada fase varia de pessoa pra pessoa.</p>
+
+      <div class="proj-compare">
+        <div class="proj-compare-col ruim">
+          <h5>Só a canetinha</h5>
+          <ul>
+            <li>✗ Hormônio natural continua desligado</li>
+            <li>✗ Resultado depende 100% da aplicação</li>
+          </ul>
+        </div>
+        <div class="proj-compare-col bom">
+          <h5>Canetinha + Método</h5>
+          <ul>
+            <li>✓ Hormônio natural sendo reativado</li>
+            <li>✓ Protocolo pensado pra sustentar o resultado</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="solucao-box" style="text-align:left;margin-bottom:10px;">
+        <h4 style="margin-bottom:10px;">Com base nas suas respostas, identificamos que:</h4>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 10px;">✅ Seu Índice de GLP-1 Natural está em <strong>${idx}/100</strong>, nível <strong>${niv.txt}</strong>, calculado a partir das suas respostas.</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 10px;">✅ O que mais te incomoda hoje é: <strong>"${dor}"</strong>, e é exatamente isso que o protocolo foi feito pra resolver.</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0;">✅ Sua meta agora é ${metaFrase}.</p>
+      </div>
+
+      <p style="font-size:15px;font-weight:800;color:var(--verde-escuro);line-height:1.5;text-align:center;margin:18px 0 4px;">A seguir você vai conhecer o protocolo completo, pensado pra resolver exatamente os pontos identificados aqui.</p>
+
+      <button class="btn" style="margin-top:14px;" onclick="go(1)">Quero ver o meu protocolo agora →</button>
     </div>
   </div>`;
 }
