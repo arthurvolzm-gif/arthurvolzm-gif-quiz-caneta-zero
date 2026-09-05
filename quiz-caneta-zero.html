@@ -712,8 +712,13 @@ const QUESTIONS = [
     id:'meta_kg', num:21,
     question:'Quantos quilos você ainda quer eliminar?',
     options:['🌱 Até 5 kg','🎯 De 6 a 10 kg','💪 De 11 a 15 kg','🔥 De 16 a 20 kg','🚀 Mais de 20 kg','✅ Só quero manter o que já perdi']
-  }
+  },
   /* >>> META (prova social) entra aqui, depois do diagnóstico completo <<< */
+  {
+    id:'outros_objetivos', num:22, type:'multi',
+    question:'Além de emagrecer, quais são seus outros objetivos?',
+    options:['Perder barriga/gordura localizada','Melhorar flacidez','Melhorar dores','Mais disposição e energia','Melhorar a saúde']
+  }
 ];
 
 /* benefício personalizado usado na pergunta de compromisso */
@@ -737,7 +742,7 @@ const state = { idx:0, answers:{} };
 const FLOW = [];
 /* peso, altura e meta_kg só entram depois do diagnóstico completo (full), a pedido do
    usuário — ficam de fora do forEach principal e são empurradas mais abaixo */
-const DEFERRED_APOS_DIAGNOSTICO = ['corpo_sonho','peso','altura','meta_kg'];
+const DEFERRED_APOS_DIAGNOSTICO = ['corpo_sonho','peso','altura','meta_kg','outros_objetivos'];
 FLOW.push({type:'intro'});
 QUESTIONS.forEach(q=>{
   if(DEFERRED_APOS_DIAGNOSTICO.includes(q.id)) return;
