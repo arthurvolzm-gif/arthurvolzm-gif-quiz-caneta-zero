@@ -37,11 +37,12 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
    (versão completa)** — só aqui aparece o alerta, o Índice de GLP-1, o "2 pontos
    identificados", os pontos numerados 1 e 2, e a frase original da solução
    ("potencializar o hormônio que produz o GLP-1").
-7. **Perguntas 18 a 21** — corpo dos sonhos (Magra/Definida/Com curvas/Média, cada opção com foto
-   colada à esquerda — variação `.opts.photo`), peso, altura e meta de quilos a eliminar.
-   Entram só depois do diagnóstico completo (a pedido do usuário) — veja
+7. **Perguntas 18 a 22** — corpo dos sonhos (Magra/Definida/Com curvas/Média, cada opção com foto
+   colada à esquerda — variação `.opts.photo`), peso, altura, meta de quilos a eliminar e,
+   por fim, "Além de emagrecer, quais são seus outros objetivos?" (multi-escolha). Todas
+   entram só depois do diagnóstico completo (a pedido do usuário) — veja
    `DEFERRED_APOS_DIAGNOSTICO` no código. Logo após `meta_kg` entra a tela de prova
-   social ("Sua meta é totalmente possível...").
+   social ("Sua meta é totalmente possível..."), e `outros_objetivos` vem logo depois dela.
 8. **Landing final** (`renderResult`) — oferta, bônus, garantia, FAQ e checkout.
 
 ⚠️ A frase da tela de prova social "Nas próximas etapas vamos calcular o seu Índice de
