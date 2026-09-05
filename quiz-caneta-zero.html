@@ -669,36 +669,38 @@ const QUESTIONS = [
 
   /* ===== N — NECESSIDADE ===== */
   {
-    id:'peso', num:15, type:'ruler',
-    question:'Qual é o seu peso atual?',
-    units:[{u:'kg',min:40,max:160,def:70,step:1},{u:'lb',min:88,max:352,def:154,step:1}]
-  },
-  {
-    id:'altura', num:16, type:'ruler',
-    question:'Qual é a sua altura?',
-    units:[{u:'cm',min:140,max:210,def:165,step:1},{u:'pol',min:55,max:83,def:65,step:1}]
-  },
-  {
-    id:'meta_kg', num:17,
-    question:'Quantos quilos você ainda quer eliminar?',
-    options:['🌱 Até 5 kg','🎯 De 6 a 10 kg','💪 De 11 a 15 kg','🔥 De 16 a 20 kg','🚀 Mais de 20 kg','✅ Só quero manter o que já perdi']
-  },
-  /* >>> META (prova social) entra aqui <<< */
-  {
-    id:'acompanhamento', num:18,
+    id:'acompanhamento', num:15,
     question:'Você tem acompanhamento de uma nutricionista durante o tratamento?',
     options:['❌ Nunca tive','🔄 Tive no começo, mas parei','🤷 Tenho, mas ela nunca falou sobre isso','✅ Tenho e me orienta bem']
   },
   {
-    id:'compromisso', num:19,
+    id:'compromisso', num:16,
     question:(a)=>`Você se compromete a seguir por 14 dias um método feito por uma nutricionista para ${beneficioPorDor(a)}?`,
     options:['Sim, me comprometo','Sim, quero pelo menos tentar','Ainda não sei se consigo']
   },
   {
-    id:'liberar', num:20,
+    id:'liberar', num:17,
     question:'Seu protocolo está pronto. Quer ver agora o método indicado para o seu perfil?',
     options:['🔓 Sim, quero ver o meu protocolo','📈 Sim, e quero saber como subir o meu índice']
+  },
+
+  /* ===== essas 3 renderizam só depois do diagnóstico completo (full), veja DEFERRED_APOS_DIAGNOSTICO ===== */
+  {
+    id:'peso', num:18, type:'ruler',
+    question:'Qual é o seu peso atual?',
+    units:[{u:'kg',min:40,max:160,def:70,step:1},{u:'lb',min:88,max:352,def:154,step:1}]
+  },
+  {
+    id:'altura', num:19, type:'ruler',
+    question:'Qual é a sua altura?',
+    units:[{u:'cm',min:140,max:210,def:165,step:1},{u:'pol',min:55,max:83,def:65,step:1}]
+  },
+  {
+    id:'meta_kg', num:20,
+    question:'Quantos quilos você ainda quer eliminar?',
+    options:['🌱 Até 5 kg','🎯 De 6 a 10 kg','💪 De 11 a 15 kg','🔥 De 16 a 20 kg','🚀 Mais de 20 kg','✅ Só quero manter o que já perdi']
   }
+  /* >>> META (prova social) entra aqui, depois do diagnóstico completo <<< */
 ];
 
 /* benefício personalizado usado na pergunta de compromisso */
@@ -720,18 +722,26 @@ const INTERSTITIALS = {};
    ========================================================= */
 const state = { idx:0, answers:{} };
 const FLOW = [];
+/* peso, altura e meta_kg só entram depois do diagnóstico completo (full), a pedido do
+   usuário — ficam de fora do forEach principal e são empurradas mais abaixo */
+const DEFERRED_APOS_DIAGNOSTICO = ['peso','altura','meta_kg'];
 FLOW.push({type:'intro'});
 QUESTIONS.forEach(q=>{
+  if(DEFERRED_APOS_DIAGNOSTICO.includes(q.id)) return;
   FLOW.push({type:'question', q});
   if(INTERSTITIALS[q.id]) FLOW.push({type:'interstitial', id:q.id});
   if(q.id==='colaterais'){                                  // diagnóstico no meio do quiz (sem a tela de análise)
     FLOW.push({type:'diagnostico'});
   }
-  if(q.id==='meta_kg') FLOW.push({type:'meta'});            // prova social (antes da reta final)
 });
 FLOW.push({type:'break2'});                                 // mecanismo GLP-1 (fecha o quiz e entrega o protocolo)
 FLOW.push({type:'analyzing'});                              // repete análise + diagnóstico antes da landing final
 FLOW.push({type:'diagnostico', full:true});                 // aqui sim com índice, alerta e os 3 pontos completos
+DEFERRED_APOS_DIAGNOSTICO.forEach(id=>{
+  const q = QUESTIONS.find(x=>x.id===id);
+  FLOW.push({type:'question', q});
+  if(q.id==='meta_kg') FLOW.push({type:'meta'});            // prova social (agora bem antes do result)
+});
 FLOW.push({type:'result'});
 
 const app = document.getElementById('app');
