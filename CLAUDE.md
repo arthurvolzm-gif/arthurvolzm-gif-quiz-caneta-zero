@@ -9,7 +9,9 @@ Foi separado do repositório antigo `Site_Kelly`, que misturava outros funis e t
 - **`quiz-caneta-zero.html`** — o quiz inteiro em arquivo único: HTML, CSS e JS.
   Não há build, não há dependências. Abrir no navegador já roda.
 - Imagens usadas pelo quiz, todas na raiz: `FotoKelly.jpg`, `FotoSiteKelly.jpeg`,
-  `Garantia7dias.png`, `pesquisa-mounjaro.jpeg`, `resultado-1.jpg`, `bg-vegetal.jpg`.
+  `Garantia7dias.png`, `pesquisa-mounjaro.jpeg`, `resultado-1.jpg`, `bg-vegetal.jpg`,
+  `idade-18-29.jpg`, `idade-30-39.jpg`, `idade-40-49.jpg`, `idade-50-mais.jpg`,
+  `corpo-magra.jpg`, `corpo-definida.jpg`, `corpo-maromba.jpg`.
 
 A landing do mesmo produto **não** está aqui: ela vive em
 `arthurvolzm-gif/caneta-zero-site` (Vercel) e é a fonte oficial da página de vendas.
@@ -35,10 +37,11 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
    (versão completa)** — só aqui aparece o alerta, o Índice de GLP-1, o "2 pontos
    identificados", os pontos numerados 1 e 2, e a frase original da solução
    ("potencializar o hormônio que produz o GLP-1").
-7. **Perguntas 18 a 20** — peso, altura e meta de quilos a eliminar. Entram só depois do
-   diagnóstico completo (a pedido do usuário) — veja `DEFERRED_APOS_DIAGNOSTICO` no
-   código. Logo após `meta_kg` entra a tela de prova social ("Sua meta é totalmente
-   possível...").
+7. **Perguntas 18 a 21** — corpo dos sonhos (Magra/Definida/Maromba, cada opção com foto
+   colada à esquerda — variação `.opts.photo`), peso, altura e meta de quilos a eliminar.
+   Entram só depois do diagnóstico completo (a pedido do usuário) — veja
+   `DEFERRED_APOS_DIAGNOSTICO` no código. Logo após `meta_kg` entra a tela de prova
+   social ("Sua meta é totalmente possível...").
 8. **Landing final** (`renderResult`) — oferta, bônus, garantia, FAQ e checkout.
 
 ⚠️ A frase da tela de prova social "Nas próximas etapas vamos calcular o seu Índice de
