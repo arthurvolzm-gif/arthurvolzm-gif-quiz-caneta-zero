@@ -1138,15 +1138,15 @@ function renderDiagnostico(full){
 
       <!-- 3 PROBLEMAS IDENTIFICADOS -->
       <div style="background:#fdecec;border-radius:14px;padding:14px 18px;margin:22px 0 18px;text-align:center;">
-        <p style="color:var(--vermelho);font-weight:900;font-size:15px;letter-spacing:.5px;margin:0;">⚠️ 3 PONTOS FORAM IDENTIFICADOS</p>
+        <p style="color:var(--vermelho);font-weight:900;font-size:15px;letter-spacing:.5px;margin:0;">⚠️ 2 PONTOS FORAM IDENTIFICADOS</p>
       </div>`;
 
-  const heading2 = full ? '2 · Você tem 82% de chance de engordar ao parar a canetinha' : 'Você tem 82% de chance de engordar ao parar a canetinha';
+  const heading2 = full ? '1 · Você tem 82% de chance de engordar ao parar a canetinha' : 'Você tem 82% de chance de engordar ao parar a canetinha';
   const fraseFinal2 = !full ? '' : `<p style="font-size:13.5px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;">Mas existe uma forma de isso não acontecer com você, e ela começa antes de reduzir a dose.</p>`;
 
   const problema3 = !full ? '' : `
       <div class="solucao-box" style="text-align:left;margin-bottom:18px;">
-        <h4 style="margin-bottom:8px;">3 · Parte do que sai da balança não é gordura</h4>
+        <h4 style="margin-bottom:8px;">2 · Parte do que sai da balança não é gordura</h4>
         <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0;">Quando a perda é rápida e a proteína fica baixa, uma fatia relevante do peso perdido vem de <strong>massa magra</strong>, ${massaTxt}. Menos massa magra significa menos gasto de energia em repouso: é isso que trava a balança na mesma dose que funcionava.</p>
       </div>`;
 
@@ -1160,10 +1160,6 @@ function renderDiagnostico(full){
       <div class="brand-sub" style="margin-bottom:12px;">Diagnóstico personalizado</div>
       <div class="progress-bar"><div class="progress-fill" style="width:${pctAte('colaterais')}%"></div></div>
 ${revelacao}
-      <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
-        <h4 style="margin-bottom:0;">1 · Você está aproveitando só parte da aplicação</h4>
-      </div>
-
       <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
         <h4 style="margin-bottom:8px;">${heading2}</h4>
         <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 14px;">Os estudos que acompanharam pessoas depois da suspensão desses medicamentos mostram que a maior parte recupera peso quando o corpo é devolvido sem nenhuma preparação. No seu caso, isso significa colocar em risco <strong>tudo o que você já investiu na aplicação até aqui</strong>.</p>
