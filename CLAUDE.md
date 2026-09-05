@@ -55,7 +55,14 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
    — veja `DEFERRED_APOS_DIAGNOSTICO` no código. Logo após `meta_kg` entra a tela de
    prova social ("Sua meta é totalmente possível..."), e `outros_objetivos` vem logo
    depois dela.
-9. **Landing final** (`renderResult`) — oferta, bônus, garantia, FAQ e checkout.
+9. **"Analisando suas respostas..." (3ª vez) + Projeção final** (`renderProjecao`) — logo
+   depois de `outros_objetivos`. Linha do tempo de 14 dias (fases qualitativas, sem prazo
+   numérico de resultado), comparativo "Só a canetinha" x "Canetinha + Método" (sem
+   números, só qualitativo) e um resumo "Com base nas suas respostas, identificamos que:"
+   usando dados reais já coletados (Índice de GLP-1, `dor`, `meta_kg`) — nunca inventar
+   estatística nova aqui (compliance: sem "93% de sucesso" ou "elimine X kg em Y dias"
+   sem fonte).
+10. **Landing final** (`renderResult`) — oferta, bônus, garantia, FAQ e checkout.
 
 ⚠️ A frase da tela de prova social "Nas próximas etapas vamos calcular o seu Índice de
 GLP-1 Natural" (em `renderMeta`) ficou desatualizada com essa mudança: o índice já foi
