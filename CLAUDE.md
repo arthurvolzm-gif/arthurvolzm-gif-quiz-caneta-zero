@@ -23,7 +23,7 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
    Não há botão de CTA: clicar numa faixa de idade inicia o quiz e dispara `QuizIniciado`.
 2. **Perguntas 1 a 11** — nome, objetivo, canetinha, dose, tempo de uso, dor principal,
    quilos eliminados, massa muscular, exercícios, fome, sintomas.
-3. **"Analisando suas respostas…"** — 7 s, barra com curva *smootherstep*, sem lista de
+3. **"Analisando suas respostas…"** — 5 s, barra com curva *smootherstep*, sem lista de
    tópicos.
 4. **Diagnóstico** — Índice de GLP-1 Natural (0-100) + 3 pontos identificados + a caixa
    verde clara "Mas isso tem solução…".
