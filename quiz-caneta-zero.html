@@ -168,6 +168,13 @@ body{
 .opt.sel .opt-radio{border-color:var(--verde);background:var(--verde);}
 .opt.sel .opt-radio::after{content:'✓';color:#fff;font-size:13px;font-weight:700;}
 
+/* variação com foto colada à esquerda de cada opção (lista vertical) */
+.opts.photo .opt-row{display:flex;align-items:stretch;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.06);cursor:pointer;transition:all .18s ease;}
+.opts.photo .opt-row:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(76,175,130,.18);}
+.opts.photo .opt-row-img{width:84px;flex-shrink:0;object-fit:cover;display:block;}
+.opts.photo .opt-row .opt{flex:1;border:none;border-radius:0;box-shadow:none;}
+.opts.photo .opt-row .opt:hover{transform:none;box-shadow:none;border-color:transparent;}
+
 /* ===== BOTÕES ===== */
 .btn{
   display:block;width:100%;text-align:center;
@@ -684,19 +691,25 @@ const QUESTIONS = [
     options:['🔓 Sim, quero ver o meu protocolo','📈 Sim, e quero saber como subir o meu índice']
   },
 
-  /* ===== essas 3 renderizam só depois do diagnóstico completo (full), veja DEFERRED_APOS_DIAGNOSTICO ===== */
+  /* ===== essas 4 renderizam só depois do diagnóstico completo (full), veja DEFERRED_APOS_DIAGNOSTICO ===== */
   {
-    id:'peso', num:18, type:'ruler',
+    id:'corpo_sonho', num:18,
+    question:'Qual é o seu corpo dos sonhos?',
+    options:['Magra','Definida','Maromba'],
+    optionImages:['corpo-magra.jpg','corpo-definida.jpg','corpo-maromba.jpg']
+  },
+  {
+    id:'peso', num:19, type:'ruler',
     question:'Qual é o seu peso atual?',
     units:[{u:'kg',min:40,max:160,def:70,step:1},{u:'lb',min:88,max:352,def:154,step:1}]
   },
   {
-    id:'altura', num:19, type:'ruler',
+    id:'altura', num:20, type:'ruler',
     question:'Qual é a sua altura?',
     units:[{u:'cm',min:140,max:210,def:165,step:1},{u:'pol',min:55,max:83,def:65,step:1}]
   },
   {
-    id:'meta_kg', num:20,
+    id:'meta_kg', num:21,
     question:'Quantos quilos você ainda quer eliminar?',
     options:['🌱 Até 5 kg','🎯 De 6 a 10 kg','💪 De 11 a 15 kg','🔥 De 16 a 20 kg','🚀 Mais de 20 kg','✅ Só quero manter o que já perdi']
   }
@@ -724,7 +737,7 @@ const state = { idx:0, answers:{} };
 const FLOW = [];
 /* peso, altura e meta_kg só entram depois do diagnóstico completo (full), a pedido do
    usuário — ficam de fora do forEach principal e são empurradas mais abaixo */
-const DEFERRED_APOS_DIAGNOSTICO = ['peso','altura','meta_kg'];
+const DEFERRED_APOS_DIAGNOSTICO = ['corpo_sonho','peso','altura','meta_kg'];
 FLOW.push({type:'intro'});
 QUESTIONS.forEach(q=>{
   if(DEFERRED_APOS_DIAGNOSTICO.includes(q.id)) return;
@@ -831,8 +844,10 @@ function renderQuestion(q){
       <div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:${(q.num/TOTAL_Q)*100}%"></div></div>
       ${echo}
       <h2 class="q-title">${typeof q.question==="function"?q.question(state.answers):q.question}</h2>
-      <div class="opts">
-        ${q.options.map((o,i)=>`<button class="opt" data-i="${i}" onclick="selectOpt('${q.id}',${i})"><span class="opt-radio"></span><span>${o}</span></button>`).join('')}
+      <div class="opts${q.optionImages?' photo':''}">
+        ${q.optionImages
+          ? q.options.map((o,i)=>`<div class="opt-row" onclick="selectOpt('${q.id}',${i})"><img src="${q.optionImages[i]}" alt="${o}" class="opt-row-img" onerror="this.style.display='none'"><button class="opt" data-i="${i}"><span class="opt-radio"></span><span>${o}</span></button></div>`).join('')
+          : q.options.map((o,i)=>`<button class="opt" data-i="${i}" onclick="selectOpt('${q.id}',${i})"><span class="opt-radio"></span><span>${o}</span></button>`).join('')}
       </div>
       ${q.img?`<img src="${q.img}" alt="" style="width:100%;border-radius:12px;display:block;margin:16px 0 0;" onerror="this.style.display='none'">`:''}
     </div>
