@@ -681,8 +681,8 @@ const QUESTIONS = [
   },
   {
     id:'compromisso', num:16,
-    question:(a)=>`Você se compromete a seguir por 14 dias um método feito por uma nutricionista para ${beneficioPorDor(a)}?`,
-    options:['Sim, me comprometo','Sim, quero pelo menos tentar','Ainda não sei se consigo']
+    question:'Você se compromete a seguir no método da Dra. Kelly, que já ajudou mais de 500 pessoas a emagrecerem, para fazer cada aplicação valer a pena nos próximos 14 dias?',
+    options:['Sim, me comprometo','Quero pelo menos tentar']
   },
   {
     id:'liberar', num:17,
@@ -719,17 +719,6 @@ const QUESTIONS = [
     options:['Perder barriga/gordura localizada','Melhorar flacidez','Melhorar dores','Mais disposição e energia','Melhorar a saúde']
   }
 ];
-
-/* benefício personalizado usado na pergunta de compromisso */
-function beneficioPorDor(a){
-  const d = a.dor || '';
-  if(d.includes('balança travou'))   return 'destravar a balança sem precisar aumentar a dose';
-  if(d.includes('medo de parar'))    return 'sair da canetinha sem recuperar o peso que você já perdeu';
-  if(d.includes('flácida'))          return 'emagrecer preservando o músculo, a firmeza e o rosto';
-  if(d.includes('Gasto muito'))      return 'fazer cada aplicação valer o que ela custa';
-  if(d.includes('peso está voltando'))return 'recuperar o controle do seu peso sem voltar para a aplicação';
-  return 'voltar a emagrecer e sustentar o resultado sem depender da aplicação';
-}
 
 /* Interstíciais (aparecem DEPOIS de certas perguntas) */
 const INTERSTITIALS = {};
