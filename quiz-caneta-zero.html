@@ -731,7 +731,7 @@ QUESTIONS.forEach(q=>{
 });
 FLOW.push({type:'break2'});                                 // mecanismo GLP-1 (fecha o quiz e entrega o protocolo)
 FLOW.push({type:'analyzing'});                              // repete análise + diagnóstico antes da landing final
-FLOW.push({type:'diagnostico'});
+FLOW.push({type:'diagnostico', full:true});                 // aqui sim com índice, alerta e os 3 pontos completos
 FLOW.push({type:'result'});
 
 const app = document.getElementById('app');
@@ -765,7 +765,7 @@ function render(){
   const map = {
     intro:renderIntro, question:()=>renderQuestion(step.q), break1:renderBreak1, break2:renderBreak2,
     interstitial:()=>renderInterstitial(step.id),
-    analyzing:renderAnalyzing, diagnostico:renderDiagnostico, prepitch:renderPrePitch, meta:renderMeta,
+    analyzing:renderAnalyzing, diagnostico:()=>renderDiagnostico(step.full), prepitch:renderPrePitch, meta:renderMeta,
     offerLocked:renderOfferLocked, offerPrice:renderOfferPrice, result:renderResult
   };
   (map[step.type]||renderIntro)();
@@ -1109,7 +1109,7 @@ function nivelGLP(v){
   return {txt:'MODERADA',               cor:'#c8973a', bg:'#fff8e8'};
 }
 
-function renderDiagnostico(){
+function renderDiagnostico(full){
   const a = state.answers;
   const nome = a.nome && a.nome!=='você' ? a.nome : '';
   const idx = calcIndiceGLP();
@@ -1118,12 +1118,9 @@ function renderDiagnostico(){
   const kg = (a.ja_eliminou||'').replace('De ','').replace(' kg','');
   const massaTxt = (a.massa||'').includes('Sim') ? 'e você já percebeu isso no espelho' : 'mesmo que você ainda não tenha percebido';
 
-  app.innerHTML = `
-  <div class="wrap fade">
-    <div class="card-quiz">
-      <div class="brand-sub" style="margin-bottom:12px;">Diagnóstico personalizado</div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${pctAte('colaterais')}%"></div></div>
-
+  /* na 1ª aparição (meio do quiz) não revela nem o alerta, nem o índice, nem o
+     "3 pontos identificados" — isso fica só pra 2ª aparição (full), antes da oferta */
+  const revelacao = !full ? '' : `
       <div style="background:${niv.bg};border-radius:14px;padding:16px 18px;margin:0 0 18px;text-align:center;">
         <p style="color:${niv.cor};font-weight:800;font-size:16.5px;line-height:1.45;margin:0;">⚠️ ${nome?nome+', s':'S'}ua produção natural de GLP-1 está <strong>${niv.txt}</strong>.</p>
       </div>
@@ -1144,8 +1141,27 @@ function renderDiagnostico(){
       <!-- 3 PROBLEMAS IDENTIFICADOS -->
       <div style="background:#fdecec;border-radius:14px;padding:14px 18px;margin:22px 0 18px;text-align:center;">
         <p style="color:var(--vermelho);font-weight:900;font-size:15px;letter-spacing:.5px;margin:0;">⚠️ 3 PONTOS FORAM IDENTIFICADOS</p>
-      </div>
+      </div>`;
 
+  const heading2 = full ? '2 · Você tem 82% de chance de engordar ao parar a canetinha' : 'Você tem 82% de chance de engordar ao parar a canetinha';
+  const fraseFinal2 = !full ? '' : `<p style="font-size:13.5px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;">Mas existe uma forma de isso não acontecer com você, e ela começa antes de reduzir a dose.</p>`;
+
+  const problema3 = !full ? '' : `
+      <div class="solucao-box" style="text-align:left;margin-bottom:18px;">
+        <h4 style="margin-bottom:8px;">3 · Parte do que sai da balança não é gordura</h4>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0;">Quando a perda é rápida e a proteína fica baixa, uma fatia relevante do peso perdido vem de <strong>massa magra</strong>, ${massaTxt}. Menos massa magra significa menos gasto de energia em repouso: é isso que trava a balança na mesma dose que funcionava.</p>
+      </div>`;
+
+  const solucaoTxt = full
+    ? `Mas isso tem solução, você apenas precisa <strong style="text-transform:uppercase;">potencializar o hormônio</strong> que produz o <strong style="text-transform:uppercase;">GLP-1</strong> no seu corpo`
+    : `Mas isso tem solução... continue o teste para descobrir o que está travando seu corpo e ter acesso ao método para resolver isso nos próximos 14 dias.`;
+
+  app.innerHTML = `
+  <div class="wrap fade">
+    <div class="card-quiz">
+      <div class="brand-sub" style="margin-bottom:12px;">Diagnóstico personalizado</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pctAte('colaterais')}%"></div></div>
+${revelacao}
       <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
         <h4 style="margin-bottom:8px;">1 · Você está aproveitando só parte da aplicação</h4>
         <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 12px;">${kg&&!kg.includes('Ainda')?`Você já eliminou ${kg} kg, o que é ótimo. `:''}Pelo seu perfil, o aproveitamento estimado do tratamento hoje está em torno de <strong>${aprov}%</strong>. O restante se perde porque o estímulo que o seu corpo precisaria receber pelo prato não está acontecendo.</p>
@@ -1156,7 +1172,7 @@ function renderDiagnostico(){
       </div>
 
       <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
-        <h4 style="margin-bottom:8px;">2 · Você tem 82% de chance de engordar ao parar a canetinha</h4>
+        <h4 style="margin-bottom:8px;">${heading2}</h4>
         <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 14px;">Os estudos que acompanharam pessoas depois da suspensão desses medicamentos mostram que a maior parte recupera peso quando o corpo é devolvido sem nenhuma preparação. No seu caso, isso significa colocar em risco <strong>tudo o que você já investiu na aplicação até aqui</strong>.</p>
 
         <div class="prova-numero" style="font-size:56px;margin-top:6px;">82%</div>
@@ -1165,18 +1181,12 @@ function renderDiagnostico(){
         <div class="prova-noticia">
           <img src="pesquisa-mounjaro.jpeg" alt="Reportagem sobre reganho de peso após o fim do tratamento com Mounjaro" onerror="this.style.display='none'">
         </div>
-
-        <p style="font-size:13.5px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;">Mas existe uma forma de isso não acontecer com você, e ela começa antes de reduzir a dose.</p>
+${fraseFinal2}
       </div>
-
-      <div class="solucao-box" style="text-align:left;margin-bottom:18px;">
-        <h4 style="margin-bottom:8px;">3 · Parte do que sai da balança não é gordura</h4>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0;">Quando a perda é rápida e a proteína fica baixa, uma fatia relevante do peso perdido vem de <strong>massa magra</strong>, ${massaTxt}. Menos massa magra significa menos gasto de energia em repouso: é isso que trava a balança na mesma dose que funcionava.</p>
-      </div>
-
+${problema3}
       <!-- A SOLUÇÃO -->
       <div style="background:#eef7f1;border:1px solid #d5ebe0;border-radius:14px;padding:22px 20px;margin:22px 0 0;text-align:center;">
-        <p style="color:var(--verde-escuro);font-size:16px;font-weight:800;line-height:1.55;margin:0;">Mas isso tem solução, você apenas precisa <strong style="text-transform:uppercase;">potencializar o hormônio</strong> que produz o <strong style="text-transform:uppercase;">GLP-1</strong> no seu corpo</p>
+        <p style="color:var(--verde-escuro);font-size:16px;font-weight:800;line-height:1.55;margin:0;">${solucaoTxt}</p>
       </div>
 
       <button class="btn" style="margin-top:22px;" onclick="go(1)">Continuar →</button>

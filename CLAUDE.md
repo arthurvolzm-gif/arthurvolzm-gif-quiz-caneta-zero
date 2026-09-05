@@ -24,13 +24,16 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
    de uma faixa de idade inicia o quiz e dispara `QuizIniciado`.
 2. **Perguntas 1 a 11** — nome, objetivo, canetinha, dose, tempo de uso, dor principal,
    quilos eliminados, massa muscular, exercícios, fome, sintomas.
-3. **Diagnóstico** — direto após `colaterais`, sem tela de análise antes. Índice de GLP-1
-   Natural (0-100) + 3 pontos identificados + a caixa verde clara "Mas isso tem solução…".
+3. **Diagnóstico (versão curta)** — direto após `colaterais`, sem tela de análise antes.
+   Não mostra o alerta, o Índice de GLP-1 nem o "3 pontos identificados": só os pontos
+   1 e 2 (sem numerar o 2) e termina com um gancho de curiosidade pra continuar o teste.
 4. **Perguntas 12 a 20** — projeção de futuro, concordâncias, peso, altura, meta,
    prova social, acompanhamento, compromisso, liberação.
 5. **"O hormônio da caneta não vem só da caneta"** — a tela do mecanismo (break2).
-6. **"Analisando suas respostas…"** (5 s, barra com curva *smootherstep*) + **Diagnóstico**
-   de novo — a mesma tela do passo 3, repetida aqui como reforço logo antes da oferta.
+6. **"Analisando suas respostas…"** (5 s, barra com curva *smootherstep*) + **Diagnóstico
+   (versão completa)** — só aqui aparece o alerta, o Índice de GLP-1, o "3 pontos
+   identificados", o ponto 3 e a frase original da solução ("potencializar o hormônio
+   que produz o GLP-1").
 7. **Landing final** (`renderResult`) — oferta, bônus, garantia, FAQ e checkout.
 
 ### Regras que o código já respeita
@@ -41,8 +44,11 @@ Ordem das telas (o `FLOW` é montado a partir do array `QUESTIONS`):
 - **Gatilhos de tela** ficam no `FLOW.push`: o primeiro diagnóstico entra depois de
   `colaterais` (dentro do `QUESTIONS.forEach`), a prova social depois de `meta_kg`. Fora
   do forEach, na sequência final: `break2` (mecanismo) → `analyzing` → `diagnostico` (2ª
-  vez) → `result`. `renderDiagnostico` e `renderAnalyzing` são as mesmas funções nas duas
-  ocorrências — não duplique o código, só a entrada no `FLOW`.
+  vez) → `result`. `renderDiagnostico(full)` é a mesma função nas duas ocorrências: o
+  `FLOW.push({type:'diagnostico'})` do meio chama sem `full` (versão curta), e o do fim
+  usa `{type:'diagnostico', full:true}` (versão completa). Ao editar o texto do
+  diagnóstico, veja se a mudança deve valer só numa versão (então entra dentro do
+  `full ? ... : ...`) ou nas duas.
 - **O Índice de GLP-1** (`calcIndiceGLP`) lê os *textos* das alternativas. Se você mudar
   o texto de uma opção, ajuste o `includes()` correspondente ou a pontuação some
   silenciosamente. Hoje ele usa: tempo de uso, fome, massa, colaterais, objetivo e dose.
