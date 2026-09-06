@@ -696,57 +696,57 @@ const QUESTIONS = [
 
   /* ===== I — IMPLICAÇÃO ===== */
   {
-    id:'futuro', num:16, type:'multi',
+    id:'futuro', num:21, type:'multi',
     question:'Como seria a sua vida se você engordasse tudo de novo depois da canetinha?',
     options:['😞 Minha autoestima e confiança iriam lá embaixo','🏥 Minha saúde ia piorar de novo','👗 Voltaria o problema pra vestir e comprar roupa','💸 Sentiria que joguei fora todo o dinheiro que gastei','😢 Ia me sentir fracassada mais uma vez']
   },
   {
-    id:'concorda_habitos', num:17,
+    id:'concorda_habitos', num:22,
     question:'Você acredita que algumas mudanças simples no seu estilo de vida são determinantes para não engordar novamente depois da canetinha?',
     options:['✅ Sim, sem isso os resultados da canetinha são temporários','😟 Não, vou ser dependente desse remédio a vida toda']
   },
   {
-    id:'concorda_gasto', num:18,
+    id:'concorda_gasto', num:23,
     question:'Você concorda que não adianta gastar milhares de reais na aplicação para engordar tudo depois?',
     options:['Sim, preciso fazer esse investimento valer','Concordo, mas nunca soube o que fazer','Não tinha parado pra pensar nisso']
   },
   /* ===== N — NECESSIDADE ===== */
   {
-    id:'acompanhamento', num:19,
+    id:'acompanhamento', num:24,
     question:'Você tem acompanhamento de uma nutricionista durante o tratamento?',
     options:['❌ Nunca tive','🔄 Tive no começo, mas parei','🤷 Tenho, mas ela nunca falou sobre isso','✅ Tenho e me orienta bem']
   },
   {
-    id:'compromisso', num:20,
+    id:'compromisso', num:25,
     question:'Você se compromete a seguir no método da Dra. Kelly, que já ajudou mais de 500 pessoas a emagrecerem, para fazer cada aplicação valer a pena nos próximos 14 dias?',
     options:['Sim, me comprometo','Quero pelo menos tentar']
   },
 
   /* ===== essas 4 renderizam só depois do diagnóstico completo (full), veja DEFERRED_APOS_DIAGNOSTICO ===== */
   {
-    id:'corpo_sonho', num:21,
+    id:'corpo_sonho', num:16,
     question:'Qual é o seu corpo dos sonhos?',
     options:['Magra','Definida','Com curvas','Média'],
     optionImages:['corpo-magra.jpg','corpo-definida.jpg','corpo-curvas.jpg','corpo-media.jpg']
   },
   {
-    id:'peso', num:22, type:'ruler',
+    id:'peso', num:17, type:'ruler',
     question:'Qual é o seu peso atual?',
     units:[{u:'kg',min:40,max:160,def:70,step:1},{u:'lb',min:88,max:352,def:154,step:1}]
   },
   {
-    id:'altura', num:23, type:'ruler',
+    id:'altura', num:18, type:'ruler',
     question:'Qual é a sua altura?',
     units:[{u:'cm',min:140,max:210,def:165,step:1},{u:'pol',min:55,max:83,def:65,step:1}]
   },
   {
-    id:'meta_kg', num:24,
+    id:'meta_kg', num:19,
     question:'Quantos quilos você ainda quer eliminar?',
     options:['🌱 Até 5 kg','🎯 De 6 a 10 kg','💪 De 11 a 15 kg','🔥 De 16 a 20 kg','🚀 Mais de 20 kg','✅ Só quero manter o que já perdi']
   },
   /* >>> META (prova social) entra aqui, depois do diagnóstico completo <<< */
   {
-    id:'outros_objetivos', num:25, type:'multi',
+    id:'outros_objetivos', num:20, type:'multi',
     question:'Além de emagrecer, quais são seus outros objetivos?',
     options:['Perder barriga/gordura localizada','Melhorar flacidez','Melhorar dores','Mais disposição e energia','Melhorar a saúde']
   }
@@ -774,14 +774,14 @@ QUESTIONS.forEach(q=>{
   if(q.id==='estresse'){                                     // análise + diagnóstico completo (alerta + índice)
     FLOW.push({type:'analyzing'});
     FLOW.push({type:'diagnostico', full:true});
+    DEFERRED_APOS_DIAGNOSTICO.forEach(id=>{                   // corpo_sonho, peso, altura, meta_kg, outros_objetivos
+      const dq = QUESTIONS.find(x=>x.id===id);                // entram logo depois do diagnóstico completo
+      FLOW.push({type:'question', q:dq});
+      if(dq.id==='meta_kg') FLOW.push({type:'meta'});         // prova social
+    });
   }
 });
 FLOW.push({type:'break2'});                                 // mecanismo GLP-1 (fecha o quiz e entrega o protocolo)
-DEFERRED_APOS_DIAGNOSTICO.forEach(id=>{
-  const q = QUESTIONS.find(x=>x.id===id);
-  FLOW.push({type:'question', q});
-  if(q.id==='meta_kg') FLOW.push({type:'meta'});            // prova social (agora bem antes do result)
-});
 FLOW.push({type:'analyzing'});                              // 3ª vez: analisa tudo, inclusive outros_objetivos
 FLOW.push({type:'projecao'});                               // projeção final do protocolo, antes da oferta
 FLOW.push({type:'result'});
@@ -1285,7 +1285,7 @@ ${revelacao}
         <div class="prova-noticia">
           <img src="pesquisa-mounjaro.jpeg" alt="Reportagem sobre reganho de peso após o fim do tratamento com Mounjaro" onerror="this.style.display='none'">
         </div>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;">Os estudos que acompanharam pessoas depois da suspensão desses medicamentos mostram que a maior parte recupera peso quando o corpo é devolvido sem nenhuma preparação. No seu caso, isso significa colocar em risco <strong>tudo o que você já investiu na aplicação até aqui</strong>.</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;text-align:center;">Os estudos que acompanharam pessoas depois da suspensão desses medicamentos mostram que a maior parte recupera peso quando o corpo é devolvido sem nenhuma preparação. No seu caso, isso significa colocar em risco <strong>tudo o que você já investiu na aplicação até aqui</strong>.</p>
 ${fraseFinal2}
       </div>
 ${problema3}
