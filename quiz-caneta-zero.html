@@ -478,12 +478,11 @@ body{
 .diag-pointer::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--verde-escuro);}
 .diag-labels{display:flex;font-size:10.5px;color:#9aaaa2;font-weight:700;margin:8px 0 4px;}
 .diag-labels span{flex:1;text-align:center;}
-.analise-item{margin-bottom:18px;}
-.analise-item:last-child{margin-bottom:0;}
-.analise-item-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;font-weight:700;color:var(--cinza);margin-bottom:7px;}
-.analise-item-top .pct{font-weight:900;color:var(--verde-escuro);font-variant-numeric:tabular-nums;}
-.analise-item-bar{height:9px;background:#e3ede8;border-radius:20px;overflow:hidden;}
-.analise-item-fill{height:100%;width:0;background:linear-gradient(90deg,var(--verde-escuro),var(--verde-claro));border-radius:20px;}
+.lib-box{text-align:center;margin:18px 0 14px;}
+.lib-label{font-size:11.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--verde);}
+.lib-pct{font-family:'Open Sans',sans-serif;font-size:42px;font-weight:900;color:var(--verde-escuro);line-height:1;margin:6px 0 10px;font-variant-numeric:tabular-nums;}
+.lib-bar{height:11px;background:#e3ede8;border-radius:20px;overflow:hidden;}
+.lib-fill{height:100%;width:0;background:linear-gradient(90deg,var(--verde-escuro),var(--verde-claro));border-radius:20px;}
 .meta-img{border:2px dashed #cdddd4;border-radius:14px;background:#f4faf7;color:#9aaaa2;font-size:13px;padding:46px 16px;margin:0 0 18px;}
 .causa-box{background:#fdecec;border-radius:14px;padding:16px 18px;margin:16px 0;}
 .causa-box h4{color:var(--vermelho);font-size:14.5px;line-height:1.35;margin-bottom:8px;}
@@ -658,48 +657,53 @@ const QUESTIONS = [
     ]
   },
   {
-    id:'ja_eliminou', num:7,
+    id:'acompanhamento', num:7,
+    question:'Você tem acompanhamento de uma nutricionista durante o tratamento?',
+    options:['❌ Nunca tive','🔄 Tive no começo, mas parei','🤷 Tenho, mas ela nunca falou sobre isso','✅ Tenho e me orienta bem']
+  },
+  {
+    id:'ja_eliminou', num:8,
     question:'Quantos quilos você já eliminou com a canetinha?',
     options:['Ainda nenhum','De 1 a 5 kg','De 6 a 10 kg','De 11 a 15 kg','Mais de 16 kg']
   },
   {
-    id:'exercicio', num:8,
+    id:'exercicio', num:9,
     question:'Você costuma se exercitar quantas vezes por semana?',
     options:['😴 Nenhuma','🚶 1-2x na semana','🏃 3-4x na semana','💪 5x ou mais na semana']
   },
   {
-    id:'massa', num:9,
+    id:'massa', num:10,
     question:'Você percebeu flacidez ou perda de massa muscular enquanto emagrecia?',
     options:['😔 Sim, infelizmente','🤔 Não, mas já ouvi falar que acontece']
   },
   /* --- a pergunta abaixo arma exatamente o que a BREAK 2 vai revelar --- */
   {
-    id:'fome', num:10,
+    id:'fome', num:11,
     question:'Está com dificuldade na alimentação devido a falta de fome?',
     options:['🙁 Sim, estou comendo pouco','😋 Não, estou comendo bastante']
   },
   {
-    id:'colaterais', num:11, type:'multi',
+    id:'colaterais', num:12, type:'multi',
     question:'Quais desses sintomas você já sentiu durante o tratamento?',
     options:['🤢 Enjoo ou dor no estômago','🚽 Intestino preso ou diarreia','😩 Cansaço que não passa','💇 Queda de cabelo','😞 Rosto abatido ou pele sem firmeza','✅ Nenhum desses']
   },
   {
-    id:'proteina_refeicoes', num:12,
+    id:'proteina_refeicoes', num:13,
     question:'Você costuma comer proteína em todas as refeições?',
     options:['🥩 Sim, sempre','🍽️ Às vezes','🚫 Quase nunca']
   },
   {
-    id:'intestino', num:13,
+    id:'intestino', num:14,
     question:'Como está o funcionamento do seu intestino?',
     options:['✅ Regular','😣 Preso','💧 Solto']
   },
   {
-    id:'sono', num:14,
+    id:'sono', num:15,
     question:'Quantas horas você dorme por noite, em média?',
     options:['⚠️ Menos de 5h','🌙 Entre 5 e 7h','😴 Mais de 7h']
   },
   {
-    id:'estresse', num:15,
+    id:'estresse', num:16,
     question:'Como está seu nível de estresse no dia a dia?',
     options:['😰 Alto','😐 Moderado','😌 Baixo']
   },
@@ -707,57 +711,51 @@ const QUESTIONS = [
 
   /* ===== I — IMPLICAÇÃO ===== */
   {
-    id:'futuro', num:21, type:'multi',
+    id:'futuro', num:17, type:'multi',
     question:'Como seria a sua vida se você engordasse tudo de novo depois da canetinha?',
     options:['😞 Minha autoestima e confiança iriam lá embaixo','🏥 Minha saúde ia piorar de novo','👗 Voltaria o problema pra vestir e comprar roupa','💸 Sentiria que joguei fora todo o dinheiro que gastei','😢 Ia me sentir fracassada mais uma vez']
   },
   {
-    id:'concorda_habitos', num:22,
+    id:'concorda_habitos', num:18,
     question:'Você acredita que algumas mudanças simples no seu estilo de vida são determinantes para não engordar novamente depois da canetinha?',
     options:['✅ Sim, sem isso os resultados da canetinha são temporários','😟 Não, vou ser dependente desse remédio a vida toda']
   },
   {
-    id:'concorda_gasto', num:23,
+    id:'concorda_gasto', num:19,
     question:'Você concorda que não adianta gastar milhares de reais na aplicação para engordar tudo depois?',
     options:['Sim, preciso fazer esse investimento valer','Concordo, mas nunca soube o que fazer','Não tinha parado pra pensar nisso']
   },
-  /* ===== N — NECESSIDADE ===== */
   {
-    id:'acompanhamento', num:24,
-    question:'Você tem acompanhamento de uma nutricionista durante o tratamento?',
-    options:['❌ Nunca tive','🔄 Tive no começo, mas parei','🤷 Tenho, mas ela nunca falou sobre isso','✅ Tenho e me orienta bem']
-  },
-  {
-    id:'compromisso', num:25,
+    id:'compromisso', num:20,
     question:'Você se compromete a seguir no método da Dra. Kelly, que já ajudou mais de 500 pessoas a emagrecerem, para fazer cada aplicação valer a pena nos próximos 14 dias?',
     options:['Sim, me comprometo','Quero pelo menos tentar']
   },
 
   /* ===== essas 4 renderizam só depois do diagnóstico completo (full), veja DEFERRED_APOS_DIAGNOSTICO ===== */
   {
-    id:'corpo_sonho', num:16,
+    id:'corpo_sonho', num:21,
     question:'Qual é o seu corpo dos sonhos?',
     options:['Magra','Definida','Com curvas','Média'],
     optionImages:['corpo-magra.jpg','corpo-definida.jpg','corpo-curvas.jpg','corpo-media.jpg']
   },
   {
-    id:'peso', num:17, type:'ruler',
+    id:'peso', num:22, type:'ruler',
     question:'Qual é o seu peso atual?',
     units:[{u:'kg',min:40,max:160,def:70,step:1},{u:'lb',min:88,max:352,def:154,step:1}]
   },
   {
-    id:'altura', num:18, type:'ruler',
+    id:'altura', num:23, type:'ruler',
     question:'Qual é a sua altura?',
     units:[{u:'cm',min:140,max:210,def:165,step:1},{u:'pol',min:55,max:83,def:65,step:1}]
   },
   {
-    id:'meta_kg', num:19,
+    id:'meta_kg', num:24,
     question:'Quantos quilos você ainda quer eliminar?',
     options:['🌱 Até 5 kg','🎯 De 6 a 10 kg','💪 De 11 a 15 kg','🔥 De 16 a 20 kg','🚀 Mais de 20 kg','✅ Só quero manter o que já perdi']
   },
   /* >>> META (prova social) entra aqui, depois do diagnóstico completo <<< */
   {
-    id:'outros_objetivos', num:20, type:'multi',
+    id:'outros_objetivos', num:25, type:'multi',
     question:'Além de emagrecer, quais são seus outros objetivos?',
     options:['Perder barriga/gordura localizada','Melhorar flacidez','Melhorar dores','Mais disposição e energia','Melhorar a saúde']
   }
@@ -1176,45 +1174,32 @@ function renderMeta(){
 
 /* ---------- ANALISANDO ---------- */
 function renderAnalyzing(){
-  const a = state.answers;
-  const ITEMS = [
-    { label:`⏱️ Tempo de uso e dose da ${(a.caneta||'canetinha').split(' ')[0]} analisados`, target:92 },
-    { label:'🩺 Sintomas e sinais colaterais avaliados', target:78 },
-    { label:'📊 Índice de GLP-1 Natural calculado', target:96 },
-    { label:'📋 Protocolo de 14 dias sendo montado', target:55 }
-  ];
   app.innerHTML = `
   <div class="wrap fade">
     <div class="card-quiz" style="padding-top:56px;padding-bottom:52px;">
       <div class="brand-sub" style="margin-bottom:14px;">Diagnóstico personalizado</div>
       <div class="analise-title">Analisando suas respostas...</div>
-      <div style="margin-top:28px;">
-        ${ITEMS.map((it,i)=>`
-        <div class="analise-item">
-          <div class="analise-item-top"><span>${it.label}</span><span class="pct" id="anPct${i}">0%</span></div>
-          <div class="analise-item-bar"><div class="analise-item-fill" id="anFill${i}"></div></div>
-        </div>`).join('')}
+      <div class="lib-box" style="margin-top:30px;">
+        <div class="lib-label">Liberando seu diagnóstico personalizado...</div>
+        <div class="lib-pct" id="libPct">0%</div>
+        <div class="lib-bar"><div class="lib-fill" id="libFill"></div></div>
       </div>
     </div>
   </div>`;
-  const DUR = 5200, STAGGER = 260;                     // cada item começa um pouco depois do anterior
-  const startT = performance.now();
+  const DUR = 5000;                                    // total da animação
+  const pctEl=document.getElementById('libPct'), fillEl=document.getElementById('libFill');
+  const startT=performance.now();
+  let ultimo = -1;                                     // só repinta o número quando o inteiro muda
   function tick(now){
-    let algumEmAndamento = false;
-    ITEMS.forEach((it,i)=>{
-      const dur = DUR - i*STAGGER;
-      const t = Math.max(0, Math.min(1, (now - (startT + i*STAGGER)) / dur));
-      if(t<1) algumEmAndamento = true;
-      const eased = t*t*t*(t*(t*6-15)+10);             // smootherstep: parte e chega sem solavanco
-      const pct = Math.round(eased*it.target);
-      const pctEl = document.getElementById('anPct'+i), fillEl = document.getElementById('anFill'+i);
-      if(pctEl) pctEl.textContent = pct+'%';
-      if(fillEl) fillEl.style.width = (eased*it.target)+'%';
-    });
-    if(algumEmAndamento) requestAnimationFrame(tick);
+    const t=Math.min(1,(now-startT)/DUR);
+    const eased=t*t*t*(t*(t*6-15)+10);                 // smootherstep: parte e chega sem solavanco
+    const pct=Math.round(eased*100);
+    if(pctEl && pct!==ultimo){ pctEl.textContent=pct+'%'; ultimo=pct; }
+    if(fillEl)fillEl.style.width=(eased*100)+'%';
+    if(t<1) requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
-  setTimeout(()=>go(1), DUR + 300);
+  setTimeout(()=>go(1),DUR);
 }
 
 
@@ -1301,18 +1286,17 @@ function renderDiagnostico(full){
         <p style="color:var(--vermelho);font-weight:900;font-size:15px;letter-spacing:.5px;margin:0;">⚠️ 2 PONTOS FORAM IDENTIFICADOS</p>
       </div>`;
 
-  /* ponto 1: na versão curta é o dado dos 82% (Mounjaro). Na versão completa não repete
-     isso (já apareceu antes no quiz) — usa as respostas de proteína/intestino, coletadas
-     bem antes desta tela, pra introduzir o mecanismo (a tela break2 foi removida) */
-  const proteina = a.proteina_refeicoes || '';
-  const intestinoOk = (a.intestino||'').includes('Regular');
-  const precisaEstimulo = proteina.includes('Quase nunca') || proteina.includes('Às vezes') || !intestinoOk;
+  /* ponto 1: na versão curta é o dado dos 82% (Mounjaro). Na versão completa é o
+     aproveitamento estimado da aplicação, calculado a partir do Índice de GLP-1 */
+  const aprov = Math.min(92, idx + 22);
   const ponto1 = full ? `
       <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
-        <h4 style="margin-bottom:8px;">1 · Seu intestino não está recebendo o estímulo certo</h4>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0;">${precisaEstimulo
-          ? `Pelas suas respostas, sua alimentação nem sempre traz proteína suficiente${intestinoOk?'':' e seu intestino nem sempre funciona regularmente'}. É exatamente esse estímulo, proteína no prato e um intestino funcionando bem, que ativa a produção natural do hormônio que a canetinha imita toda semana. Sem ele, seu corpo continua praticamente 100% dependente da aplicação.`
-          : `Você já mantém parte do básico em dia, mas isso sozinho não é suficiente pra reativar sua produção natural sozinha. Falta o restante da estratégia, que você vai conhecer a seguir.`}</p>
+        <h4 style="margin-bottom:8px;">1 · Você está aproveitando só parte da aplicação</h4>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 12px;">Pelo seu perfil, o aproveitamento estimado do tratamento hoje está em torno de <strong>${aprov}%</strong>. O restante se perde porque o estímulo que o seu corpo precisaria receber pelo prato não está acontecendo.</p>
+        <div style="height:10px;border-radius:20px;background:#e3ede8;overflow:hidden;">
+          <div style="height:100%;width:${aprov}%;background:linear-gradient(90deg,var(--verde-escuro),var(--verde-claro));border-radius:20px;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11.5px;color:#8a9a92;font-weight:700;margin-top:6px;"><span>0</span><span>Você: ${aprov}%</span><span>100</span></div>
       </div>` : `
       <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
         <h4 style="margin-bottom:8px;">Você sabia que:</h4>
