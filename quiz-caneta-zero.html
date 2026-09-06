@@ -711,51 +711,51 @@ const QUESTIONS = [
 
   /* ===== I — IMPLICAÇÃO ===== */
   {
-    id:'futuro', num:17, type:'multi',
+    id:'futuro', num:22, type:'multi',
     question:'Como seria a sua vida se você engordasse tudo de novo depois da canetinha?',
     options:['😞 Minha autoestima e confiança iriam lá embaixo','🏥 Minha saúde ia piorar de novo','👗 Voltaria o problema pra vestir e comprar roupa','💸 Sentiria que joguei fora todo o dinheiro que gastei','😢 Ia me sentir fracassada mais uma vez']
   },
   {
-    id:'concorda_habitos', num:18,
+    id:'concorda_habitos', num:23,
     question:'Você acredita que algumas mudanças simples no seu estilo de vida são determinantes para não engordar novamente depois da canetinha?',
     options:['✅ Sim, sem isso os resultados da canetinha são temporários','😟 Não, vou ser dependente desse remédio a vida toda']
   },
   {
-    id:'concorda_gasto', num:19,
+    id:'concorda_gasto', num:24,
     question:'Você concorda que não adianta gastar milhares de reais na aplicação para engordar tudo depois?',
     options:['Sim, preciso fazer esse investimento valer','Concordo, mas nunca soube o que fazer','Não tinha parado pra pensar nisso']
   },
   {
-    id:'compromisso', num:20,
+    id:'compromisso', num:25,
     question:'Você se compromete a seguir no método da Dra. Kelly, que já ajudou mais de 500 pessoas a emagrecerem, para fazer cada aplicação valer a pena nos próximos 14 dias?',
     options:['Sim, me comprometo','Quero pelo menos tentar']
   },
 
   /* ===== essas 4 renderizam só depois do diagnóstico completo (full), veja DEFERRED_APOS_DIAGNOSTICO ===== */
   {
-    id:'corpo_sonho', num:21,
+    id:'corpo_sonho', num:17,
     question:'Qual é o seu corpo dos sonhos?',
     options:['Magra','Definida','Com curvas','Média'],
     optionImages:['corpo-magra.jpg','corpo-definida.jpg','corpo-curvas.jpg','corpo-media.jpg']
   },
   {
-    id:'peso', num:22, type:'ruler',
+    id:'peso', num:18, type:'ruler',
     question:'Qual é o seu peso atual?',
     units:[{u:'kg',min:40,max:160,def:70,step:1},{u:'lb',min:88,max:352,def:154,step:1}]
   },
   {
-    id:'altura', num:23, type:'ruler',
+    id:'altura', num:19, type:'ruler',
     question:'Qual é a sua altura?',
     units:[{u:'cm',min:140,max:210,def:165,step:1},{u:'pol',min:55,max:83,def:65,step:1}]
   },
   {
-    id:'meta_kg', num:24,
+    id:'meta_kg', num:20,
     question:'Quantos quilos você ainda quer eliminar?',
     options:['🌱 Até 5 kg','🎯 De 6 a 10 kg','💪 De 11 a 15 kg','🔥 De 16 a 20 kg','🚀 Mais de 20 kg','✅ Só quero manter o que já perdi']
   },
   /* >>> META (prova social) entra aqui, depois do diagnóstico completo <<< */
   {
-    id:'outros_objetivos', num:25, type:'multi',
+    id:'outros_objetivos', num:21, type:'multi',
     question:'Além de emagrecer, quais são seus outros objetivos?',
     options:['Perder barriga/gordura localizada','Melhorar flacidez','Melhorar dores','Mais disposição e energia','Melhorar a saúde']
   }
@@ -1066,9 +1066,18 @@ function renderProjecao(){
   disposicaoAntes = Math.max(15, Math.min(60, disposicaoAntes));
   const autoestimaAntes = Math.max(20, Math.min(55, Math.round(idx*0.75)));
   const satisfacaoAntes = (a.massa||'').includes('Sim') ? 32 : 42;
+  const colateraisArr = Array.isArray(a.colaterais) ? a.colaterais : (a.colaterais ? [a.colaterais] : []);
+  const temSintomas = colateraisArr.some(c=>c && !c.includes('Nenhum'));
+  let controleFomeAntes = (a.fome||'').includes('pouco') ? 30 : 38;
+  if(temSintomas) controleFomeAntes -= 8;
+  controleFomeAntes = Math.max(15, Math.min(45, controleFomeAntes));
+  let qualidadeSonoAntes = sono.includes('Menos de 5h') ? 22 : sono.includes('5 e 7h') ? 40 : 58;
+  qualidadeSonoAntes = Math.max(15, Math.min(60, qualidadeSonoAntes));
   const disposicaoDepois = Math.min(95, disposicaoAntes+55);
-  const autoestimaDepois = Math.min(92, autoestimaAntes+42);
+  const autoestimaDepois = Math.min(92, autoestimaAntes+60);
   const satisfacaoDepois = Math.min(90, satisfacaoAntes+48);
+  const controleFomeDepois = Math.min(90, controleFomeAntes+50);
+  const qualidadeSonoDepois = Math.min(90, qualidadeSonoAntes+45);
   const metrica = (label,antes,depois)=>`
         <div class="glp-metric"><div class="glp-metric-top"><span class="nome">${label}</span><span class="val">${antes}%</span></div><div class="glp-bar"><div class="glp-bar-fill" style="width:${antes}%"></div></div></div>`;
   const metricaBom = (label,antes,depois)=>`
@@ -1109,7 +1118,7 @@ function renderProjecao(){
       <div class="proj-chart-days">
         ${pontosCurva.map(p=>`<div class="proj-chart-day" style="left:${(p.x/320*100).toFixed(1)}%;">Dia ${String(p.dia).padStart(2,'0')}</div>`).join('')}
       </div>
-      <p style="font-size:11px;color:#8a9a92;text-align:center;margin:6px 0 0;">Estimativa educativa da evolução esperada com o protocolo.</p>`;
+`;
 
   app.innerHTML = `
   <div class="wrap fade">
@@ -1128,15 +1137,18 @@ ${curvaHTML}
           ${metrica('Nível de disposição', disposicaoAntes)}
           ${metrica('Autoestima', autoestimaAntes)}
           ${metrica('Satisfação com o corpo', satisfacaoAntes)}
+          ${metrica('Controle da fome', controleFomeAntes)}
+          ${metrica('Qualidade do sono', qualidadeSonoAntes)}
         </div>
         <div class="proj-compare-col bom">
           <h5>Com o protocolo</h5>
           ${metricaBom('Nível de disposição', disposicaoAntes, disposicaoDepois)}
           ${metricaBom('Autoestima', autoestimaAntes, autoestimaDepois)}
           ${metricaBom('Satisfação com o corpo', satisfacaoAntes, satisfacaoDepois)}
+          ${metricaBom('Controle da fome', controleFomeAntes, controleFomeDepois)}
+          ${metricaBom('Qualidade do sono', qualidadeSonoAntes, qualidadeSonoDepois)}
         </div>
       </div>
-      <p style="font-size:11px;color:#8a9a92;text-align:center;margin:8px 0 0;">Estimativa educativa calculada a partir das suas respostas.</p>
 
       <div class="proj-compare">
         <div class="proj-compare-col ruim">
@@ -1158,9 +1170,9 @@ ${curvaHTML}
       <!-- RESULTADO DA ANÁLISE -->
       <div style="background:#fdecec;border-radius:14px;padding:16px 18px;margin:22px 0 14px;text-align:left;">
         <p style="color:var(--vermelho);font-weight:900;font-size:14px;letter-spacing:.3px;margin:0 0 10px;">⚠️ RESULTADO DA SUA ANÁLISE</p>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.6;margin:0 0 8px;">✗ ${intestinoOk2 ? 'Seu prato ainda não entrega os 3 estímulos completos que ativam o hormônio' : 'Seu intestino e sua alimentação ainda não entregam o estímulo que ativa o hormônio'}, mesmo com a canetinha aplicada certinho.</p>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.6;margin:0 0 8px;">✗ ${estresseAlto ? 'Seu nível de estresse e sono podem estar competindo com a sua saciedade' : 'Sem o estímulo certo, a produção própria de saciedade segue desligada'}.</p>
-        <p style="font-size:14px;color:var(--verde-escuro);font-weight:800;line-height:1.6;margin:0;">✅ Boa notícia: seu perfil responde bem ao protocolo, o próximo passo é só colocar os estímulos certos em prática.</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.6;margin:0 0 8px;">✗ ${intestinoOk2 ? 'O fato do seu prato ainda não entregar os 3 estímulos completos que ativam o hormônio' : 'A falta do estímulo certo na sua alimentação'} tem uma causa específica, e ela pode ser resolvida com o protocolo certo, não só com a aplicação.</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.6;margin:0 0 8px;">✗ Seu Índice de GLP-1 Natural está em <strong>${idx}/100</strong>, nível <strong>${niv.txt}</strong>, e isso confirma que ${estresseAlto ? 'o seu estresse e o seu sono estão competindo com a sua saciedade' : 'a sua produção própria de saciedade ainda está desligada'}.</p>
+        <p style="font-size:14px;color:var(--verde-escuro);font-weight:800;line-height:1.6;margin:0;">✅ Boa notícia: seu perfil responde bem ao protocolo, e você pode chegar ao Dia 14 sentindo esse hormônio ativo, com mais disposição e resultado sustentado, sem depender só da aplicação.</p>
       </div>
 
       <!-- COMO FUNCIONA O PROTOCOLO -->
@@ -1178,7 +1190,31 @@ ${curvaHTML}
         <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0;">✅ Sua meta agora é ${metaFrase}.</p>
       </div>
 
-      <p style="font-size:15px;font-weight:800;color:var(--verde-escuro);line-height:1.5;text-align:center;margin:18px 0 4px;">A seguir você vai conhecer o protocolo completo, pensado pra resolver exatamente os pontos identificados aqui.</p>
+      <!-- O QUE VOCÊ VAI RECEBER -->
+      <h4 style="text-align:center;margin:26px 0 12px;font-size:17px;color:var(--verde-escuro);">Seu protocolo já está pronto. Você vai receber:</h4>
+      <div class="valor-box" style="text-align:left;">
+        <div class="of-item"><span class="ic">✓</span><span class="nm"><strong>Módulo 1</strong> · Ativação do Gatilho GLP-1 Natural</span></div>
+        <div class="of-item"><span class="ic">✓</span><span class="nm"><strong>Módulo 2</strong> · Blindagem da Massa Magra</span></div>
+        <div class="of-item"><span class="ic">✓</span><span class="nm"><strong>Módulo 3</strong> · Redução Sem Efeito Rebote</span></div>
+        <div class="of-item"><span class="ic">✓</span><span class="nm"><strong>Módulo 4</strong> · Plano de 14 Dias</span></div>
+        <div class="of-block bonus" style="margin-top:14px;">+ 3 bônus exclusivos</div>
+        <div class="of-item"><span class="ic">✓</span><span class="nm">Grupo VIP no WhatsApp</span></div>
+        <div class="of-item"><span class="ic">✓</span><span class="nm">Cardápio semanal e lista de compras</span></div>
+        <div class="of-item"><span class="ic">✓</span><span class="nm">Guia anti efeitos colaterais</span></div>
+      </div>
+
+      <!-- COMPARE OS CUSTOS -->
+      <h4 style="text-align:center;margin:26px 0 12px;font-size:17px;color:var(--verde-escuro);">Compare o custo de continuar assim:</h4>
+      <div class="valor-box">
+        <div class="valor-row"><span class="lbl">Aplicação por mês</span><span class="num">R$ 800–3.000</span></div>
+        <div class="valor-row"><span class="lbl">Consulta e retornos</span><span class="num">R$ 300–800</span></div>
+        <div class="valor-row"><span class="lbl">Exames de acompanhamento</span><span class="num">R$ 0–1.140</span></div>
+        <div class="valor-row"><span class="lbl">Suplementação</span><span class="num">R$ 200–950</span></div>
+        <div class="valor-row total"><span class="lbl">Protocolo GLP-1 Natural</span><span class="num" style="color:var(--verde-escuro);">R$ 29,90</span></div>
+      </div>
+      <p style="font-size:12.5px;color:#8a9a92;line-height:1.55;margin:10px 0 0;text-align:center;">Reativar a sua própria produção custa menos que 1 dia de canetinha, uma vez só.</p>
+
+      <p style="font-size:15px;font-weight:800;color:var(--verde-escuro);line-height:1.5;text-align:center;margin:22px 0 4px;">A seguir você vai conhecer o protocolo completo, pensado pra resolver exatamente os pontos identificados aqui.</p>
 
       <button class="btn" style="margin-top:14px;" onclick="go(1)">Quero ver o meu protocolo agora →</button>
     </div>
@@ -1294,7 +1330,8 @@ function renderDiagnostico(full){
      "3 pontos identificados" — isso fica só pra 2ª aparição (full), antes da oferta */
   const revelacao = !full ? '' : `
       <div style="background:${niv.bg};border-radius:14px;padding:16px 18px;margin:0 0 18px;text-align:center;">
-        <p style="color:${niv.cor};font-weight:800;font-size:16.5px;line-height:1.45;margin:0;">⚠️ ${nome?nome+', s':'S'}ua produção natural de GLP-1 está <strong>${niv.txt}</strong>.</p>
+        <p style="color:${niv.cor};font-weight:800;font-size:16.5px;line-height:1.45;margin:0 0 8px;">⚠️ ${nome?nome+', s':'S'}ua produção natural de GLP-1 está <strong>${niv.txt}</strong>.</p>
+        <p style="color:${niv.cor};font-weight:600;font-size:13.5px;line-height:1.5;margin:0;">Com base nas suas respostas, isso indica que seu corpo pode estar represando gordura abdominal e dificultando o resultado, mesmo quando você faz tudo certo.</p>
       </div>
 
       <!-- MEDIDOR DO ÍNDICE -->
