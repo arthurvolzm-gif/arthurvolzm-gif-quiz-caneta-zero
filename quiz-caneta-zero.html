@@ -375,6 +375,16 @@ body{
 .proj-compare-col.bom h5{color:var(--verde-escuro);}
 .proj-compare-col ul{list-style:none;padding:0;margin:0;font-size:12px;color:#4a4a4a;line-height:1.6;}
 .proj-compare-col li{margin-bottom:6px;}
+.glp-metric{margin-bottom:10px;}
+.glp-metric:last-child{margin-bottom:0;}
+.glp-metric-top{display:flex;justify-content:space-between;font-size:10.5px;font-weight:700;color:#4a4a4a;margin-bottom:4px;}
+.glp-metric-top .val{font-weight:900;}
+.proj-compare-col.ruim .glp-metric-top .val{color:var(--vermelho);}
+.proj-compare-col.bom .glp-metric-top .val{color:var(--verde-escuro);}
+.glp-bar{height:7px;border-radius:10px;background:#fff;overflow:hidden;}
+.glp-bar-fill{height:100%;border-radius:10px;}
+.proj-compare-col.ruim .glp-bar-fill{background:linear-gradient(90deg,#e05a4e,#f0a05a);}
+.proj-compare-col.bom .glp-bar-fill{background:linear-gradient(90deg,var(--verde-escuro),var(--verde-claro));}
 .prova-texto p{margin-bottom:14px;}
 .prova-texto p:last-child{margin-bottom:0;}
 @media(max-width:768px){.prova-numero{font-size:58px;}.prova-texto{font-size:15px;}}
@@ -468,11 +478,12 @@ body{
 .diag-pointer::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--verde-escuro);}
 .diag-labels{display:flex;font-size:10.5px;color:#9aaaa2;font-weight:700;margin:8px 0 4px;}
 .diag-labels span{flex:1;text-align:center;}
-.lib-box{text-align:center;margin:18px 0 14px;}
-.lib-label{font-size:11.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--verde);}
-.lib-pct{font-family:'Open Sans',sans-serif;font-size:42px;font-weight:900;color:var(--verde-escuro);line-height:1;margin:6px 0 10px;font-variant-numeric:tabular-nums;}
-.lib-bar{height:11px;background:#e3ede8;border-radius:20px;overflow:hidden;}
-.lib-fill{height:100%;width:0;background:linear-gradient(90deg,var(--verde-escuro),var(--verde-claro));border-radius:20px;}
+.analise-item{margin-bottom:18px;}
+.analise-item:last-child{margin-bottom:0;}
+.analise-item-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;font-weight:700;color:var(--cinza);margin-bottom:7px;}
+.analise-item-top .pct{font-weight:900;color:var(--verde-escuro);font-variant-numeric:tabular-nums;}
+.analise-item-bar{height:9px;background:#e3ede8;border-radius:20px;overflow:hidden;}
+.analise-item-fill{height:100%;width:0;background:linear-gradient(90deg,var(--verde-escuro),var(--verde-claro));border-radius:20px;}
 .meta-img{border:2px dashed #cdddd4;border-radius:14px;background:#f4faf7;color:#9aaaa2;font-size:13px;padding:46px 16px;margin:0 0 18px;}
 .causa-box{background:#fdecec;border-radius:14px;padding:16px 18px;margin:16px 0;}
 .causa-box h4{color:var(--vermelho);font-size:14.5px;line-height:1.35;margin-bottom:8px;}
@@ -833,14 +844,13 @@ function renderIntro(){
     <div class="card-quiz" style="text-align:center;padding-top:60px;padding-bottom:46px;">
       <div class="brand-sub" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:800;color:var(--verde);margin-bottom:10px;">Teste grátis para quem usa canetinha</div>
       <h1 class="intro-h1" style="color:var(--verde-escuro);">Descubra o nível de GLP-1 natural do seu corpo.</h1>
-      <p class="intro-sub" style="font-size:16px;line-height:1.6;margin-top:10px;color:var(--verde);">Um teste rápido que revela o nível do seu GLP-1 natural e o que fazer para reativá-lo.</p>
+      <p class="intro-sub" style="font-size:16px;line-height:1.6;margin-top:10px;color:var(--verde);text-align:center;">Faça o teste grátis e descubra o nível do seu GLP-1 natural e o que fazer para reativá-lo.</p>
       <h2 class="intro-h1" style="margin:34px 0 0;">Qual a sua idade?</h2>
       <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#9aa8a2;margin:14px 0 22px;">Toque para escolher</p>
       <div class="opts grid2">
         ${IDADE_OPTS.map((o,i)=>`<div class="idade-card" onclick="selectIdade(${i})"><img src="${IDADE_IMGS[i]}" alt="${o}" class="idade-img" onerror="this.style.display='none'"><button class="opt${state.answers.idade===o?' sel':''}" data-i="${i}"><span class="opt-radio"></span><span>${o}</span></button></div>`).join('')}
       </div>
-      <p class="intro-sub" style="font-size:16px;line-height:1.6;margin-top:18px;color:var(--verde);">Faça o teste e receba um diagnóstico gratuito. Ao final você ganhará um protocolo específico para seu corpo.</p>
-      <p style="font-size:13px;color:#8aa79a;margin-top:14px;">✅ Tempo estimado: 2 minutos</p>
+      <p style="font-size:13px;color:#8aa79a;margin-top:18px;">✅ Tempo estimado: 2 minutos</p>
     </div>
   </div>`;
 }
@@ -1050,6 +1060,25 @@ function renderProjecao(){
     ? 'manter o peso que você já perdeu, sem depender só da aplicação'
     : `eliminar <strong>${metaTxt||'mais alguns quilos'}</strong> e manter o resultado sem depender só da aplicação`;
 
+  /* estimativa educativa antes/depois, a partir de respostas reais (sono, estresse, massa) —
+     nunca um número solto: sempre calculado e rotulado como estimativa */
+  const sono = a.sono || '', estresse = a.estresse || '';
+  let disposicaoAntes = sono.includes('Menos de 5h') ? 28 : sono.includes('5 e 7h') ? 42 : 55;
+  if(estresse.includes('Alto')) disposicaoAntes -= 12; else if(estresse.includes('Moderado')) disposicaoAntes -= 4;
+  disposicaoAntes = Math.max(15, Math.min(60, disposicaoAntes));
+  const autoestimaAntes = Math.max(20, Math.min(55, Math.round(idx*0.75)));
+  const satisfacaoAntes = (a.massa||'').includes('Sim') ? 32 : 42;
+  const disposicaoDepois = Math.min(95, disposicaoAntes+55);
+  const autoestimaDepois = Math.min(92, autoestimaAntes+42);
+  const satisfacaoDepois = Math.min(90, satisfacaoAntes+48);
+  const metrica = (label,antes,depois)=>`
+        <div class="glp-metric"><div class="glp-metric-top"><span class="nome">${label}</span><span class="val">${antes}%</span></div><div class="glp-bar"><div class="glp-bar-fill" style="width:${antes}%"></div></div></div>`;
+  const metricaBom = (label,antes,depois)=>`
+        <div class="glp-metric"><div class="glp-metric-top"><span class="nome">${label}</span><span class="val">${depois}%</span></div><div class="glp-bar"><div class="glp-bar-fill" style="width:${depois}%"></div></div></div>`;
+
+  const intestinoOk2 = (a.intestino||'').includes('Regular');
+  const estresseAlto = estresse.includes('Alto') || estresse.includes('Moderado');
+
   app.innerHTML = `
   <div class="wrap fade">
     <div class="card-quiz">
@@ -1059,13 +1088,28 @@ function renderProjecao(){
 
       <h2 class="q-title" style="margin-top:18px;">${nome?nome+', a':'A'}qui está a sua projeção com o protocolo de 14 dias</h2>
 
-      <div class="proj-timeline">
+      <div class="proj-compare" style="margin-top:20px;">
+        <div class="proj-compare-col ruim">
+          <h5>Hoje</h5>
+          ${metrica('Nível de disposição', disposicaoAntes)}
+          ${metrica('Autoestima', autoestimaAntes)}
+          ${metrica('Satisfação com o corpo', satisfacaoAntes)}
+        </div>
+        <div class="proj-compare-col bom">
+          <h5>Com o protocolo</h5>
+          ${metricaBom('Nível de disposição', disposicaoAntes, disposicaoDepois)}
+          ${metricaBom('Autoestima', autoestimaAntes, autoestimaDepois)}
+          ${metricaBom('Satisfação com o corpo', satisfacaoAntes, satisfacaoDepois)}
+        </div>
+      </div>
+      <p style="font-size:11px;color:#8a9a92;text-align:center;margin:8px 0 0;">Estimativa educativa calculada a partir das suas respostas.</p>
+
+      <div class="proj-timeline" style="margin-top:26px;">
         <div class="proj-stop"><div class="dot"></div><div class="fase">Ponto de partida</div><div class="dia">Dia 1</div></div>
         <div class="proj-stop"><div class="dot"></div><div class="fase">Ativação do hormônio</div><div class="dia">Dia 3 a 5</div></div>
         <div class="proj-stop"><div class="dot"></div><div class="fase">Virada de chave</div><div class="dia">Dia 7 a 10</div></div>
         <div class="proj-stop"><div class="dot"></div><div class="fase">Consolidação</div><div class="dia">Dia 14</div></div>
       </div>
-      <p style="font-size:11.5px;color:#8a9a92;text-align:center;margin:8px 0 0;">Etapas educativas do protocolo. O ritmo de cada fase varia de pessoa pra pessoa.</p>
 
       <div class="proj-compare">
         <div class="proj-compare-col ruim">
@@ -1083,6 +1127,22 @@ function renderProjecao(){
           </ul>
         </div>
       </div>
+
+      <!-- RESULTADO DA ANÁLISE -->
+      <div style="background:#fdecec;border-radius:14px;padding:16px 18px;margin:22px 0 14px;text-align:left;">
+        <p style="color:var(--vermelho);font-weight:900;font-size:14px;letter-spacing:.3px;margin:0 0 10px;">⚠️ RESULTADO DA SUA ANÁLISE</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.6;margin:0 0 8px;">✗ ${intestinoOk2 ? 'Seu prato ainda não entrega os 3 estímulos completos que ativam o hormônio' : 'Seu intestino e sua alimentação ainda não entregam o estímulo que ativa o hormônio'}, mesmo com a canetinha aplicada certinho.</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.6;margin:0 0 8px;">✗ ${estresseAlto ? 'Seu nível de estresse e sono podem estar competindo com a sua saciedade' : 'Sem o estímulo certo, a produção própria de saciedade segue desligada'}.</p>
+        <p style="font-size:14px;color:var(--verde-escuro);font-weight:800;line-height:1.6;margin:0;">✅ Boa notícia: seu perfil responde bem ao protocolo, o próximo passo é só colocar os estímulos certos em prática.</p>
+      </div>
+
+      <!-- COMO FUNCIONA O PROTOCOLO -->
+      <h4 style="text-align:center;margin:18px 0 12px;font-size:17px;color:var(--verde-escuro);">Como funciona o protocolo?</h4>
+      <div style="border:1px solid #e2ece7;border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:13.5px;color:#4a4a4a;line-height:1.5;">🔥 Reativa o gatilho natural do GLP-1 direto pelo prato, com os 3 estímulos certos</div>
+      <div style="border:1px solid #e2ece7;border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:13.5px;color:#4a4a4a;line-height:1.5;">💪 Protege a massa magra enquanto a gordura sai</div>
+      <div style="border:1px solid #e2ece7;border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:13.5px;color:#4a4a4a;line-height:1.5;">📉 Prepara seu corpo pra reduzir a dose sem que a fome e o peso voltem</div>
+      <div style="border:1px solid #e2ece7;border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:13.5px;color:#4a4a4a;line-height:1.5;">🏠 Feito no seu dia a dia, sem dieta maluca ou contagem de calorias</div>
+      <div style="border:1px solid #e2ece7;border-radius:12px;padding:12px 14px;margin-bottom:18px;font-size:13.5px;color:#4a4a4a;line-height:1.5;">👩‍⚕️ Criado pela nutricionista Kelly Firbida a partir do que ela já aplica em consulta</div>
 
       <div class="solucao-box" style="text-align:left;margin-bottom:10px;">
         <h4 style="margin-bottom:10px;">Com base nas suas respostas, identificamos que:</h4>
@@ -1116,32 +1176,45 @@ function renderMeta(){
 
 /* ---------- ANALISANDO ---------- */
 function renderAnalyzing(){
+  const a = state.answers;
+  const ITEMS = [
+    { label:`⏱️ Tempo de uso e dose da ${(a.caneta||'canetinha').split(' ')[0]} analisados`, target:92 },
+    { label:'🩺 Sintomas e sinais colaterais avaliados', target:78 },
+    { label:'📊 Índice de GLP-1 Natural calculado', target:96 },
+    { label:'📋 Protocolo de 14 dias sendo montado', target:55 }
+  ];
   app.innerHTML = `
   <div class="wrap fade">
     <div class="card-quiz" style="padding-top:56px;padding-bottom:52px;">
       <div class="brand-sub" style="margin-bottom:14px;">Diagnóstico personalizado</div>
       <div class="analise-title">Analisando suas respostas...</div>
-      <div class="lib-box" style="margin-top:30px;">
-        <div class="lib-label">Liberando seu diagnóstico personalizado...</div>
-        <div class="lib-pct" id="libPct">0%</div>
-        <div class="lib-bar"><div class="lib-fill" id="libFill"></div></div>
+      <div style="margin-top:28px;">
+        ${ITEMS.map((it,i)=>`
+        <div class="analise-item">
+          <div class="analise-item-top"><span>${it.label}</span><span class="pct" id="anPct${i}">0%</span></div>
+          <div class="analise-item-bar"><div class="analise-item-fill" id="anFill${i}"></div></div>
+        </div>`).join('')}
       </div>
     </div>
   </div>`;
-  const DUR = 5000;                                    // total da animação
-  const pctEl=document.getElementById('libPct'), fillEl=document.getElementById('libFill');
-  const startT=performance.now();
-  let ultimo = -1;                                     // só repinta o número quando o inteiro muda
+  const DUR = 5200, STAGGER = 260;                     // cada item começa um pouco depois do anterior
+  const startT = performance.now();
   function tick(now){
-    const t=Math.min(1,(now-startT)/DUR);
-    const eased=t*t*t*(t*(t*6-15)+10);                 // smootherstep: parte e chega sem solavanco
-    const pct=Math.round(eased*100);
-    if(pctEl && pct!==ultimo){ pctEl.textContent=pct+'%'; ultimo=pct; }
-    if(fillEl)fillEl.style.width=(eased*100)+'%';
-    if(t<1) requestAnimationFrame(tick);
+    let algumEmAndamento = false;
+    ITEMS.forEach((it,i)=>{
+      const dur = DUR - i*STAGGER;
+      const t = Math.max(0, Math.min(1, (now - (startT + i*STAGGER)) / dur));
+      if(t<1) algumEmAndamento = true;
+      const eased = t*t*t*(t*(t*6-15)+10);             // smootherstep: parte e chega sem solavanco
+      const pct = Math.round(eased*it.target);
+      const pctEl = document.getElementById('anPct'+i), fillEl = document.getElementById('anFill'+i);
+      if(pctEl) pctEl.textContent = pct+'%';
+      if(fillEl) fillEl.style.width = (eased*it.target)+'%';
+    });
+    if(algumEmAndamento) requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
-  setTimeout(()=>go(1),DUR);
+  setTimeout(()=>go(1), DUR + 300);
 }
 
 
@@ -1261,7 +1334,7 @@ function renderDiagnostico(full){
 
   const solucaoTxt = full
     ? `Mas isso tem solução, você apenas precisa <strong style="text-transform:uppercase;">potencializar o hormônio</strong> que produz o <strong style="text-transform:uppercase;">GLP-1</strong> no seu corpo`
-    : `Mas isso tem solução... continue o teste para descobrir o que está travando seu corpo e ter acesso ao método para resolver isso nos próximos 14 dias.`;
+    : `Mas isso tem solução... continue o teste para descobrir o que está travando a sua produção natural de GLP-1 e ter acesso ao método para reativá-la nos próximos 14 dias.`;
 
   app.innerHTML = `
   <div class="wrap fade">
