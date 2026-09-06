@@ -792,8 +792,7 @@ QUESTIONS.forEach(q=>{
   }
 });
 FLOW.push({type:'analyzing'});                              // 3ª vez: analisa tudo, inclusive outros_objetivos
-FLOW.push({type:'projecao'});                               // projeção final do protocolo, antes da oferta
-FLOW.push({type:'result'});
+FLOW.push({type:'projecao'});                               // projeção final do protocolo — já é a landing/oferta, última tela do quiz
 
 const app = document.getElementById('app');
 const TOTAL_Q = QUESTIONS.length;
@@ -1066,13 +1065,10 @@ function renderProjecao(){
   let controleFomeAntes = (a.fome||'').includes('pouco') ? 30 : 38;
   if(temSintomas) controleFomeAntes -= 8;
   controleFomeAntes = Math.max(15, Math.min(45, controleFomeAntes));
-  let qualidadeSonoAntes = sono.includes('Menos de 5h') ? 22 : sono.includes('5 e 7h') ? 40 : 58;
-  qualidadeSonoAntes = Math.max(15, Math.min(60, qualidadeSonoAntes));
   const disposicaoDepois = Math.min(95, disposicaoAntes+55);
   const autoestimaDepois = Math.min(92, autoestimaAntes+60);
   const satisfacaoDepois = Math.min(90, satisfacaoAntes+48);
   const controleFomeDepois = Math.min(90, controleFomeAntes+50);
-  const qualidadeSonoDepois = Math.min(90, qualidadeSonoAntes+45);
   const metrica = (label,antes,depois)=>`
         <div class="glp-metric"><div class="glp-metric-top"><span class="nome">${label}</span><span class="val">${antes}%</span></div><div class="glp-bar"><div class="glp-bar-fill" style="width:${antes}%"></div></div></div>`;
   const metricaBom = (label,antes,depois)=>`
@@ -1139,7 +1135,6 @@ ${curvaHTML}
           ${metrica('Autoestima', autoestimaAntes)}
           ${metrica('Satisfação com o corpo', satisfacaoAntes)}
           ${metrica('Controle da fome', controleFomeAntes)}
-          ${metrica('Qualidade do sono', qualidadeSonoAntes)}
         </div>
         <div class="proj-compare-col bom">
           <img src="projecao-protocolo.jpg" alt="Com o protocolo" class="proj-compare-img" onerror="this.remove()">
@@ -1148,7 +1143,6 @@ ${curvaHTML}
           ${metricaBom('Autoestima', autoestimaAntes, autoestimaDepois)}
           ${metricaBom('Satisfação com o corpo', satisfacaoAntes, satisfacaoDepois)}
           ${metricaBom('Controle da fome', controleFomeAntes, controleFomeDepois)}
-          ${metricaBom('Qualidade do sono', qualidadeSonoAntes, qualidadeSonoDepois)}
         </div>
       </div>
 
@@ -1173,10 +1167,10 @@ ${curvaHTML}
         </div>
       </div>
 
-      <div style="background:#e9f6ee;border-radius:14px;padding:16px 18px;margin:22px 0 14px;text-align:left;">
-        <p style="font-size:14px;color:var(--verde-escuro);font-weight:800;line-height:1.6;margin:0 0 10px;">✅ Boa notícia: seu perfil responde bem ao protocolo, e você pode chegar ao Dia 14 sentindo esse hormônio ativo, com mais disposição e resultado sustentado, sem depender só da aplicação.</p>
-        <p style="font-size:14px;color:var(--verde-escuro);font-weight:800;line-height:1.6;margin:0 0 10px;">✅ Seguindo o protocolo, é possível estimular a eliminação de gordura já nos primeiros 14 dias, sem depender só da aplicação.</p>
-        <p style="font-size:14px;color:var(--verde-escuro);font-weight:800;line-height:1.6;margin:0;">✅ O protocolo foi pensado pra reduzir bastante o risco de efeito rebote ao longo do tempo.</p>
+      <div style="background:#e9f6ee;border-radius:14px;padding:20px 18px;margin:22px 0 14px;text-align:center;">
+        <h4 style="margin:0 0 10px;font-size:17px;color:#1a1a1a;">Seu Plano Personalizado <span style="color:var(--verde);">Protocolo GLP-1 Natural</span></h4>
+        <p style="font-size:14.5px;color:var(--verde-escuro);font-weight:800;line-height:1.6;margin:0 0 12px;">Baseado nas suas respostas, criamos um protocolo 100% personalizado pra reativar o seu GLP-1 natural, com o próximo passo pensado pros seus 14 primeiros dias.</p>
+        <p style="font-size:14px;color:#4a4a4a;font-weight:400;line-height:1.65;margin:0;">O protocolo contém os <strong>estímulos certos</strong> pra ativar sua produção natural de saciedade e reduzir o risco de efeito rebote, respeitando sua rotina e o que mais te incomoda hoje.</p>
       </div>
 
       <!-- COMO FUNCIONA O PROTOCOLO -->
@@ -1184,50 +1178,19 @@ ${curvaHTML}
       <div class="valor-box" style="text-align:left;padding:6px 18px;">
         <div class="of-item" style="align-items:flex-start;">
           <span class="ic">✓</span>
-          <span class="nm">🔥 <strong>Ativação:</strong> como acionar o Gatilho GLP-1 Natural direto pelo prato.
-            <ul style="margin:8px 0 0;padding-left:16px;font-size:12.5px;color:#66756f;line-height:1.6;">
-              <li>As 3 partes do gatilho, e como colocar todas no seu prato</li>
-              <li>A ordem de comer que muda a sua fome nas horas seguintes</li>
-              <li>Por que a fome volta triplicada quando você para, e como se preparar antes</li>
-              <li>O erro que quase toda mulher na canetinha comete e que desliga esse gatilho</li>
-            </ul>
-          </span>
+          <span class="nm">🔥 <strong>Ativação:</strong> as 3 partes do gatilho e como colocar todas no seu prato: proteína suficiente, fibra fermentável e a ordem de comer que muda a sua fome nas horas seguintes. E o erro que quase toda mulher na canetinha comete e que desliga essa produção.</span>
         </div>
         <div class="of-item" style="align-items:flex-start;">
           <span class="ic">✓</span>
-          <span class="nm">💪 <strong>Blindagem:</strong> preservar o músculo, que é onde o gatilho trabalha.
-            <ul style="margin:8px 0 0;padding-left:16px;font-size:12.5px;color:#66756f;line-height:1.6;">
-              <li>Por que boa parte do peso que sai na canetinha é músculo, e não gordura</li>
-              <li>Quanta proteína você realmente precisa comendo pouco</li>
-              <li>Como distribuir nos horários que mais protegem a sua massa magra</li>
-              <li>O que fazer para o corpo queimar gordura em vez de músculo</li>
-            </ul>
-          </span>
+          <span class="nm">💪 <strong>Blindagem:</strong> por que boa parte do peso que sai na canetinha é músculo e não gordura, quanta proteína você realmente precisa comendo pouco, e como distribuir nos horários que mais protegem a sua massa magra.</span>
         </div>
         <div class="of-item" style="align-items:flex-start;">
           <span class="ic">✓</span>
-          <span class="nm">📉 <strong>Redução:</strong> a saída da canetinha sem efeito rebote.
-            <ul style="margin:8px 0 0;padding-left:16px;font-size:12.5px;color:#66756f;line-height:1.6;">
-              <li>Os sinais que mostram que o seu corpo já está pronto para uma dose menor</li>
-              <li>Por que reduzir aos poucos funciona e parar de uma vez costuma dar errado</li>
-              <li>O que comer nas semanas de redução para a fome não te pegar de surpresa</li>
-            </ul>
-          </span>
+          <span class="nm">📉 <strong>Redução:</strong> os sinais de que o seu corpo já está pronto para uma dose menor, por que reduzir aos poucos funciona e parar de uma vez costuma dar errado, e o que comer nas semanas de redução para a fome não te pegar de surpresa.</span>
         </div>
         <div class="of-item" style="align-items:flex-start;">
           <span class="ic">✓</span>
-          <span class="nm">🏠 <strong>Liberdade:</strong> o plano de 14 dias pra implementar tudo isso na sua rotina.
-            <ul style="margin:8px 0 0;padding-left:16px;font-size:12.5px;color:#66756f;line-height:1.6;">
-              <li>O que fazer em cada dia, do dia 1 ao dia 14</li>
-              <li>Uma mudança por vez, sem virar sua rotina de cabeça para baixo</li>
-              <li>Checklist diário para não se perder no meio do caminho</li>
-              <li>O plano de resgate para os dias em que a fome bater mais forte</li>
-            </ul>
-          </span>
-        </div>
-        <div class="of-item">
-          <span class="ic">✓</span>
-          <span class="nm">👩‍⚕️ Criado pela nutricionista Kelly Firbida a partir do que ela já aplica em consulta</span>
+          <span class="nm">🏠 <strong>Liberdade:</strong> o que fazer em cada dia, do dia 1 ao dia 14, uma mudança por vez, sem virar a sua rotina de cabeça para baixo. Com checklist diário e o plano de resgate para os dias em que a fome bater mais forte.</span>
         </div>
       </div>
 
@@ -1242,11 +1205,26 @@ ${curvaHTML}
       </div>
       <p style="font-size:12.5px;color:#8a9a92;line-height:1.55;margin:10px 0 0;text-align:center;">Reativar a sua própria produção custa menos que 1 dia de canetinha, uma vez só.</p>
 
+      <!-- SUA DECISÃO -->
+      <div class="res-section" style="padding:26px 0 0;">
+        <h2 class="res-h2" style="font-size:20px;">Sua decisão <span>agora</span></h2>
+        <div class="dec-grid">
+          <div class="dec-col op1">
+            <div class="dt">Opção 1</div>
+            Continuar pagando mais de mil reais por mês por uma aplicação que segura o seu peso mas não ensina nada ao seu corpo, presa ao medo de parar e ver tudo voltar.
+          </div>
+          <div class="dec-col op2">
+            <div class="dt">Opção 2</div>
+            Investir uma única vez, menos do que você gasta em um delivery, para ter o passo a passo que faz o seu próprio corpo assumir o trabalho e te dá a liberdade de sair da canetinha quando quiser.
+          </div>
+        </div>
+      </div>
+
       <!-- OFERTA -->
       <div class="res-section" style="padding:26px 0 0;">
         <div class="oferta-final">
           <div class="ot">Protocolo GLP-1 Natural</div>
-          <div class="of-block">No ebook você recebe</div>
+          <div class="of-block">Você recebe</div>
           <div class="of-item"><span class="ic">✓</span><span class="nm">Módulo 1 · Ativação do Gatilho GLP-1 Natural</span><span class="pr">R$29,90</span></div>
           <div class="of-item"><span class="ic">✓</span><span class="nm">Módulo 2 · Blindagem da Massa Magra</span><span class="pr">R$23,90</span></div>
           <div class="of-item"><span class="ic">✓</span><span class="nm">Módulo 3 · Redução Sem Efeito Rebote</span><span class="pr">R$26,90</span></div>
@@ -1271,6 +1249,15 @@ ${curvaHTML}
         <img src="Garantia7dias.png" alt="Garantia de 7 dias" class="gar-img">
       </div>
 
+      <!-- QUEM É -->
+      <div class="res-section">
+        <div class="quem">
+          <img src="FotoSiteKelly.jpeg" alt="Nutri Kelly" style="width:160px;height:160px;border-radius:16px;object-fit:cover;border:4px solid var(--verde-claro);box-shadow:0 0 34px rgba(76,175,130,.4);margin:0 auto 20px;display:block;" onerror="this.style.display='none'">
+          <h3>Quem está por trás <span>do método</span></h3>
+          <p>Oi! Sou a <span>Nutri Kelly</span>, tenho 41 anos e moro no Paraná. Sou nutricionista há 18 anos, especialista em nutrição e emagrecimento. Atendo mulheres em tratamento com canetinha todos os dias e criei este protocolo com o que eu explico em consulta: como reativar a produção natural de saciedade, proteger a massa magra e reduzir a dose sem que o peso volte.</p>
+        </div>
+      </div>
+
       <!-- FAQ -->
       <div class="res-section faq">
         <h2 class="res-h2" style="font-size:20px;">Ainda tem <span>alguma dúvida?</span></h2>
@@ -1285,9 +1272,11 @@ ${curvaHTML}
         </div>
       </div>
 
-      <p style="font-size:15px;font-weight:800;color:var(--verde-escuro);line-height:1.5;text-align:center;margin:22px 0 4px;">A seguir você vai conhecer o protocolo completo, pensado pra resolver exatamente os pontos identificados aqui.</p>
+      <p style="font-size:15px;font-weight:800;color:var(--verde-escuro);line-height:1.5;text-align:center;margin:22px 0 4px;">Não fique só no diagnóstico. Comece a reativar o seu GLP-1 natural hoje.</p>
 
-      <button class="btn" style="margin-top:14px;" onclick="go(1)">Quero ver o meu protocolo agora →</button>
+      <a class="btn" style="margin-top:14px;" href="${CHECKOUT_URL}" onclick="px('InitiateCheckout', true)">Quero ativar meu GLP-1 natural →</a>
+
+      <p style="font-size:11.5px;color:#8aa79a;line-height:1.6;text-align:center;margin:22px 0 0;">Este material é educativo e não substitui acompanhamento médico ou nutricional. Resultados variam de pessoa para pessoa.</p>
     </div>
   </div>`;
   startCountdown('proj-timer',8*60+55);
@@ -1761,7 +1750,7 @@ function renderResult(){
       <div class="res-section" id="comprar">
         <div class="oferta-final">
           <div class="ot">Protocolo GLP-1 Natural</div>
-          <div class="of-block">No ebook você recebe</div>
+          <div class="of-block">Você recebe</div>
           <div class="of-item"><span class="ic">✓</span><span class="nm">Módulo 1 · Ativação do Gatilho GLP-1 Natural</span><span class="pr">R$29,90</span></div>
           <div class="of-item"><span class="ic">✓</span><span class="nm">Módulo 2 · Blindagem da Massa Magra</span><span class="pr">R$23,90</span></div>
           <div class="of-item"><span class="ic">✓</span><span class="nm">Módulo 3 · Redução Sem Efeito Rebote</span><span class="pr">R$26,90</span></div>
@@ -1874,7 +1863,7 @@ render();
   /* O pop-up so vale na tela final do quiz (a mini landing com a oferta).
      Durante as perguntas o botao voltar funciona normalmente. */
   function naMiniLanding() {
-    try { return FLOW[state.idx] && FLOW[state.idx].type === 'result'; }
+    try { return FLOW[state.idx] && FLOW[state.idx].type === 'projecao'; }
     catch (e) { return false; }
   }
 
