@@ -130,7 +130,7 @@ body{
 .echo{font-size:14px;color:#7d9488;margin-bottom:6px;}
 
 /* ===== PERGUNTA ===== */
-.q-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--verde-escuro);line-height:1.25;margin-bottom:22px;text-align:center;}
+.q-title{font-family:'Open Sans',sans-serif;font-size:26px;font-weight:900;color:var(--verde-escuro);line-height:1.25;margin-bottom:22px;text-align:center;}
 
 /* ===== OPÇÕES ===== */
 .opts{display:flex;flex-direction:column;gap:12px;}
@@ -781,7 +781,6 @@ QUESTIONS.forEach(q=>{
     });
   }
 });
-FLOW.push({type:'break2'});                                 // mecanismo GLP-1 (fecha o quiz e entrega o protocolo)
 FLOW.push({type:'analyzing'});                              // 3ª vez: analisa tudo, inclusive outros_objetivos
 FLOW.push({type:'projecao'});                               // projeção final do protocolo, antes da oferta
 FLOW.push({type:'result'});
@@ -815,7 +814,7 @@ function toastHTML(count){
 function render(){
   const step = FLOW[state.idx];
   const map = {
-    intro:renderIntro, question:()=>renderQuestion(step.q), break1:renderBreak1, break2:renderBreak2,
+    intro:renderIntro, question:()=>renderQuestion(step.q), break1:renderBreak1,
     interstitial:()=>renderInterstitial(step.id),
     analyzing:renderAnalyzing, diagnostico:()=>renderDiagnostico(step.full), prepitch:renderPrePitch, meta:renderMeta,
     projecao:renderProjecao,
@@ -834,6 +833,7 @@ function renderIntro(){
     <div class="card-quiz" style="text-align:center;padding-top:60px;padding-bottom:46px;">
       <div class="brand-sub" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:800;color:var(--verde);margin-bottom:10px;">Teste grátis para quem usa canetinha</div>
       <h1 class="intro-h1" style="color:var(--verde-escuro);">Descubra o nível de GLP-1 natural do seu corpo.</h1>
+      <p class="intro-sub" style="font-size:16px;line-height:1.6;margin-top:10px;color:var(--verde);">Um teste rápido que revela o nível do seu GLP-1 natural e o que fazer para reativá-lo.</p>
       <h2 class="intro-h1" style="margin:34px 0 0;">Qual a sua idade?</h2>
       <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#9aa8a2;margin:14px 0 22px;">Toque para escolher</p>
       <div class="opts grid2">
@@ -1038,35 +1038,6 @@ function renderInterstitial(id){
 
 /* ---------- MINI-VSL 1 (mecanismo, credibilidade, autoridade) ---------- */
 /* ---------- BREAK 2 (substitui a mini-VSL — mecanismo + virada) ---------- */
-function renderBreak2(){
-  const a = state.answers;
-  const nome = a.nome && a.nome!=='você' ? a.nome : '';
-
-  const t = a.tempo_uso || '';
-  const tempoTxt = t.includes('Mais de 1') ? 'Há mais de um ano isso se repete toda semana.'
-    : t.includes('6 meses')  ? 'Há mais de seis meses isso se repete toda semana.'
-    : t.includes('3 e 6')    ? 'Há meses isso se repete toda semana.'
-    : t.includes('1 e 3')    ? 'Já são semanas nesse padrão.'
-    : 'Semana após semana, o padrão se repete.';
-  app.innerHTML = `
-  <div class="wrap fade">
-    <div class="card-quiz" style="text-align:center;">
-      ${backBtn()}<div class="brand"><span class="brand-nome">Método Caneta Zero</span></div>
-      <div class="brand-sub">Diagnóstico personalizado</div>
-      <div class="progress-bar" style="margin-top:8px;margin-bottom:24px;"><div class="progress-fill" style="width:100%"></div></div>
-      <p class="pp-h" style="margin-bottom:18px;">${nome?nome+', o':'O'} hormônio da caneta não vem só da caneta</p>
-      <p class="inter-text">O GLP-1 é o hormônio de saciedade que a aplicação entrega em você toda semana. O que quase ninguém explica é a origem dele: <strong style="color:#1a1a1a">o seu próprio intestino fabrica esse mesmo hormônio</strong>, várias vezes por dia, desde sempre.</p>
-      <p class="inter-text">Só que essa produção não acontece sozinha: ela depende de estímulos específicos que chegam pelo prato — <strong>proteína</strong>, <strong>fibra fermentável</strong> e a <strong>ordem em que você come</strong>.</p>
-      <p class="inter-text">${(a.fome||'').includes('bastante')
-        ? `Você respondeu que <strong style="color:#1a1a1a">está comendo bastante</strong>. Se o estímulo certo não entra junto, o volume de comida não converte em produção própria de saciedade.`
-        : `Você respondeu que <strong style="color:#1a1a1a">está comendo pouco</strong>. Isso alimenta você, mas em quantidade pequena o estímulo que o seu intestino recebe fica muito abaixo do necessário.`}</p>
-      <p class="inter-text">${tempoTxt} A canetinha não ensina o corpo a produzir saciedade, ela <strong style="color:#1a1a1a">substitui a produção</strong>. Enquanto ela substitui, a fábrica interna fica parada. Quando a dose cai, ela não está pronta para assumir.</p>
-      <p class="inter-text" style="color:#1a1a1a;font-weight:800;">É isso que trava a balança na mesma dose. E é isso que faz o peso voltar. A boa notícia é que essa produção pode ser religada, e é exatamente isso que o seu protocolo faz.</p>
-      <button class="btn" onclick="go(1)">Ver o meu protocolo →</button>
-    </div>
-  </div>`;
-}
-
 /* ---------- PROJEÇÃO FINAL (depois de outros_objetivos, antes do result) ---------- */
 function renderProjecao(){
   const a = state.answers;
@@ -1257,8 +1228,30 @@ function renderDiagnostico(full){
         <p style="color:var(--vermelho);font-weight:900;font-size:15px;letter-spacing:.5px;margin:0;">⚠️ 2 PONTOS FORAM IDENTIFICADOS</p>
       </div>`;
 
-  const heading2 = full ? '1 · Você sabia que:' : 'Você sabia que:';
-  const fraseFinal2 = !full ? '' : `<p style="font-size:13.5px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;">Mas existe uma forma de isso não acontecer com você, e ela começa antes de reduzir a dose.</p>`;
+  /* ponto 1: na versão curta é o dado dos 82% (Mounjaro). Na versão completa não repete
+     isso (já apareceu antes no quiz) — usa as respostas de proteína/intestino, coletadas
+     bem antes desta tela, pra introduzir o mecanismo (a tela break2 foi removida) */
+  const proteina = a.proteina_refeicoes || '';
+  const intestinoOk = (a.intestino||'').includes('Regular');
+  const precisaEstimulo = proteina.includes('Quase nunca') || proteina.includes('Às vezes') || !intestinoOk;
+  const ponto1 = full ? `
+      <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
+        <h4 style="margin-bottom:8px;">1 · Seu intestino não está recebendo o estímulo certo</h4>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0;">${precisaEstimulo
+          ? `Pelas suas respostas, sua alimentação nem sempre traz proteína suficiente${intestinoOk?'':' e seu intestino nem sempre funciona regularmente'}. É exatamente esse estímulo, proteína no prato e um intestino funcionando bem, que ativa a produção natural do hormônio que a canetinha imita toda semana. Sem ele, seu corpo continua praticamente 100% dependente da aplicação.`
+          : `Você já mantém parte do básico em dia, mas isso sozinho não é suficiente pra reativar sua produção natural sozinha. Falta o restante da estratégia, que você vai conhecer a seguir.`}</p>
+      </div>` : `
+      <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
+        <h4 style="margin-bottom:8px;">Você sabia que:</h4>
+
+        <div class="prova-numero" style="font-size:56px;margin-top:6px;">82%</div>
+        <p class="prova-numero-legenda" style="font-size:14px;margin-bottom:16px;">das pessoas que pararam o Mounjaro recuperaram parte do peso perdido em até um ano.</p>
+
+        <div class="prova-noticia">
+          <img src="pesquisa-mounjaro.jpeg" alt="Reportagem sobre reganho de peso após o fim do tratamento com Mounjaro" onerror="this.style.display='none'">
+        </div>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;text-align:center;">Os estudos que acompanharam pessoas depois da suspensão desses medicamentos mostram que a maior parte recupera peso quando o corpo é devolvido sem nenhuma preparação. No seu caso, isso significa colocar em risco <strong>tudo o que você já investiu na aplicação até aqui</strong>.</p>
+      </div>`;
 
   const problema3 = !full ? '' : `
       <div class="solucao-box" style="text-align:left;margin-bottom:18px;">
@@ -1276,18 +1269,7 @@ function renderDiagnostico(full){
       <div class="brand-sub" style="margin-bottom:12px;">Diagnóstico personalizado</div>
       <div class="progress-bar"><div class="progress-fill" style="width:${pctAte(progressoId)}%"></div></div>
 ${revelacao}
-      <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
-        <h4 style="margin-bottom:8px;">${heading2}</h4>
-
-        <div class="prova-numero" style="font-size:56px;margin-top:6px;">82%</div>
-        <p class="prova-numero-legenda" style="font-size:14px;margin-bottom:16px;">das pessoas que pararam o Mounjaro recuperaram parte do peso perdido em até um ano.</p>
-
-        <div class="prova-noticia">
-          <img src="pesquisa-mounjaro.jpeg" alt="Reportagem sobre reganho de peso após o fim do tratamento com Mounjaro" onerror="this.style.display='none'">
-        </div>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;text-align:center;">Os estudos que acompanharam pessoas depois da suspensão desses medicamentos mostram que a maior parte recupera peso quando o corpo é devolvido sem nenhuma preparação. No seu caso, isso significa colocar em risco <strong>tudo o que você já investiu na aplicação até aqui</strong>.</p>
-${fraseFinal2}
-      </div>
+${ponto1}
 ${problema3}
       <!-- A SOLUÇÃO -->
       <div style="background:#eef7f1;border:1px solid #d5ebe0;border-radius:14px;padding:22px 20px;margin:22px 0 0;text-align:center;">
