@@ -368,6 +368,7 @@ body{
 .proj-chart-day{position:absolute;transform:translateX(-50%);font-size:9.5px;color:#8a9a92;font-weight:700;white-space:nowrap;}
 .proj-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0;}
 .proj-compare-col{border-radius:14px;padding:14px 12px;}
+.proj-compare-img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;border-radius:10px;display:block;margin-bottom:10px;}
 .proj-compare-col.ruim{background:#fdecec;}
 .proj-compare-col.bom{background:#eef7f1;}
 .proj-compare-col h5{font-size:12.5px;font-weight:900;margin:0 0 8px;text-align:center;}
@@ -1133,6 +1134,7 @@ ${curvaHTML}
 
       <div class="proj-compare" style="margin-top:22px;">
         <div class="proj-compare-col ruim">
+          <img src="projecao-hoje.jpg" alt="Hoje" class="proj-compare-img" onerror="this.remove()">
           <h5>Hoje</h5>
           ${metrica('Nível de disposição', disposicaoAntes)}
           ${metrica('Autoestima', autoestimaAntes)}
@@ -1141,6 +1143,7 @@ ${curvaHTML}
           ${metrica('Qualidade do sono', qualidadeSonoAntes)}
         </div>
         <div class="proj-compare-col bom">
+          <img src="projecao-protocolo.jpg" alt="Com o protocolo" class="proj-compare-img" onerror="this.remove()">
           <h5>Com o protocolo</h5>
           ${metricaBom('Nível de disposição', disposicaoAntes, disposicaoDepois)}
           ${metricaBom('Autoestima', autoestimaAntes, autoestimaDepois)}
