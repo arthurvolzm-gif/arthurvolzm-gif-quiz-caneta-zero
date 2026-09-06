@@ -1078,8 +1078,6 @@ function renderProjecao(){
   const metricaBom = (label,antes,depois)=>`
         <div class="glp-metric"><div class="glp-metric-top"><span class="nome">${label}</span><span class="val">${depois}%</span></div><div class="glp-bar"><div class="glp-bar-fill" style="width:${depois}%"></div></div></div>`;
 
-  const intestinoOk2 = (a.intestino||'').includes('Regular');
-  const estresseAlto = estresse.includes('Alto') || estresse.includes('Moderado');
 
   /* curva de evolução (0-100, estimativa educativa, não é kg nem resultado garantido) */
   const diasCurva = [1,3,5,7,10,14];
@@ -1090,6 +1088,7 @@ function renderProjecao(){
   const yC = v => 160 - (v/100)*100;
   const pontosCurva = diasCurva.map((d,i)=>({x:xC(d), y:yC(valsCurva[i]), label:labelsCurva[i], cor:coresCurva[i], dia:d}));
   const pathCurva = pontosCurva.map((p,i)=>(i===0?'M':'L')+p.x.toFixed(1)+','+p.y.toFixed(1)).join(' ');
+  const areaCurva = pathCurva+` L${pontosCurva[pontosCurva.length-1].x.toFixed(1)},160 L${pontosCurva[0].x.toFixed(1)},160 Z`;
   const curvaHTML = `
       <div class="proj-chart-tt">Sua curva estimada de evolução no protocolo</div>
       <div class="proj-chart-wrap">
@@ -1101,16 +1100,16 @@ function renderProjecao(){
               <stop offset="100%" stop-color="#4caf82"/>
             </linearGradient>
             <linearGradient id="projAreaGrad" x1="20" y1="160" x2="300" y2="20" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#f7c9c3"/>
-              <stop offset="50%" stop-color="#f8e2a8"/>
-              <stop offset="100%" stop-color="#b9e3c7"/>
+              <stop offset="0%" stop-color="#e8544a"/>
+              <stop offset="50%" stop-color="#f0b93f"/>
+              <stop offset="100%" stop-color="#42b17a"/>
             </linearGradient>
           </defs>
-          <rect x="20" y="10" width="280" height="150" rx="10" fill="url(#projAreaGrad)"/>
-          <line x1="20" y1="160" x2="300" y2="160" stroke="#fff" stroke-width="1" stroke-opacity=".6"/>
-          <line x1="20" y1="110" x2="300" y2="110" stroke="#fff" stroke-width="1" stroke-dasharray="3,3" stroke-opacity=".6"/>
-          <line x1="20" y1="60" x2="300" y2="60" stroke="#fff" stroke-width="1" stroke-dasharray="3,3" stroke-opacity=".6"/>
-          ${pontosCurva.map(p=>`<line x1="${p.x.toFixed(1)}" y1="${p.y.toFixed(1)}" x2="${p.x.toFixed(1)}" y2="160" stroke="#fff" stroke-width="1" stroke-dasharray="2,3" stroke-opacity=".6"/>`).join('')}
+          <line x1="20" y1="160" x2="300" y2="160" stroke="#e3ede8" stroke-width="1"/>
+          <line x1="20" y1="110" x2="300" y2="110" stroke="#e3ede8" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="20" y1="60" x2="300" y2="60" stroke="#e3ede8" stroke-width="1" stroke-dasharray="3,3"/>
+          ${pontosCurva.map(p=>`<line x1="${p.x.toFixed(1)}" y1="${p.y.toFixed(1)}" x2="${p.x.toFixed(1)}" y2="160" stroke="#e3ede8" stroke-width="1" stroke-dasharray="2,3"/>`).join('')}
+          <path d="${areaCurva}" fill="url(#projAreaGrad)" fill-opacity=".55" stroke="none"/>
           <path d="${pathCurva}" fill="none" stroke="url(#projLineGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           ${pontosCurva.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.5" fill="#fff" stroke="${p.cor}" stroke-width="3"/>`).join('')}
         </svg>
@@ -1159,6 +1158,8 @@ ${curvaHTML}
           <ul>
             <li>✗ Hormônio natural continua desligado</li>
             <li>✗ Resultado depende 100% da aplicação</li>
+            <li>✗ Balança travada na mesma dose</li>
+            <li>✗ Medo de reduzir e engordar tudo</li>
           </ul>
         </div>
         <div class="proj-compare-col bom">
@@ -1166,18 +1167,13 @@ ${curvaHTML}
           <ul>
             <li>✓ Hormônio natural sendo reativado</li>
             <li>✓ Protocolo pensado pra sustentar o resultado</li>
+            <li>✓ Mais resultado com a mesma aplicação</li>
+            <li>✓ Um plano claro pra reduzir a dose</li>
           </ul>
         </div>
       </div>
 
-      <!-- RESULTADO DA ANÁLISE -->
-      <div style="background:#fdecec;border-radius:14px;padding:16px 18px;margin:22px 0 14px;text-align:left;">
-        <p style="color:var(--vermelho);font-weight:900;font-size:14px;letter-spacing:.3px;margin:0 0 10px;">⚠️ RESULTADO DA SUA ANÁLISE</p>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.6;margin:0 0 8px;">✗ ${intestinoOk2 ? 'O fato do seu prato ainda não entregar os 3 estímulos completos que ativam o hormônio' : 'A falta do estímulo certo na sua alimentação'} tem uma causa específica, e ela pode ser resolvida com o protocolo certo, não só com a aplicação.</p>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.6;margin:0;">✗ Seu Índice de GLP-1 Natural está em <strong>${idx}/100</strong>, nível <strong>${niv.txt}</strong>, e isso confirma que ${estresseAlto ? 'o seu estresse e o seu sono estão competindo com a sua saciedade' : 'a sua produção própria de saciedade ainda está desligada'}.</p>
-      </div>
-
-      <div style="background:#e9f6ee;border-radius:14px;padding:16px 18px;margin:0 0 14px;text-align:left;">
+      <div style="background:#e9f6ee;border-radius:14px;padding:16px 18px;margin:22px 0 14px;text-align:left;">
         <p style="font-size:14px;color:var(--verde-escuro);font-weight:800;line-height:1.6;margin:0 0 10px;">✅ Boa notícia: seu perfil responde bem ao protocolo, e você pode chegar ao Dia 14 sentindo esse hormônio ativo, com mais disposição e resultado sustentado, sem depender só da aplicação.</p>
         <p style="font-size:14px;color:var(--verde-escuro);font-weight:800;line-height:1.6;margin:0 0 10px;">✅ Seguindo o protocolo, é possível estimular a eliminação de gordura já nos primeiros 14 dias, sem depender só da aplicação.</p>
         <p style="font-size:14px;color:var(--verde-escuro);font-weight:800;line-height:1.6;margin:0;">✅ O protocolo foi pensado pra reduzir bastante o risco de efeito rebote ao longo do tempo.</p>
@@ -1185,23 +1181,54 @@ ${curvaHTML}
 
       <!-- COMO FUNCIONA O PROTOCOLO -->
       <h4 style="text-align:center;margin:18px 0 12px;font-size:17px;color:var(--verde-escuro);">Como funciona o Protocolo GLP-1 Natural?</h4>
-      <div style="border:1px solid var(--verde);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:13.5px;color:#4a4a4a;line-height:1.5;">🔥 Reativa o gatilho natural do GLP-1 direto pelo prato, com os 3 estímulos certos</div>
-      <div style="border:1px solid var(--verde);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:13.5px;color:#4a4a4a;line-height:1.5;">💪 Protege a massa magra enquanto a gordura sai</div>
-      <div style="border:1px solid var(--verde);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:13.5px;color:#4a4a4a;line-height:1.5;">📉 Prepara seu corpo pra reduzir a dose sem que a fome e o peso voltem</div>
-      <div style="border:1px solid var(--verde);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:13.5px;color:#4a4a4a;line-height:1.5;">🏠 Feito no seu dia a dia, sem dieta maluca ou contagem de calorias</div>
-      <div style="border:1px solid var(--verde);border-radius:12px;padding:12px 14px;margin-bottom:18px;font-size:13.5px;color:#4a4a4a;line-height:1.5;">👩‍⚕️ Criado pela nutricionista Kelly Firbida a partir do que ela já aplica em consulta</div>
-
-      <!-- O QUE VOCÊ VAI RECEBER -->
-      <h4 style="text-align:center;margin:26px 0 12px;font-size:17px;color:var(--verde-escuro);">Seu protocolo já está pronto. Você vai receber:</h4>
-      <div class="valor-box" style="text-align:left;">
-        <div class="of-item"><span class="ic">✓</span><span class="nm"><strong>Módulo 1</strong> · Ativação do Gatilho GLP-1 Natural</span></div>
-        <div class="of-item"><span class="ic">✓</span><span class="nm"><strong>Módulo 2</strong> · Blindagem da Massa Magra</span></div>
-        <div class="of-item"><span class="ic">✓</span><span class="nm"><strong>Módulo 3</strong> · Redução Sem Efeito Rebote</span></div>
-        <div class="of-item"><span class="ic">✓</span><span class="nm"><strong>Módulo 4</strong> · Plano de 14 Dias</span></div>
-        <div class="of-block bonus" style="margin-top:14px;">+ 3 bônus exclusivos</div>
-        <div class="of-item"><span class="ic">✓</span><span class="nm">Grupo VIP no WhatsApp</span></div>
-        <div class="of-item"><span class="ic">✓</span><span class="nm">Cardápio semanal e lista de compras</span></div>
-        <div class="of-item"><span class="ic">✓</span><span class="nm">Guia anti efeitos colaterais</span></div>
+      <div class="valor-box" style="text-align:left;padding:6px 18px;">
+        <div class="of-item" style="align-items:flex-start;">
+          <span class="ic">✓</span>
+          <span class="nm">🔥 <strong>Ativação:</strong> como acionar o Gatilho GLP-1 Natural direto pelo prato.
+            <ul style="margin:8px 0 0;padding-left:16px;font-size:12.5px;color:#66756f;line-height:1.6;">
+              <li>As 3 partes do gatilho, e como colocar todas no seu prato</li>
+              <li>A ordem de comer que muda a sua fome nas horas seguintes</li>
+              <li>Por que a fome volta triplicada quando você para, e como se preparar antes</li>
+              <li>O erro que quase toda mulher na canetinha comete e que desliga esse gatilho</li>
+            </ul>
+          </span>
+        </div>
+        <div class="of-item" style="align-items:flex-start;">
+          <span class="ic">✓</span>
+          <span class="nm">💪 <strong>Blindagem:</strong> preservar o músculo, que é onde o gatilho trabalha.
+            <ul style="margin:8px 0 0;padding-left:16px;font-size:12.5px;color:#66756f;line-height:1.6;">
+              <li>Por que boa parte do peso que sai na canetinha é músculo, e não gordura</li>
+              <li>Quanta proteína você realmente precisa comendo pouco</li>
+              <li>Como distribuir nos horários que mais protegem a sua massa magra</li>
+              <li>O que fazer para o corpo queimar gordura em vez de músculo</li>
+            </ul>
+          </span>
+        </div>
+        <div class="of-item" style="align-items:flex-start;">
+          <span class="ic">✓</span>
+          <span class="nm">📉 <strong>Redução:</strong> a saída da canetinha sem efeito rebote.
+            <ul style="margin:8px 0 0;padding-left:16px;font-size:12.5px;color:#66756f;line-height:1.6;">
+              <li>Os sinais que mostram que o seu corpo já está pronto para uma dose menor</li>
+              <li>Por que reduzir aos poucos funciona e parar de uma vez costuma dar errado</li>
+              <li>O que comer nas semanas de redução para a fome não te pegar de surpresa</li>
+            </ul>
+          </span>
+        </div>
+        <div class="of-item" style="align-items:flex-start;">
+          <span class="ic">✓</span>
+          <span class="nm">🏠 <strong>Liberdade:</strong> o plano de 14 dias pra implementar tudo isso na sua rotina.
+            <ul style="margin:8px 0 0;padding-left:16px;font-size:12.5px;color:#66756f;line-height:1.6;">
+              <li>O que fazer em cada dia, do dia 1 ao dia 14</li>
+              <li>Uma mudança por vez, sem virar sua rotina de cabeça para baixo</li>
+              <li>Checklist diário para não se perder no meio do caminho</li>
+              <li>O plano de resgate para os dias em que a fome bater mais forte</li>
+            </ul>
+          </span>
+        </div>
+        <div class="of-item">
+          <span class="ic">✓</span>
+          <span class="nm">👩‍⚕️ Criado pela nutricionista Kelly Firbida a partir do que ela já aplica em consulta</span>
+        </div>
       </div>
 
       <!-- COMPARE OS CUSTOS -->
@@ -1211,15 +1238,59 @@ ${curvaHTML}
         <div class="valor-row"><span class="lbl">Consulta e retornos</span><span class="num">R$ 300–800</span></div>
         <div class="valor-row"><span class="lbl">Exames de acompanhamento</span><span class="num">R$ 0–1.140</span></div>
         <div class="valor-row"><span class="lbl">Suplementação</span><span class="num">R$ 200–950</span></div>
-        <div class="valor-row total"><span class="lbl">Protocolo GLP-1 Natural</span><span class="num" style="color:var(--verde-escuro);">R$ 29,90</span></div>
+        <div class="valor-row total" style="background:#e9f6ee;"><span class="lbl">Protocolo GLP-1 Natural</span><span class="num" style="color:var(--verde-escuro);">R$ 29,90</span></div>
       </div>
       <p style="font-size:12.5px;color:#8a9a92;line-height:1.55;margin:10px 0 0;text-align:center;">Reativar a sua própria produção custa menos que 1 dia de canetinha, uma vez só.</p>
+
+      <!-- OFERTA -->
+      <div class="res-section" style="padding:26px 0 0;">
+        <div class="oferta-final">
+          <div class="ot">Protocolo GLP-1 Natural</div>
+          <div class="of-block">No ebook você recebe</div>
+          <div class="of-item"><span class="ic">✓</span><span class="nm">Módulo 1 · Ativação do Gatilho GLP-1 Natural</span><span class="pr">R$29,90</span></div>
+          <div class="of-item"><span class="ic">✓</span><span class="nm">Módulo 2 · Blindagem da Massa Magra</span><span class="pr">R$23,90</span></div>
+          <div class="of-item"><span class="ic">✓</span><span class="nm">Módulo 3 · Redução Sem Efeito Rebote</span><span class="pr">R$26,90</span></div>
+          <div class="of-item"><span class="ic">✓</span><span class="nm">Módulo 4 · Plano de 14 Dias</span><span class="pr">R$17,20</span></div>
+          <div class="of-block bonus">+ 3 bônus exclusivos</div>
+          <div class="of-item"><span class="ic">✓</span><span class="nm">Grupo VIP no WhatsApp</span><span class="pr">GRÁTIS</span></div>
+          <div class="of-item"><span class="ic">✓</span><span class="nm">Cardápio semanal e lista de compras</span><span class="pr">GRÁTIS</span></div>
+          <div class="of-item"><span class="ic">✓</span><span class="nm">Guia anti efeitos colaterais</span><span class="pr">GRÁTIS</span></div>
+
+          <div class="reserva" style="margin:22px 0 0;">⏱ Oferta reservada por: <span class="t" id="proj-timer">08:55</span></div>
+          <div class="of-de">De R$ 97,90</div>
+          <div class="of-por">Por apenas</div>
+          <div class="of-val">R$29,90</div>
+          <div class="of-avista">à vista ou 5x de R$6,62</div>
+          <a class="btn" href="${CHECKOUT_URL}" onclick="px('InitiateCheckout', true)">Quero ativar meu GLP-1 natural →</a>
+          <p class="of-secure">Pix, cartão ou boleto · Acesso imediato · Compra segura · Garantia de 7 dias</p>
+        </div>
+      </div>
+
+      <!-- GARANTIA -->
+      <div class="res-section" style="text-align:center;">
+        <img src="Garantia7dias.png" alt="Garantia de 7 dias" class="gar-img">
+      </div>
+
+      <!-- FAQ -->
+      <div class="res-section faq">
+        <h2 class="res-h2" style="font-size:20px;">Ainda tem <span>alguma dúvida?</span></h2>
+        <div style="margin-top:20px;">
+          <details><summary>Como vou receber o ebook?</summary><div class="a">Imediatamente após a confirmação do pagamento, você recebe um email com o link para acessar e baixar o material em PDF. Acesso vitalício, no celular ou no computador.</div></details>
+          <details><summary>Preciso parar a canetinha para aplicar?</summary><div class="a">Não, e o ideal é justamente o contrário. O melhor momento para reativar a produção natural é enquanto o medicamento ainda está te dando margem. A redução da dose é tratada no Módulo 3, no seu tempo e com o seu médico.</div></details>
+          <details><summary>Funciona se eu já parei?</summary><div class="a">Sim. Os mesmos estímulos que reativam a produção natural funcionam para quem já saiu da aplicação e quer sustentar o peso.</div></details>
+          <details><summary>Serve para qualquer canetinha?</summary><div class="a">Sim. O protocolo é nutricional e vale para qualquer medicação dessa categoria e para qualquer dose, inclusive manipulados.</div></details>
+          <details><summary>É uma dieta complicada?</summary><div class="a">Não. É um passo a passo simples de 14 dias, uma mudança por vez, em linguagem direta. Qualquer pessoa aplica na rotina, mesmo sem conhecimento de nutrição.</div></details>
+          <details><summary>Substitui médico?</summary><div class="a">Não. É um material educativo de apoio nutricional. Não interrompa nem altere a dose de qualquer medicamento por conta própria: converse sempre com o profissional que acompanha o seu tratamento.</div></details>
+          <details><summary>Como funciona a garantia?</summary><div class="a">Em 7 dias, se você sentir que o material não atendeu, basta enviar um email e devolvemos 100% do valor, sem burocracia.</div></details>
+        </div>
+      </div>
 
       <p style="font-size:15px;font-weight:800;color:var(--verde-escuro);line-height:1.5;text-align:center;margin:22px 0 4px;">A seguir você vai conhecer o protocolo completo, pensado pra resolver exatamente os pontos identificados aqui.</p>
 
       <button class="btn" style="margin-top:14px;" onclick="go(1)">Quero ver o meu protocolo agora →</button>
     </div>
   </div>`;
+  startCountdown('proj-timer',8*60+55);
 }
 
 /* ---------- META / PROVA SOCIAL (após pergunta do tempo) ---------- */
@@ -1399,7 +1470,7 @@ ${problema3}
       <div style="background:#eef7f1;border:1px solid #d5ebe0;border-radius:14px;padding:22px 20px;margin:22px 0 0;text-align:center;">
         <p style="color:var(--verde-escuro);font-size:16px;font-weight:800;line-height:1.55;margin:0;">${solucaoTxt}</p>
       </div>
-${full ? `<h4 style="color:#1a1a1a;font-size:15px;font-weight:900;margin:16px 0 0;line-height:1.35;text-align:center;">Continue o teste e descubra como reativar esse hormônio nos próximos 14 dias.</h4>` : ''}
+${full ? `<h4 style="color:#1a1a1a;font-size:15px;font-weight:900;margin:16px 0 0;line-height:1.35;text-align:center;">A falta do estímulo certo na sua alimentação tem uma causa específica, e ela pode ser resolvida com o protocolo certo.<br>Continue o teste e descubra como reativar esse hormônio nos próximos 14 dias.</h4>` : ''}
 
       <button class="btn" style="margin-top:22px;" onclick="go(1)">Continuar →</button>
     </div>
