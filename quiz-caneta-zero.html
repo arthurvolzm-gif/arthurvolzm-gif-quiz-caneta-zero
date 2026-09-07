@@ -1419,7 +1419,7 @@ function renderDiagnostico(full){
   const ponto1 = full ? `
       <div class="solucao-box" style="text-align:left;margin-bottom:16px;">
         <h4 style="margin-bottom:8px;">1 · Você está aproveitando só parte da aplicação</h4>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 12px;">Pelo seu perfil, o aproveitamento estimado do tratamento hoje está em torno de <strong>${aprov}%</strong>. O restante se perde porque o estímulo que o seu corpo precisaria receber pelo prato não está acontecendo.</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0 0 12px;">Você está tendo resultados com a aplicação, isso é ótimo! Mas pelo seu perfil, o aproveitamento do tratamento hoje está em torno de <strong>${aprov}%</strong>, e poderia emagrecer mais e mais rápido com alguns ajustes simples pelo prato.</p>
         <div style="height:14px;border-radius:20px;background:linear-gradient(90deg,#e05a4e 0%,#f0c05a 50%,#4caf82 100%);position:relative;">
           <div style="position:absolute;top:-5px;left:calc(${aprov}% - 12px);width:24px;height:24px;border-radius:50%;background:#fff;border:4px solid ${niv.cor};box-shadow:0 2px 8px rgba(0,0,0,.18);"></div>
         </div>
@@ -1434,18 +1434,18 @@ function renderDiagnostico(full){
         <div class="prova-noticia">
           <img src="pesquisa-mounjaro.jpeg" alt="Reportagem sobre reganho de peso após o fim do tratamento com Mounjaro" onerror="this.style.display='none'">
         </div>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;text-align:center;">Os estudos que acompanharam pessoas depois da suspensão desses medicamentos mostram que a maior parte recupera peso quando o corpo é devolvido sem nenhuma preparação. No seu caso, isso significa colocar em risco <strong>tudo o que você já investiu na aplicação até aqui</strong>.</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:14px 0 0;text-align:center;">Os estudos que acompanharam pessoas depois da suspensão desses medicamentos mostram que a maior parte recupera peso quando o corpo é devolvido sem nenhuma preparação. Isso significa colocar em risco <strong>todo o investimento das aplicações</strong>.</p>
       </div>`;
 
   const problema3 = !full ? '' : `
       <div class="solucao-box" style="text-align:left;margin-bottom:18px;">
         <h4 style="margin-bottom:8px;">2 · Parte do que sai da balança não é gordura</h4>
-        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0;">Quando a perda é rápida e a proteína fica baixa, uma fatia relevante do peso perdido vem de <strong>massa magra</strong>, ${massaTxt}. Menos massa magra significa menos gasto de energia em repouso: é isso que trava a balança na mesma dose que funcionava.</p>
+        <p style="font-size:14px;color:#4a4a4a;line-height:1.65;margin:0;">Quando a perda é rápida e a proteína fica baixa, uma fatia relevante do peso perdido vem de <strong>massa magra</strong>, ${massaTxt}. Isso acontece porque, sem os estímulos certos pelo prato, o seu corpo não sustenta a saciedade sozinho e acaba puxando energia do músculo pra compensar: menos massa magra significa menos gasto de energia em repouso, e é isso que trava a balança na mesma dose que funcionava.</p>
       </div>`;
 
   const solucaoTxt = full
     ? `Mas isso tem solução, você apenas precisa <strong style="text-transform:uppercase;">potencializar o hormônio</strong> que produz o <strong style="text-transform:uppercase;">GLP-1</strong> no seu corpo`
-    : `Mas isso tem solução... continue o teste para descobrir o que está travando a sua produção natural de GLP-1 e ter acesso ao método para reativá-la nos próximos 14 dias.`;
+    : `Mas isso tem solução... continue o teste para descobrir como preparar o seu corpo agora e não fazer parte dessa estatística quando chegar a hora de reduzir a dose.`;
 
   app.innerHTML = `
   <div class="wrap fade">
@@ -1459,7 +1459,7 @@ ${problema3}
       <div style="background:#eef7f1;border:1px solid #d5ebe0;border-radius:14px;padding:22px 20px;margin:22px 0 0;text-align:center;">
         <p style="color:var(--verde-escuro);font-size:16px;font-weight:800;line-height:1.55;margin:0;">${solucaoTxt}</p>
       </div>
-${full ? `<h4 style="color:#1a1a1a;font-size:15px;font-weight:900;margin:16px 0 0;line-height:1.35;text-align:center;">A falta do estímulo certo na sua alimentação tem uma causa específica, e ela pode ser resolvida com o protocolo certo.<br>Continue o teste e descubra como reativar esse hormônio nos próximos 14 dias.</h4>` : ''}
+${full ? `<h4 style="color:#1a1a1a;font-size:15px;font-weight:900;margin:16px 0 0;line-height:1.35;text-align:center;">Continue o teste e descubra como reativar esse hormônio com um protocolo personalizado para seu caso nos próximos 14 dias.</h4>` : ''}
 
       <button class="btn" style="margin-top:22px;" onclick="go(1)">Continuar →</button>
     </div>
