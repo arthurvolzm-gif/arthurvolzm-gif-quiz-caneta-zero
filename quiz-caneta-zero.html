@@ -645,21 +645,14 @@ const QUESTIONS = [
     question:'Com que frequência você sente fome logo depois de comer?',
     options:['😣 Quase sempre','😐 Algumas vezes por semana','🙂 Raramente','😌 Nunca, saio satisfeita da mesa']
   },
-  /* >>> QUEBRA "culpa" entra aqui (a briga é desigual) <<< */
-
   /* ===== TENTATIVAS E FRUSTRAÇÃO ===== */
   {
-    id:'dietas', num:5,
-    question:'Quantas dietas você já começou nos últimos anos?',
-    options:['Nenhuma, essa é a primeira vez','1 ou 2','De 3 a 5','Perdi a conta']
-  },
-  {
-    id:'tentativas', num:6,
+    id:'tentativas', num:5,
     question:'O que aconteceu nas vezes anteriores?',
     options:['Emagreci, mas o peso voltou','Não consegui manter a rotina','Travei no meio do caminho','Nunca comecei de verdade']
   },
   {
-    id:'frustracao', num:7, type:'multi',
+    id:'frustracao', num:6, type:'multi',
     question:'E o que você sentiu quando o peso voltou?',
     options:['😞 Que o esforço foi em vão','🪞 Vergonha de me olhar no espelho','👗 Frustração com a roupa que não serve mais','😔 Que o problema era comigo','🔁 Medo de tentar de novo e falhar']
   },
@@ -667,32 +660,32 @@ const QUESTIONS = [
 
   /* ===== ROTINA — é daqui que sai o Índice de GLP-1 Natural e as 5 travas ===== */
   {
-    id:'proteina', num:8,
+    id:'proteina', num:7,
     question:'Tem proteína na maioria das suas refeições?',
     options:['❌ Quase nunca','🤏 Só no almoço','✅ Na maioria delas','💪 Em todas, sempre']
   },
   {
-    id:'carbo', num:9,
+    id:'carbo', num:8,
     question:'Quando você quer emagrecer, o que faz com o carboidrato?',
     options:['✂️ Corto quase tudo','📉 Reduzo bastante','⚖️ Mantenho e controlo a quantidade','🤷 Nunca prestei atenção nisso']
   },
   {
-    id:'agua', num:10,
+    id:'agua', num:9,
     question:'Quanta água você bebe por dia?',
     options:['💧 Menos de 1 litro','🥤 Entre 1 e 2 litros','🚰 Mais de 2 litros']
   },
   {
-    id:'sono', num:11,
+    id:'sono', num:10,
     question:'Quantas horas você dorme por noite, em média?',
     options:['⚠️ Menos de 5 horas','😪 Entre 5 e 6 horas','😌 Entre 7 e 8 horas','😴 Mais de 8 horas']
   },
   {
-    id:'estresse', num:12,
+    id:'estresse', num:11,
     question:'Como está o seu nível de estresse no dia a dia?',
     options:['🔥 Muito alto, vivo no limite','😬 Alto na maior parte do tempo','🙂 Moderado, dá pra levar','😌 Baixo, estou tranquila']
   },
   {
-    id:'treino_frequencia', num:13,
+    id:'treino_frequencia', num:12,
     question:'Quantas vezes por semana você se exercita de verdade?',
     options:['😴 Nenhuma','🚶 1 ou 2 vezes','🏃 3 ou 4 vezes','💪 5 vezes ou mais']
   },
@@ -700,28 +693,28 @@ const QUESTIONS = [
 
   /* ===== essas 5 renderizam só depois do diagnóstico, veja DEFERRED_APOS_DIAGNOSTICO ===== */
   {
-    id:'corpo_sonho', num:14,
+    id:'corpo_sonho', num:13,
     question:'Qual é o seu corpo dos sonhos?',
     options:['Magra','Definida','Com curvas','Média'],
     optionImages:['corpo-magra.jpg','corpo-definida.jpg','corpo-curvas.jpg','corpo-media.jpg']
   },
   {
-    id:'peso', num:15, type:'ruler',
+    id:'peso', num:14, type:'ruler',
     question:'Qual é o seu peso atual?',
     units:[{u:'kg',min:40,max:160,def:70,step:1},{u:'lb',min:88,max:352,def:154,step:1}]
   },
   {
-    id:'altura', num:16, type:'ruler',
+    id:'altura', num:15, type:'ruler',
     question:'Qual é a sua altura?',
     units:[{u:'cm',min:140,max:210,def:165,step:1},{u:'pol',min:55,max:83,def:65,step:1}]
   },
   {
-    id:'meta_peso', num:17, type:'ruler',
+    id:'meta_peso', num:16, type:'ruler',
     question:'Qual peso você quer alcançar?',
     units:[{u:'kg',min:40,max:160,def:65,step:1},{u:'lb',min:88,max:352,def:143,step:1}]
   },
   {
-    id:'outros_objetivos', num:18, type:'multi',
+    id:'outros_objetivos', num:17, type:'multi',
     question:'Além de emagrecer, o que mais você quer conquistar?',
     options:['⚡ Mais energia e disposição','😊 Me sentir bem em qualquer roupa','🪞 Me olhar no espelho e gostar do que vejo','💪 Mais força no dia a dia','🧘 Reduzir o estresse e dormir melhor']
   }
@@ -744,7 +737,6 @@ QUESTIONS.forEach(q=>{
   if(DEFERRED_APOS_DIAGNOSTICO.includes(q.id)) return;
   FLOW.push({type:'question', q});
   if(INTERSTITIALS[q.id]) FLOW.push({type:'interstitial', id:q.id});
-  if(q.id==='fome_depois') FLOW.push({type:'culpa'});         // quebra: a briga é desigual
   if(q.id==='frustracao')  FLOW.push({type:'prova'});         // quebra: você não está sozinha
   if(q.id==='treino_frequencia'){                             // análise + diagnóstico (Índice de GLP-1 Natural + travas)
     FLOW.push({type:'analyzing'});
@@ -790,7 +782,7 @@ function render(){
   const map = {
     intro:renderIntro, question:()=>renderQuestion(step.q),
     interstitial:()=>renderInterstitial(step.id),
-    culpa:renderCulpa, prova:renderProva,
+    prova:renderProva,
     analyzing:()=>renderAnalyzing(step.v2), diagnostico:renderDiagnostico,
     projecao:renderProjecao, vsl:renderVsl
   };
@@ -978,23 +970,6 @@ function renderRulerQuestion(q){
   });
   setLabels(u0); update();
   document.getElementById('rNext').onclick=()=>{ state.answers[q.id]=Math.round(parseFloat(rangeEl.value))+' '+q.units[uIdx].u; trackResposta(q.id, state.answers[q.id]); go(1); };
-}
-
-/* ---------- QUEBRA "culpa" (depois da pergunta de fome_depois) ---------- */
-function renderCulpa(){
-  app.innerHTML = `
-  <div class="wrap fade">
-    <div class="card-quiz" style="text-align:center;">
-      ${backBtn()}
-      <div class="brand-sub" style="margin-bottom:14px;">Antes de continuar</div>
-      <span class="hist-tag">A culpa não é sua</span>
-      <p class="inter-text" style="font-weight:800;color:var(--verde-claro);margin:18px 0;">Se você já emagreceu e o peso voltou, isso não foi falta de força de vontade.</p>
-      <p class="inter-text">Durante quase toda a história da humanidade o problema foi a falta de comida, nunca o excesso. Quem guardava gordura com facilidade sobrevivia. Por isso o seu corpo aprendeu a defender a reserva, e a arma que ele usa para isso é a fome.</p>
-      <p class="inter-text">Só que hoje comida chegou a dois toques no celular. <strong>A sua biologia é antiga e o mundo é novo.</strong> Você está tentando vencer no braço um sistema que levou milhares de anos para ficar bom no que faz.</p>
-      <p class="inter-text" style="color:var(--verde-escuro);font-weight:800;">Força de vontade sozinha perde. Não porque você é fraca, mas porque a briga é desigual. Nas próximas perguntas a gente vai achar o que está desequilibrando ela.</p>
-      <button class="btn" onclick="go(1)">Continuar</button>
-    </div>
-  </div>`;
 }
 
 /* ---------- QUEBRA "prova" (depois de frustracao, sem depoimento inventado) ---------- */
