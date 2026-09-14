@@ -628,9 +628,9 @@ const QUESTIONS = [
     options:['🎯 Emagrecer mais do que estou emagrecendo','💊 Me preparar para reduzir a dose sem engordar','🚫 Parar de usar a caneta sem recuperar o peso','🔁 Recuperar o resultado que eu já tinha perdido']
   },
   {
-    id:'caneta', num:3,
-    question:'Que caneta você usa?',
-    options:['Mounjaro (tirzepatida)','Ozempic (semaglutida)','Wegovy (semaglutida)','Saxenda (liraglutida)','Manipulada / não lembro o nome']
+    id:'corpo_hoje', num:3,
+    question:'Como você descreveria seu corpo hoje?',
+    options:['😕 Magra, mas sem nenhuma definição','🤏 Alguns quilos a mais, principalmente na barriga','📈 Acima do peso, quero uma mudança grande','💪 Já tenho uma base, quero refinar o shape']
   },
 
   /* ===== S — SITUAÇÃO ===== */
@@ -647,25 +647,30 @@ const QUESTIONS = [
 
   /* ===== P — PROBLEMA ===== */
   {
-    id:'dor', num:6,
-    question:'O que mais te incomoda hoje no seu tratamento?',
+    id:'problema', num:6,
+    question:'O que mais te atrapalha hoje?',
     options:[
-      'A balança travou mesmo aplicando certinho',
-      'Tenho medo de parar e engordar tudo de volta',
-      'Emagreci, mas fiquei flácida e com o rosto abatido',
-      'Gasto muito por mês e vejo pouco resultado',
-      'Já parei e o peso está voltando'
+      '🍽️ Fome fora de hora, o dia inteiro',
+      '🍫 Vontade de doce no fim do dia',
+      '🌙 Belisco à noite mesmo sem fome',
+      '⏰ Falta de tempo pra cuidar da comida',
+      '🔁 Começo bem e não consigo manter'
     ]
   },
   {
-    id:'acompanhamento', num:7,
-    question:'Você tem acompanhamento de uma nutricionista durante o tratamento?',
-    options:['❌ Nunca tive','🔄 Tive no começo, mas parei','🤷 Tenho, mas ela nunca falou sobre isso','✅ Tenho e me orienta bem']
+    id:'tentativas', num:7,
+    question:'Você já tentou mudar o corpo antes e não conseguiu manter o resultado?',
+    options:[
+      'Sim, perdi peso mas voltou tudo depois',
+      'Comecei, mas não consegui manter a rotina',
+      'Essa é a minha primeira tentativa séria',
+      'Já tentei várias formas, nada funcionou direito'
+    ]
   },
   {
-    id:'ja_eliminou', num:8,
-    question:'Quantos quilos você já eliminou com a canetinha?',
-    options:['Ainda nenhum','De 1 a 5 kg','De 6 a 10 kg','De 11 a 15 kg','Mais de 16 kg']
+    id:'frustracao', num:8, type:'multi',
+    question:'E o que você sentiu quando o peso voltou?',
+    options:['😞 Que o esforço foi em vão','🪞 Vergonha de me olhar no espelho','👗 Frustração com a roupa que não serve mais','😔 Que o problema era comigo','🔁 Medo de tentar de novo e falhar']
   },
   {
     id:'exercicio', num:9,
