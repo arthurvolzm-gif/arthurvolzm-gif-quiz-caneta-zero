@@ -626,7 +626,8 @@ const QUESTIONS = [
   {
     id:'corpo_hoje', num:2,
     question:'Como você descreveria seu corpo hoje?',
-    options:['😕 Magra, mas sem nenhuma definição','🤏 Alguns quilos a mais, principalmente na barriga','📈 Acima do peso, quero uma mudança grande','💪 Já tenho uma base, quero refinar o shape']
+    options:['😕 Magra, mas sem nenhuma definição','🤏 Alguns quilos a mais, principalmente na barriga','📈 Acima do peso, quero uma mudança grande','💪 Já tenho uma base, quero refinar o shape'],
+    optionImages:['corpo-hoje-mulher-magra.jpg','corpo-hoje-mulher-gordinha.jpg','corpo-hoje-mulher-sobrepeso.jpg','corpo-hoje-mulher-definida.jpg']
   },
   {
     id:'problema', num:3,
@@ -676,27 +677,22 @@ const QUESTIONS = [
     options:['✂️ Corto quase tudo','📉 Reduzo bastante','⚖️ Mantenho e controlo a quantidade','🤷 Nunca prestei atenção nisso']
   },
   {
-    id:'velocidade', num:10,
-    question:'Em quanto tempo você costuma terminar uma refeição?',
-    options:['⚡ Menos de 10 minutos','🕐 Entre 10 e 20 minutos','🧘 Mais de 20 minutos, com calma']
-  },
-  {
-    id:'agua', num:11,
+    id:'agua', num:10,
     question:'Quanta água você bebe por dia?',
     options:['💧 Menos de 1 litro','🥤 Entre 1 e 2 litros','🚰 Mais de 2 litros']
   },
   {
-    id:'sono', num:12,
+    id:'sono', num:11,
     question:'Quantas horas você dorme por noite, em média?',
     options:['⚠️ Menos de 5 horas','😪 Entre 5 e 6 horas','😌 Entre 7 e 8 horas','😴 Mais de 8 horas']
   },
   {
-    id:'estresse', num:13,
+    id:'estresse', num:12,
     question:'Como está o seu nível de estresse no dia a dia?',
     options:['🔥 Muito alto, vivo no limite','😬 Alto na maior parte do tempo','🙂 Moderado, dá pra levar','😌 Baixo, estou tranquila']
   },
   {
-    id:'treino_frequencia', num:14,
+    id:'treino_frequencia', num:13,
     question:'Quantas vezes por semana você se exercita de verdade?',
     options:['😴 Nenhuma','🚶 1 ou 2 vezes','🏃 3 ou 4 vezes','💪 5 vezes ou mais']
   },
@@ -704,28 +700,28 @@ const QUESTIONS = [
 
   /* ===== essas 5 renderizam só depois do diagnóstico, veja DEFERRED_APOS_DIAGNOSTICO ===== */
   {
-    id:'corpo_sonho', num:15,
+    id:'corpo_sonho', num:14,
     question:'Qual é o seu corpo dos sonhos?',
     options:['Magra','Definida','Com curvas','Média'],
     optionImages:['corpo-magra.jpg','corpo-definida.jpg','corpo-curvas.jpg','corpo-media.jpg']
   },
   {
-    id:'peso', num:16, type:'ruler',
+    id:'peso', num:15, type:'ruler',
     question:'Qual é o seu peso atual?',
     units:[{u:'kg',min:40,max:160,def:70,step:1},{u:'lb',min:88,max:352,def:154,step:1}]
   },
   {
-    id:'altura', num:17, type:'ruler',
+    id:'altura', num:16, type:'ruler',
     question:'Qual é a sua altura?',
     units:[{u:'cm',min:140,max:210,def:165,step:1},{u:'pol',min:55,max:83,def:65,step:1}]
   },
   {
-    id:'meta_peso', num:18, type:'ruler',
+    id:'meta_peso', num:17, type:'ruler',
     question:'Qual peso você quer alcançar?',
     units:[{u:'kg',min:40,max:160,def:65,step:1},{u:'lb',min:88,max:352,def:143,step:1}]
   },
   {
-    id:'outros_objetivos', num:19, type:'multi',
+    id:'outros_objetivos', num:18, type:'multi',
     question:'Além de emagrecer, o que mais você quer conquistar?',
     options:['⚡ Mais energia e disposição','😊 Me sentir bem em qualquer roupa','🪞 Me olhar no espelho e gostar do que vejo','💪 Mais força no dia a dia','🧘 Reduzir o estresse e dormir melhor']
   }
@@ -1334,17 +1330,16 @@ function renderAnalyzing(v2){
 
 /* ===== ÍNDICE DE GLP-1 NATURAL (0 a 100) =====
    Não é exame nem promessa de resultado: é a soma do que a própria pessoa
-   respondeu sobre a rotina dela hoje (treino, proteína, sono, água, estresse
-   e velocidade da refeição). Nenhum número aqui é inventado — é só a rotina
-   dela devolvida como nota. */
+   respondeu sobre a rotina dela hoje (treino, proteína, sono, água e
+   estresse). Nenhum número aqui é inventado — é só a rotina dela devolvida
+   como nota. */
 const PESOS_INDICE = {
-  proteina:          [0,  8, 16, 20],   // quase nunca / só no almoço / na maioria / todas       (20)
-  fome_depois:       [0,  6, 12, 15],   // quase sempre / às vezes / raramente / nunca            (15)
-  treino_frequencia: [0,  6, 12, 16],   // nenhuma / 1-2x / 3-4x / 5x+                             (16)
-  sono:              [0,  6, 15, 12],   // <5h / 5-6h / 7-8h (ótimo) / >8h                         (15)
-  agua:              [0,  6, 12],       // <1L / 1-2L / >2L                                        (12)
-  estresse:          [0,  4,  8, 12],   // muito alto / alto / moderado / baixo                    (12)
-  velocidade:        [0,  5, 10]        // <10min / 10-20min / >20min                              (10)
+  proteina:          [0,  9, 18, 22],   // quase nunca / só no almoço / na maioria / todas       (22)
+  fome_depois:       [0,  7, 14, 17],   // quase sempre / às vezes / raramente / nunca            (17)
+  treino_frequencia: [0,  7, 14, 18],   // nenhuma / 1-2x / 3-4x / 5x+                             (18)
+  sono:              [0,  7, 17, 14],   // <5h / 5-6h / 7-8h (ótimo) / >8h                         (17)
+  agua:              [0,  7, 14],       // <1L / 1-2L / >2L                                        (14)
+  estresse:          [0,  5,  9, 12]    // muito alto / alto / moderado / baixo                    (12)
 };
 
 function calcIndiceConstancia(){
