@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<base href="/">
+<title>Protocolo Personalizado · Avaliação gratuita</title>
+<meta name="facebook-domain-verification" content="1ghqwe79k59bfxj5rarqsz5i6aoug4" />
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1021851947333727');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1021851947333727&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<!-- ===== Google Analytics 4 (funil do quiz) =====
+     Cole aqui o ID de medição da sua propriedade GA4 (formato G-XXXXXXXXXX).
+     Enquanto estiver vazio, nada é carregado e o quiz funciona normalmente. -->
+<script>
+  var GA_ID = '';
+  if (GA_ID) {
+    var gaTag = document.createElement('script');
+    gaTag.async = true;
+    gaTag.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(gaTag);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+  }
+</script>
+<!-- End GA4 -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800;900&family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --verde:#2e7d5a;
+  --verde-claro:#4caf82;
+  --verde-suave:#e8f5ef;
+  --verde-escuro:#1a4d38;
+  --dourado:#c8973a;
+  --dourado-claro:#f5d99a;
+  --creme:#fdf9f3;
+  --cinza:#4a4a4a;
+  --cinza-claro:#f5f5f5;
+  --branco:#ffffff;
+  --vermelho:#c0574f;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:'Lato',sans-serif;
+  background-color:#f3f8f5;
+  background-image:url('bg-vegetal.jpg');
+  background-attachment:fixed;
+  background-size:cover;
+  background-position:center;
+  color:var(--cinza);
+  line-height:1.6;
+  min-height:100vh;
+}
+
+/* ===== BARRA TOPO ===== */
+.topbar{
+  background:var(--verde-escuro);
+  color:#fff;
+  text-align:center;
+  padding:12px 16px;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.3px;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 2px 12px rgba(0,0,0,.15);
+}
+.topbar span{opacity:.9;}
+
+/* ===== WRAP ===== */
+.wrap{
+  max-width:620px;
+  margin:0 auto;
+  padding:28px 20px 80px;
+}
+
+.card-quiz{
+  background:rgba(250,249,240,.96);
+  border-radius:22px;
+  box-shadow:0 12px 50px rgba(26,77,56,.14);
+  padding:34px 30px;
+  backdrop-filter:blur(2px);
+  position:relative;
+}
+
+/* seta de voltar */
+.back-btn{position:absolute;left:16px;top:14px;background:none;border:none;color:#9aaaa2;font-size:24px;line-height:1;cursor:pointer;padding:4px 8px;z-index:5;transition:color .18s;}
+.back-btn:hover{color:var(--verde);}
+
+.brand{text-align:center;margin-bottom:6px;}
+.brand-nome{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--verde-escuro);}
+.brand-logo{height:54px;display:block;margin:0 auto;}
+.brand-sub{font-size:13px;color:#8aa79a;margin-bottom:20px;text-align:center;}
+
+/* ===== PROGRESSO ===== */
+.progress-head{display:flex;justify-content:flex-end;font-size:13px;color:var(--dourado);font-weight:700;margin-bottom:8px;}
+.progress-bar{height:7px;background:#e3ede8;border-radius:20px;overflow:hidden;margin-bottom:26px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--verde-escuro),var(--verde-claro));border-radius:20px;transition:width .5s ease;}
+
+/* ===== PILLS ===== */
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.pill{background:#f0f7f3;border:1px solid #d9ebe2;color:var(--verde);font-size:12px;font-weight:700;padding:6px 12px;border-radius:20px;}
+
+/* ===== INSIGHT BOX ===== */
+.insight{background:#eef7f1;border-left:4px solid var(--verde-claro);border-radius:8px;padding:14px 16px;font-size:14px;color:#3a5a4c;line-height:1.6;margin-bottom:20px;}
+.insight strong{color:var(--verde);}
+
+.echo{font-size:14px;color:#7d9488;margin-bottom:6px;}
+
+/* ===== PERGUNTA ===== */
+.q-title{font-family:'Open Sans',sans-serif;font-size:26px;font-weight:900;color:var(--verde-escuro);line-height:1.25;margin-bottom:22px;text-align:center;}
+
+/* ===== OPÇÕES ===== */
+.opts{display:flex;flex-direction:column;gap:12px;}
+/* variação compacta (perguntas com muitas opções, ex.: múltipla escolha) */
+.opts.compact{gap:9px;}
+.opts.compact .opt{padding:13px 16px;font-size:14.5px;}
+.opts.compact .opt-radio{width:22px;height:22px;}
+.q-title.tight{margin-bottom:12px;}
+/* variação em grade: 2 opções por linha (abertura do quiz) */
+.opts.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+/* card = foto colada ao botão, os dois arredondados juntos como uma peça só */
+.opts.grid2 .idade-card{display:flex;flex-direction:column;border-radius:16px;overflow:hidden;box-shadow:0 6px 18px rgba(46,125,90,.28);transition:all .18s ease;cursor:pointer;}
+.opts.grid2 .idade-card:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(46,125,90,.38);}
+.opts.grid2 .idade-img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
+.opts.grid2 .opt{
+  padding:15px 14px;font-size:14px;font-weight:500;justify-content:center;text-align:center;gap:10px;
+  background:linear-gradient(135deg,#27ae60,var(--verde-claro));color:#fff;border-color:transparent;
+  border-radius:0;margin:0;
+}
+.opts.grid2 .opt:hover{transform:none;box-shadow:none;border-color:transparent;}
+.opts.grid2 .opt.sel{background:linear-gradient(135deg,#1a4d38,#2e7d5a);border-color:transparent;color:#fff;}
+.opts.grid2 .opt-radio{width:20px;height:20px;border-color:rgba(255,255,255,.85);background:rgba(255,255,255,.16);}
+.opts.grid2 .opt.sel .opt-radio{border-color:#fff;background:#fff;}
+.opts.grid2 .opt.sel .opt-radio::after{color:var(--verde-escuro);font-size:12px;}
+.opts.grid2 .idade-card:last-child:nth-child(odd){grid-column:1 / -1;justify-self:center;width:calc(50% - 5px);}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  background:#fff;border:1.5px solid #e2ece7;border-radius:14px;
+  padding:17px 18px;font-size:15px;font-weight:600;color:var(--cinza);
+  cursor:pointer;transition:all .18s ease;text-align:left;
+}
+.opt:hover{border-color:var(--verde-claro);box-shadow:0 6px 20px rgba(76,175,130,.12);transform:translateY(-1px);}
+.opt-radio{width:24px;height:24px;border-radius:50%;border:2px solid #cdddd4;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s ease;}
+.opt.sel{border-color:var(--verde);background:var(--verde-suave);}
+.opt.sel .opt-radio{border-color:var(--verde);background:var(--verde);}
+.opt.sel .opt-radio::after{content:'✓';color:#fff;font-size:13px;font-weight:700;}
+
+/* variação com foto colada à esquerda de cada opção (lista vertical) */
+.opts.photo .opt-row{display:flex;align-items:stretch;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.06);cursor:pointer;transition:all .18s ease;}
+.opts.photo .opt-row:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(76,175,130,.18);}
+.opts.photo .opt-row-img{width:84px;flex-shrink:0;object-fit:cover;display:block;}
+.opts.photo .opt-row .opt{flex:1;border:none;border-radius:0;box-shadow:none;}
+.opts.photo .opt-row .opt:hover{transform:none;box-shadow:none;border-color:transparent;}
+
+/* ===== BOTÕES ===== */
+.btn{
+  display:block;width:100%;text-align:center;
+  background:linear-gradient(135deg,#27ae60,var(--verde-claro));
+  color:#fff;font-family:'Lato',sans-serif;font-size:17px;font-weight:900;
+  border:none;border-radius:50px;padding:18px 28px;cursor:pointer;text-decoration:none;
+  box-shadow:0 8px 30px rgba(46,125,90,.32);transition:transform .2s,box-shadow .2s;letter-spacing:.3px;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(46,125,90,.45);}
+.btn-ghost{background:#fff;color:var(--verde);border:1.5px solid #d9ebe2;box-shadow:none;margin-top:12px;}
+.btn-ghost:hover{background:#f4faf7;box-shadow:none;}
+
+/* ===== INPUT DE TEXTO (nome) ===== */
+.text-input{width:100%;border:1.5px solid #e2ece7;border-radius:14px;padding:16px 18px;font-size:16px;font-family:'Lato',sans-serif;color:var(--cinza);background:#fff;margin-bottom:14px;outline:none;transition:border-color .18s,box-shadow .18s;}
+.text-input:focus{border-color:var(--verde);box-shadow:0 6px 20px rgba(76,175,130,.12);}
+.text-input::placeholder{color:#b7c6bf;}
+
+/* ===== RÉGUA (peso / altura) ===== */
+.ruler-sub{font-size:14px;color:#7d9488;margin:-8px 0 18px;}
+.unit-toggle{display:inline-flex;background:#e3ede8;border-radius:30px;padding:4px;margin-bottom:6px;}
+.unit-toggle .ut{border:none;background:transparent;color:#7d9488;font-weight:800;font-size:14px;padding:8px 26px;border-radius:24px;cursor:pointer;transition:all .18s;}
+.unit-toggle .ut.active{background:var(--verde);color:#fff;box-shadow:0 4px 14px rgba(46,125,90,.3);}
+.ruler-val{font-family:'Playfair Display',serif;font-size:46px;font-weight:900;color:var(--verde-escuro);margin:16px 0 6px;line-height:1;}
+.ruler-val small{font-size:20px;color:var(--verde);margin-left:3px;font-weight:700;}
+.ruler-track{position:relative;height:52px;margin:6px 6px 0;}
+.ruler-line{position:absolute;left:0;right:0;bottom:16px;height:2px;background:#e2ece7;}
+.ruler-ticks{position:absolute;left:0;right:0;bottom:16px;height:26px;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none;}
+.ruler-ticks .tk{width:1px;height:12px;background:#cdddd4;}
+.ruler-ticks .tk.maj{height:24px;width:2px;background:#9bb3a8;}
+.ruler-pointer{position:absolute;top:0;bottom:16px;width:3px;background:var(--verde);transform:translateX(-50%);pointer-events:none;border-radius:2px;transition:left .05s linear;}
+.ruler-pointer::after{content:'';position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid var(--verde);}
+.ruler-input{position:absolute;left:0;right:0;top:0;width:100%;height:100%;margin:0;opacity:0;cursor:grab;z-index:5;-webkit-appearance:none;appearance:none;background:transparent;}
+.ruler-input:active{cursor:grabbing;}
+.ruler-input::-webkit-slider-thumb{-webkit-appearance:none;width:40px;height:52px;background:transparent;cursor:grab;}
+.ruler-input::-moz-range-thumb{width:40px;height:52px;border:none;background:transparent;cursor:grab;}
+.ruler-labels{display:flex;justify-content:space-between;font-size:13px;color:#9aaaa2;font-weight:700;margin-top:6px;}
+
+/* ===== INTRO ===== */
+.intro-badge{display:inline-block;background:var(--verde-suave);color:var(--verde);font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:7px 18px;border-radius:20px;margin-bottom:22px;}
+.intro-h1{font-family:'Open Sans',sans-serif;font-size:32px;font-weight:900;color:var(--verde-escuro);line-height:1.25;margin-bottom:16px;text-align:center;}
+.intro-h1 span{color:var(--verde-claro);}
+.intro-sub{font-size:16px;color:#5f6f68;text-align:center;line-height:1.65;margin-bottom:26px;}
+.intro-secure{text-align:center;font-size:12px;color:#98a89f;margin-top:12px;}
+
+/* ===== INTERSTICIAL ===== */
+.inter-badge{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.inter-badge .ic{width:38px;height:38px;border-radius:50%;background:var(--verde-escuro);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.inter-badge .tt{font-size:12px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--verde-escuro);line-height:1.3;}
+.inter-text{font-size:16px;color:#4a5c53;line-height:1.7;margin-bottom:14px;}
+.inter-text strong{color:var(--verde);}
+.inter-text .red{color:var(--vermelho);font-weight:700;}
+.inter-mini{font-size:13px;color:#9aaaa2;margin-bottom:22px;}
+
+/* ===== ANALISANDO ===== */
+.analise-title{text-align:center;font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde-escuro);margin-bottom:26px;}
+.analise-list{display:flex;flex-direction:column;gap:16px;}
+.analise-item{display:flex;align-items:center;gap:14px;font-size:15px;color:#9aaaa2;font-weight:600;opacity:.5;transition:all .4s ease;}
+.analise-item .ic{width:28px;height:28px;border-radius:50%;border:2px solid #d5e2db;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;}
+.analise-item.done{opacity:1;color:var(--verde-escuro);}
+.analise-item.done .ic{background:var(--verde-escuro);border-color:var(--verde-escuro);color:#fff;}
+
+/* ===== HISTÓRIA ===== */
+.hist-avatar{width:82px;height:82px;border-radius:50%;margin:0 auto 12px;overflow:hidden;border:4px solid #fff;box-shadow:0 6px 20px rgba(0,0,0,.12);}
+.hist-avatar img{width:100%;height:100%;object-fit:cover;}
+.hist-tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--verde-escuro);text-align:center;margin-bottom:14px;line-height:1.4;}
+.hist-tag{display:block;width:max-content;margin:0 auto 10px;background:var(--verde-escuro);color:#fff;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;}
+.hist-nome{text-align:center;font-weight:900;font-size:16px;color:var(--cinza);}
+.hist-info{text-align:center;font-size:13px;color:#9aaaa2;margin-bottom:6px;}
+.hist-stars{text-align:center;color:#f5a623;font-size:16px;letter-spacing:2px;margin-bottom:16px;}
+.hist-quote{font-size:14.5px;color:#556a60;line-height:1.7;font-style:italic;text-align:center;margin-bottom:18px;}
+.hist-result{display:flex;align-items:center;gap:12px;justify-content:center;background:var(--verde);color:#fff;border-radius:12px;padding:14px 18px;font-size:14px;font-weight:700;line-height:1.4;margin-bottom:22px;}
+.hist-result .ic{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;}
+.hist-pergunta{text-align:center;font-weight:700;color:var(--cinza);margin-bottom:14px;}
+
+/* ===== MINI-VSL / VÍDEO PLACEHOLDER ===== */
+.vsl-tag{display:block;width:max-content;margin:0 auto 14px;background:#fdecec;color:var(--vermelho);font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:6px 16px;border-radius:20px;}
+.vsl-ask{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--verde-escuro);text-align:center;line-height:1.3;margin-bottom:20px;}
+.vsl-ask span{color:var(--verde-claro);}
+.video-box{position:relative;border-radius:16px;overflow:hidden;margin-bottom:18px;background:linear-gradient(135deg,var(--verde-suave),#d6ede1);border:1px solid #d9ebe2;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;}
+.video-box .play{width:66px;height:66px;border-radius:50%;background:var(--verde);color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:14px;box-shadow:0 8px 30px rgba(46,125,90,.4);animation:pulse 2.2s ease-in-out infinite;}
+.video-box .vlabel{font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde);}
+.video-box .vname{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--verde-escuro);margin-top:6px;}
+.video-box .vhint{font-size:11px;color:#9aaaa2;margin-top:8px;font-style:italic;}
+
+/* roteiro visível (substitui o vídeo por enquanto) */
+.roteiro{background:#f4faf7;border:1px solid #d9ebe2;border-radius:14px;padding:20px;margin-bottom:20px;}
+.roteiro h4{font-family:'Lato',sans-serif;font-size:14px;color:var(--verde);margin-bottom:12px;letter-spacing:.3px;font-weight:900;}
+.roteiro p{font-size:14.5px;color:#556a60;line-height:1.7;margin-bottom:12px;}
+.roteiro p:last-child{margin-bottom:0;}
+.roteiro strong{color:var(--verde-escuro);}
+.roteiro .red{color:var(--vermelho);font-weight:700;}
+
+/* ===== PRÉ-PITCH (antes x depois) ===== */
+.pp-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--verde-escuro);text-align:center;line-height:1.3;margin-bottom:8px;}
+.pp-h span{color:var(--verde-claro);}
+.pp-sub{text-align:center;font-size:14px;color:#7d9488;margin-bottom:24px;}
+
+/* antes/depois */
+.ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.res-ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ad-col{background:#fff;border-radius:14px;padding:20px;border:1px solid #e4ede9;}
+.ad-col.antes{border-top:3px solid #e07a7a;}
+.ad-col.depois{border-top:3px solid var(--verde-claro);}
+.ad-col h4{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;color:var(--cinza);}
+.ad-col.antes h4{color:var(--vermelho);}
+.ad-col.depois h4{color:var(--verde);}
+.ad-col li{list-style:none;font-size:13px;color:#66756f;padding:6px 0;display:flex;gap:8px;align-items:flex-start;line-height:1.5;}
+.ad-col.antes li::before{content:'✕';color:#e07a7a;font-weight:800;flex-shrink:0;}
+.ad-col.depois li::before{content:'✓';color:var(--verde-claro);font-weight:800;flex-shrink:0;}
+.ad-note{text-align:center;font-size:12px;color:#a8b8b1;margin-top:14px;font-style:italic;}
+
+/* ===== OFERTA REVELAR ===== */
+.rev-badge{display:block;width:max-content;margin:0 auto 16px;background:var(--verde-escuro);color:#fff;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:6px 16px;border-radius:20px;}
+.rev-lead{text-align:center;font-size:15px;color:#4a5c53;line-height:1.65;margin-bottom:22px;}
+.rev-lead strong{color:var(--verde-escuro);}
+.rev-tap{background:linear-gradient(135deg,var(--verde),var(--verde-claro));border-radius:16px;padding:26px 20px;text-align:center;color:#fff;cursor:pointer;box-shadow:0 10px 34px rgba(46,125,90,.32);transition:transform .2s;margin-bottom:18px;animation:pulse 2.4s ease-in-out infinite;}
+.rev-tap:hover{transform:translateY(-2px);}
+.rev-tap .big{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;line-height:1.3;}
+.rev-tap .small{font-size:13px;opacity:.9;margin-top:6px;}
+@keyframes pulse{0%,100%{box-shadow:0 10px 34px rgba(46,125,90,.32);}50%{box-shadow:0 14px 44px rgba(46,125,90,.55);}}
+
+.reserva{display:flex;align-items:center;justify-content:center;gap:10px;background:#f0f7f3;border-radius:12px;padding:12px;font-size:14px;color:var(--verde-escuro);font-weight:700;margin-bottom:20px;}
+.reserva .t{font-variant-numeric:tabular-nums;}
+.rev-secure{text-align:center;font-size:12px;color:#a8b8b1;margin-top:16px;}
+
+/* ===== PREÇO ===== */
+.price-box{background:linear-gradient(150deg,var(--verde-escuro),var(--verde));border-radius:18px;padding:28px 24px;text-align:center;color:#fff;margin-bottom:18px;}
+.price-box .label{font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;opacity:.85;}
+.price-box .val{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;line-height:1;margin:6px 0;}
+.price-box .val sup{font-size:24px;}
+.price-box .de{font-size:14px;opacity:.75;text-decoration:line-through;}
+.price-box .off{display:inline-block;background:var(--verde-claro);color:#fff;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;margin-top:10px;letter-spacing:.5px;}
+.price-just{font-size:13px;color:#7d9488;line-height:1.6;text-align:center;margin-bottom:18px;}
+.price-just strong{color:var(--verde);}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#fff;border:1px solid #e2ece7;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.14);padding:12px 16px;display:flex;align-items:center;gap:10px;max-width:340px;width:calc(100% - 40px);font-size:13px;color:var(--cinza);z-index:40;animation:slideUp .5s ease;}
+.toast .ic{font-size:18px;}
+.toast .x{margin-left:auto;color:#bbb;cursor:pointer;font-size:16px;background:none;border:none;}
+.toast b{color:var(--verde);}
+@keyframes slideUp{from{opacity:0;transform:translate(-50%,20px);}to{opacity:1;transform:translate(-50%,0);}}
+
+/* ===== NOTIFICAÇÃO DE VENDA ===== */
+
+/* ===== FADE ===== */
+.fade{animation:fade .4s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* =========================================================
+   PÁGINA FINAL (RESULTADO) — estilo da landing
+   ========================================================= */
+.result{max-width:900px;margin:0 auto;padding:0 0 40px;}
+.result .container{max-width:760px;margin:0 auto;padding:0 22px;}
+.res-hero{background:rgba(255,255,255,.94);border-radius:22px;box-shadow:0 12px 50px rgba(26,77,56,.14);padding:34px 30px;text-align:center;margin:28px 20px 24px;}
+.res-hero .kicker{font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde-claro);margin-bottom:12px;}
+.res-hero h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--verde-escuro);line-height:1.3;margin-bottom:14px;}
+.res-hero h1 span{color:var(--verde-claro);}
+.res-hero p{font-size:15px;color:#5f6f68;line-height:1.65;max-width:560px;margin:0 auto;}
+.res-socialbar{display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.9);border-radius:14px;padding:12px 16px;margin:0 20px 30px;font-size:13px;color:var(--cinza);font-weight:600;box-shadow:0 4px 20px rgba(26,77,56,.08);}
+.res-socialbar b{color:var(--verde);}
+.live-count{display:inline-block;font-weight:800;color:var(--verde);min-width:20px;text-align:center;transition:transform .25s ease,color .25s ease;}
+.live-count.bump{transform:scale(1.35);color:var(--verde-claro);}
+
+.res-section{padding:26px 0;}
+.res-h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--verde-escuro);text-align:center;line-height:1.3;margin-bottom:8px;}
+.res-h2 span{color:var(--verde-claro);}
+.res-sub{text-align:center;font-size:14px;color:#6f807a;margin-bottom:26px;}
+
+.mod-card{background:#fff;border-radius:14px;border:1px solid #e4ede9;padding:20px 22px;margin-bottom:12px;box-shadow:0 2px 14px rgba(46,125,90,.06);}
+.mod-head{display:flex;align-items:center;gap:14px;}
+.mod-num{width:38px;height:38px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,var(--verde),var(--verde-claro));color:#fff;font-family:'Playfair Display',serif;font-weight:900;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.mod-head h3{font-family:'Playfair Display',serif;font-size:16px;color:var(--verde-escuro);}
+.mod-card p{font-size:13.5px;color:#66756f;line-height:1.65;margin-top:12px;}
+.mod-result{background:var(--verde-suave);border-radius:8px;padding:10px 14px;margin-top:12px;font-size:12.5px;color:var(--verde);font-weight:700;}
+.mod-result::before{content:'✓ Resultado: ';}
+
+/* ===== PROVA CIENTÍFICA (mesma da landing) ===== */
+.prova-numero{font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:#c0392b;line-height:1;margin-bottom:6px;text-align:center;}
+.prova-numero-legenda{font-size:15.5px;color:#666;max-width:420px;margin:0 auto 26px;line-height:1.6;text-align:center;}
+.prova-noticia{max-width:620px;margin:0 auto;background:#fff;border:1px solid #e4e4e4;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.10);}
+.prova-noticia img{width:100%;height:auto;display:block;}
+.prova-fonte{font-size:11.5px;color:#999;padding:12px 16px;text-align:left;border-top:1px solid #f0f0f0;line-height:1.6;}
+.prova-texto{max-width:620px;margin:26px auto 0;font-size:16px;line-height:1.75;color:var(--cinza);text-align:left;}
+
+/* ===== PROJEÇÃO (tela final, depois de outros_objetivos) ===== */
+.proj-chart-tt{font-size:12.5px;font-weight:800;color:var(--verde-escuro);text-align:center;margin:26px 0 8px;}
+.proj-chart-wrap{position:relative;width:100%;aspect-ratio:320/170;}
+.proj-chart-wrap svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.proj-chart-label{position:absolute;transform:translate(-50%,-100%);background:#fff;border:1.5px solid #e2ece7;border-radius:8px;padding:3px 7px;font-size:9px;font-weight:800;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.10);}
+.proj-chart-days{position:relative;height:14px;margin:4px 0 10px;}
+.proj-chart-day{position:absolute;transform:translateX(-50%);font-size:9.5px;color:#8a9a92;font-weight:700;white-space:nowrap;}
+.proj-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0;}
+.proj-compare-col{border-radius:14px;padding:14px 12px;}
+.proj-compare-img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;border-radius:10px;display:block;margin-bottom:10px;}
+.proj-compare-col.ruim{background:#fdecec;}
+.proj-compare-col.bom{background:#eef7f1;}
+.proj-compare-col h5{font-size:12.5px;font-weight:900;margin:0 0 8px;text-align:center;}
+.proj-compare-col.ruim h5{color:var(--vermelho);}
+.proj-compare-col.bom h5{color:var(--verde-escuro);}
+.proj-compare-col ul{list-style:none;padding:0;margin:0;font-size:12px;color:#4a4a4a;line-height:1.6;}
+.proj-compare-col li{margin-bottom:6px;}
+.glp-metric{margin-bottom:10px;}
+.glp-metric:last-child{margin-bottom:0;}
+.glp-metric-top{display:flex;justify-content:space-between;font-size:10.5px;font-weight:700;color:#4a4a4a;margin-bottom:4px;}
+.glp-metric-top .val{font-weight:900;}
+.proj-compare-col.ruim .glp-metric-top .val{color:var(--vermelho);}
+.proj-compare-col.bom .glp-metric-top .val{color:var(--verde-escuro);}
+.glp-bar{height:7px;border-radius:10px;background:#fff;overflow:hidden;}
+.glp-bar-fill{height:100%;border-radius:10px;}
+.proj-compare-col.ruim .glp-bar-fill{background:linear-gradient(90deg,#e05a4e,#f0a05a);}
+.proj-compare-col.bom .glp-bar-fill{background:linear-gradient(90deg,var(--verde-escuro),var(--verde-claro));}
+.prova-texto p{margin-bottom:14px;}
+.prova-texto p:last-child{margin-bottom:0;}
+@media(max-width:768px){.prova-numero{font-size:58px;}.prova-texto{font-size:15px;}}
+
+/* tabela "quanto vale destravar" */
+.valor-box{background:#fff;border:1px solid #e4ede9;border-radius:16px;padding:8px 22px;margin-top:8px;box-shadow:0 2px 14px rgba(46,125,90,.06);}
+.valor-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #f0f5f2;font-size:14px;}
+.valor-row:last-child{border-bottom:none;}
+.valor-row .lbl{color:var(--cinza);font-weight:700;}
+.valor-row .num{color:var(--vermelho);font-weight:800;white-space:nowrap;}
+.valor-row.total{background:#fbf1f0;margin:0 -22px;padding:16px 22px;border-radius:12px;}
+.valor-nota{text-align:center;font-size:13px;color:#7d9488;margin-top:16px;line-height:1.7;}
+.valor-nota .red{color:var(--vermelho);font-weight:700;}
+
+/* decisão (2 opções) */
+.dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;}
+.dec-col{border-radius:16px;padding:24px 20px;text-align:center;font-size:13.5px;line-height:1.6;}
+.dec-col .dt{font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
+.dec-col.op1{background:#fff;border:1px solid #e4ede9;color:#66756f;}
+.dec-col.op1 .dt{color:var(--vermelho);}
+.dec-col.op2{background:var(--verde-suave);border:1px solid var(--verde-claro);color:#3a5a4c;box-shadow:0 6px 24px rgba(76,175,130,.18);}
+.dec-col.op2 .dt{color:var(--verde);}
+
+/* depoimentos */
+.dep-carousel{overflow:hidden;padding:6px 0 16px;}
+.dep-track{display:flex;gap:16px;width:max-content;padding:0 8px;animation:dep-scroll 34s linear infinite;}
+.dep-track:hover{animation-play-state:paused;}
+@keyframes dep-scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.dep-c{background:#fff;border-radius:18px;border:1px solid #e4ede9;padding:22px 20px;min-width:270px;max-width:270px;box-shadow:0 4px 20px rgba(46,125,90,.08);display:flex;flex-direction:column;text-align:center;}
+.dep-c img{width:64px;height:64px;border-radius:50%;object-fit:cover;margin:0 auto 10px;border:3px solid var(--verde-suave);}
+.dep-c .n{font-weight:900;font-size:14px;color:var(--cinza);}
+.dep-c .id{font-size:12px;color:#a8b8b1;margin-bottom:6px;}
+.dep-c .st{color:#f5a623;font-size:14px;letter-spacing:2px;margin-bottom:10px;}
+.dep-c .qt{font-style:italic;font-weight:700;font-size:13.5px;color:var(--verde);margin-bottom:8px;line-height:1.45;}
+.dep-c .tx{font-size:12.5px;color:#66756f;line-height:1.6;text-align:left;}
+
+/* quem é (expert) */
+.quem{background:rgba(255,255,255,.9);border-radius:18px;padding:30px 24px;text-align:center;box-shadow:0 4px 20px rgba(26,77,56,.08);}
+.quem .foto{width:150px;height:150px;border-radius:50%;border:4px solid var(--verde-claro);box-shadow:0 0 34px rgba(76,175,130,.4);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;background:var(--verde-suave);font-family:'Playfair Display',serif;font-size:34px;font-weight:900;color:var(--verde);line-height:1.05;}
+.quem h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--verde-escuro);margin-bottom:12px;}
+.quem h3 span{color:var(--verde-claro);}
+.quem p{font-size:14px;color:#5f6f68;line-height:1.75;max-width:520px;margin:0 auto;}
+.quem p span{color:var(--verde);font-weight:700;}
+
+/* garantia img */
+.gar-img{max-width:500px;width:92%;border-radius:16px;display:block;margin:0 auto;}
+
+/* oferta final */
+.oferta-final{background:#fff;border-radius:22px;box-shadow:0 12px 50px rgba(0,0,0,.12);padding:34px 28px;max-width:460px;margin:0 auto;text-align:center;position:relative;overflow:hidden;border:1px solid #eadfce;}
+.oferta-final::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:var(--verde);}
+.oferta-final .ot{font-family:'Playfair Display',serif;font-size:22px;color:var(--verde-escuro);margin-bottom:18px;}
+.of-item{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#556a60;border-bottom:1px solid #f0f5f2;text-align:left;}
+.of-item:last-of-type{border-bottom:none;}
+.of-item .ic{width:19px;height:19px;border-radius:50%;background:var(--verde);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.of-item .nm{flex:1;}
+.of-item .pr{flex-shrink:0;color:var(--verde-claro);text-decoration:line-through;font-weight:700;font-size:12.5px;}
+.of-block{text-align:left;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--verde);margin:16px 0 4px;}
+.of-block.bonus{color:var(--dourado);}
+.of-de{font-size:15px;color:#a8b8b1;text-decoration:line-through;margin-top:20px;}
+.of-por{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--verde-claro);margin-top:6px;}
+.of-val{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--verde-escuro);line-height:1;margin:4px 0;}
+.of-avista{font-size:14px;color:#8aa79a;margin-bottom:22px;}
+.of-secure{font-size:12px;color:#a8b8b1;margin-top:12px;}
+
+/* faq */
+.faq details{background:#fff;border-radius:12px;margin-bottom:10px;border:1px solid #e4ede9;overflow:hidden;}
+.faq summary{padding:16px 20px;font-size:14.5px;font-weight:700;color:var(--cinza);cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;gap:12px;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:'+';font-size:22px;color:var(--verde);font-weight:300;flex-shrink:0;transition:transform .3s;}
+.faq details[open] summary::after{transform:rotate(45deg);}
+.faq .a{padding:0 20px 18px;font-size:13.5px;color:#66756f;line-height:1.7;}
+
+.res-footer{text-align:center;padding:30px 20px;font-size:12px;color:#8aa79a;line-height:1.7;}
+
+/* ===== DIAGNÓSTICO (IMC + sinais) ===== */
+.diag-imc{text-align:center;margin:22px 0 6px;}
+.diag-imc-tt{font-family:'Playfair Display',serif;font-size:19px;color:var(--verde-escuro);font-weight:900;}
+.diag-imc-val{font-size:14px;color:var(--cinza);margin:8px 0 4px;}
+.diag-imc-val strong{color:var(--verde-escuro);}
+.diag-imc-zona{font-weight:800;}
+.diag-bar-wrap{margin:34px 6px 0;}
+.diag-bar{position:relative;height:24px;display:flex;border-radius:20px;overflow:visible;}
+.diag-bar .z{flex:1;height:100%;}
+.diag-bar .z:first-child{border-radius:20px 0 0 20px;}
+.diag-bar .z:last-child{border-radius:0 20px 20px 0;}
+.diag-bar .z1{background:#bcd3f0;}
+.diag-bar .z2{background:#bfe6c8;}
+.diag-bar .z3{background:#f5db8e;}
+.diag-bar .z4{background:#e7a6a0;}
+.diag-pointer{position:absolute;top:-32px;transform:translateX(-50%);background:var(--verde-escuro);color:#fff;font-size:11px;font-weight:800;padding:5px 9px;border-radius:8px;white-space:nowrap;z-index:2;}
+.diag-pointer::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--verde-escuro);}
+.diag-labels{display:flex;font-size:10.5px;color:#9aaaa2;font-weight:700;margin:8px 0 4px;}
+.diag-labels span{flex:1;text-align:center;}
+.lib-box{text-align:center;margin:18px 0 14px;}
+.lib-label{font-size:11.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--verde);}
+.lib-pct{font-family:'Open Sans',sans-serif;font-size:42px;font-weight:900;color:var(--verde-escuro);line-height:1;margin:6px 0 10px;font-variant-numeric:tabular-nums;}
+.lib-bar{height:11px;background:#e3ede8;border-radius:20px;overflow:hidden;}
+.lib-fill{height:100%;width:0;background:linear-gradient(90deg,var(--verde-escuro),var(--verde-claro));border-radius:20px;}
+.meta-img{border:2px dashed #cdddd4;border-radius:14px;background:#f4faf7;color:#9aaaa2;font-size:13px;padding:46px 16px;margin:0 0 18px;}
+.causa-box{background:#fdecec;border-radius:14px;padding:16px 18px;margin:16px 0;}
+.causa-box h4{color:var(--vermelho);font-size:14.5px;line-height:1.35;margin-bottom:8px;}
+.causa-box p{font-size:13.5px;color:#8a5f5c;margin:0;}
+.diag-hl{background:var(--vermelho);color:#fff;font-weight:800;padding:1px 5px;border-radius:4px;}
+.diag-chart{background:#fff;border:1px solid #e4ede9;border-radius:14px;padding:18px 16px 14px;margin:18px 0;text-align:center;box-shadow:0 2px 14px rgba(46,125,90,.06);}
+.diag-chart-leg{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:8px;font-size:12px;color:#66756f;font-weight:700;}
+.diag-chart-leg i{display:inline-block;width:14px;height:4px;border-radius:3px;vertical-align:middle;margin-right:5px;}
+.diag-chart-leg .dg{background:var(--verde);}
+.diag-chart-leg .dr{background:#d3bdbb;}
+.diag-aviso{background:#fbf3e3;border-left:4px solid var(--dourado);border-radius:8px;padding:14px 16px;font-size:13px;color:#6a5a3a;line-height:1.6;margin:18px 0;}
+.diag-aviso strong{color:var(--verde-escuro);}
+.alerta-box{background:#fdecec;border-radius:14px;padding:18px 20px;margin:16px 0;}
+.alerta-box h4{color:var(--vermelho);font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.alerta-box .it{font-size:13.5px;color:#8a5f5c;padding:5px 0;display:flex;gap:9px;align-items:flex-start;line-height:1.55;}
+.alerta-box .it::before{content:'✕';color:var(--vermelho);font-weight:900;flex-shrink:0;}
+.solucao-box{background:none;border:none;border-radius:0;padding:0;margin:22px 0;}
+.solucao-box h4{color:#1a1a1a;font-size:20px;font-weight:900;margin-bottom:10px;line-height:1.35;display:flex;gap:9px;align-items:flex-start;justify-content:center;text-align:center;}
+.solucao-box p{font-size:13.5px;color:#3a5a4c;line-height:1.65;}
+.solucao-box p strong{color:var(--verde-escuro);}
+
+@media(max-width:600px){
+  .intro-h1{font-size:26px;}
+  .q-title{font-size:22px;}
+  .card-quiz{padding:26px 20px;}
+  .res-hero h1{font-size:23px;}
+  .res-h2{font-size:22px;}
+  .ad-grid,.res-ad-grid,.dec-grid{grid-template-columns:1fr;}
+  .of-val{font-size:42px;}
+  .vsl-ask{font-size:20px;}
+}
+
+/* ===== POP-UP DE SAÍDA (BOTÃO VOLTAR) ===== */
+.saida-overlay{position:fixed;inset:0;background:rgba(20,40,30,.78);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px;z-index:9999;}
+.saida-overlay.aberto{display:flex;}
+.saida-modal{background:#fff;border-radius:24px;padding:44px 32px 28px;box-shadow:0 12px 60px rgba(0,0,0,.12);width:min(460px,100%);max-height:92vh;overflow:hidden auto;text-align:center;position:relative;animation:saidaEntra .28s ease-out;}
+.saida-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:var(--verde);}
+@keyframes saidaEntra{from{opacity:0;transform:translateY(16px) scale(.97);}to{opacity:1;transform:none;}}
+.saida-fechar{position:absolute;top:12px;right:14px;background:none;border:none;font-size:26px;line-height:1;color:#ccc;cursor:pointer;padding:4px 8px;z-index:2;}
+.saida-fechar:hover{color:#888;}
+.saida-selo{text-transform:uppercase;color:var(--verde-claro);font-weight:700;letter-spacing:1px;font-size:13px;margin-bottom:10px;}
+.saida-titulo{font-family:'Open Sans',sans-serif;font-size:27px;font-weight:800;line-height:1.25;color:var(--verde-escuro);margin-bottom:14px;}
+.saida-titulo span{color:var(--verde-claro);}
+.saida-sub{color:#222;font-weight:700;font-size:15px;line-height:1.7;letter-spacing:.3px;margin-bottom:24px;}
+.saida-de{font-size:16px;color:#aaa;text-decoration:line-through;margin-bottom:4px;}
+.saida-por{font-size:13px;text-transform:uppercase;color:var(--verde-claro);font-weight:700;letter-spacing:1px;margin-bottom:4px;}
+.saida-val{font-family:'Open Sans',sans-serif;font-size:46px;font-weight:900;color:var(--verde-escuro);line-height:1;margin-bottom:6px;}
+.saida-economia{font-size:15px;font-weight:700;color:var(--verde);margin-bottom:26px;}
+.saida-modal .btn{font-size:16px;padding:17px 24px;}
+.saida-recusa{display:inline-block;margin-top:14px;font-size:13px;color:#aaa;text-decoration:underline;background:none;border:none;cursor:pointer;font-family:inherit;}
+.saida-recusa:hover{color:#888;}
+.saida-rodape{font-size:12px;color:#999;margin-top:12px;letter-spacing:.3px;}
+@media (max-width:768px){
+  .saida-modal{padding:36px 20px 22px;border-radius:18px;}
+  .saida-titulo{font-size:22px;}
+  .saida-sub{font-size:14px;}
+  .saida-val{font-size:38px;}
+}
+
+/* ===== QUIZ NOVO: abertura, quebras, diagnóstico, perfil, oferta ===== */
+.card-quiz.centro{text-align:center;}
+.intro-kicker{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:800;color:var(--verde);margin-bottom:12px;}
+.intro-toque{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#9aa8a2;margin:12px 0 20px;}
+.q-sub{font-size:14px;color:#7d9488;text-align:center;margin:-4px 0 16px;}
+.btn[disabled]{opacity:.45;pointer-events:none;box-shadow:none;}
+.opt.chk .opt-radio{border-radius:7px;}
+
+.brk-kicker{font-size:12px;letter-spacing:1.6px;text-transform:uppercase;font-weight:800;color:var(--verde);text-align:center;margin:14px 0 8px;}
+.brk-title{font-family:'Open Sans',sans-serif;font-size:25px;font-weight:900;color:var(--verde-escuro);line-height:1.25;text-align:center;margin:8px 0 16px;}
+.brk-title span{color:var(--verde-claro);}
+.brk-title .red{color:var(--vermelho);}
+.brk-text{font-size:16px;color:#4a5c53;line-height:1.65;margin:0 0 12px;text-align:center;}
+.brk-text strong{color:var(--verde-escuro);}
+.brk-img{width:100%;border-radius:14px;display:block;margin:6px 0 16px;}
+.brk-red{color:var(--vermelho);font-weight:800;text-align:center;font-size:15px;margin:14px 0 4px;}
+.brk-eco{display:inline-block;background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:13.5px;border-radius:20px;padding:7px 14px;margin:4px 0 14px;}
+
+.stat-card{background:#fff;border:1px solid #e2ece7;border-radius:16px;padding:18px 16px;margin:4px 0 16px;text-align:center;}
+.stat-card .big{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:var(--vermelho);line-height:1;}
+.stat-card .leg{font-size:14.5px;color:#4a5c53;margin-top:8px;line-height:1.5;}
+.stat-card img{width:100%;border-radius:8px;margin-top:12px;display:block;}
+.stat-card .fonte{font-size:11px;color:#9aaaa2;margin-top:6px;}
+.bonecos{display:flex;justify-content:center;gap:4px;font-size:22px;margin-top:10px;}
+.bonecos .on{filter:none;} .bonecos .off{opacity:.25;}
+
+.alerta{display:flex;gap:10px;align-items:center;justify-content:center;background:#fdecec;border:1px solid #f3c4bf;color:var(--vermelho);font-weight:800;font-size:14.5px;border-radius:12px;padding:12px 14px;margin:16px 0 14px;}
+.diag-text{font-size:17px;font-weight:800;color:#1f2d27;line-height:1.55;text-align:center;margin:16px 0;}
+.diag-text mark{background:var(--vermelho);color:#fff;padding:1px 6px;border-radius:4px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+.pontos{list-style:none;background:#fff8f7;border:1px solid #f3d6d2;border-radius:14px;padding:14px 16px;margin:14px 0;text-align:left;}
+.pontos li{display:flex;gap:10px;font-size:14.5px;color:#3d2f2d;line-height:1.5;margin-bottom:10px;}
+.pontos li:last-child{margin-bottom:0;}
+.pontos li::before{content:'⚠️';flex-shrink:0;}
+.check-box{list-style:none;background:#e9f6ee;border:1px solid #cfe9db;border-radius:14px;padding:16px;margin:16px 0;text-align:left;}
+.check-box li{display:flex;gap:10px;font-size:14.5px;color:#2b3b33;line-height:1.5;margin-bottom:10px;}
+.check-box li:last-child{margin-bottom:0;}
+.check-box li::before{content:'✅';flex-shrink:0;}
+.check-box strong{color:var(--verde-escuro);}
+
+.indice{background:#fff;border:1px solid #e2ece7;border-radius:16px;padding:16px;margin:14px 0;text-align:center;}
+.indice .k{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#8a9a92;}
+.indice .v{font-family:'Playfair Display',serif;font-size:50px;font-weight:900;line-height:1.05;margin-top:4px;}
+.indice .v small{font-size:22px;color:#9aaaa2;}
+.indice-bar{height:12px;border-radius:20px;margin:12px 4px 8px;background:linear-gradient(90deg,#e05a4e 0%,#f0c05a 50%,#4caf82 100%);position:relative;}
+.indice-bar span{position:absolute;top:50%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid #1f2d27;box-shadow:0 2px 8px rgba(0,0,0,.18);}
+.indice .nv{font-size:14.5px;font-weight:800;margin-top:6px;}
+.indice .nota{font-size:11.5px;color:#9aaaa2;margin-top:4px;}
+
+.chart{background:#fff;border:1px solid #e2ece7;border-radius:16px;padding:14px 12px 10px;margin:14px 0;}
+.chart svg{width:100%;height:auto;display:block;}
+.chart .leg{display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:#8a9a92;margin-top:4px;padding:0 4px;}
+.chart .nota{font-size:10.5px;color:#a8b5ae;text-align:center;margin-top:6px;}
+
+.imc-box{background:#fff;border:1px solid #e2ece7;border-radius:16px;padding:16px;margin:14px 0;text-align:left;}
+.imc-tt{font-size:15px;font-weight:900;color:#1f2d27;}
+.imc-bar{height:10px;border-radius:10px;background:linear-gradient(90deg,#7fb3e0 0%,#4caf82 28%,#f0c05a 58%,#e05a4e 100%);position:relative;margin:34px 6px 8px;}
+.imc-pin{position:absolute;top:50%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:#fff;border:4px solid #1f2d27;}
+.imc-tag{position:absolute;bottom:18px;transform:translateX(-50%);background:#1f2d27;color:#fff;font-size:11px;font-weight:800;padding:3px 9px;border-radius:10px;white-space:nowrap;}
+.imc-esc{display:flex;justify-content:space-between;font-size:10.5px;color:#8a9a92;font-weight:700;}
+.imc-faixa{font-weight:900;font-size:14.5px;margin-top:10px;}
+.imc-nota{font-size:11.5px;color:#9aaaa2;margin-top:2px;}
+
+.mini-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;text-align:left;}
+.mini-card{background:#fff;border:1px solid #e2ece7;border-radius:12px;padding:12px;}
+.mini-card .k{font-size:10.5px;color:#8a9a92;font-weight:800;text-transform:uppercase;letter-spacing:.6px;}
+.mini-card .v{font-size:15px;font-weight:900;color:#1f2d27;margin-top:3px;line-height:1.3;}
+
+.fases{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0;}
+.fase{background:#fff;border:1.5px solid #e2ece7;border-radius:12px;padding:12px 8px;text-align:center;position:relative;}
+.fase.foco{border-color:var(--verde);background:var(--verde-suave);}
+.fase .n{font-size:10.5px;font-weight:900;color:var(--verde);letter-spacing:1px;text-transform:uppercase;}
+.fase .t{font-size:14px;font-weight:900;color:#1f2d27;margin:4px 0 6px;line-height:1.2;}
+.fase p{font-size:12px;color:#5f6f68;line-height:1.45;}
+.fase .selo{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;font-size:9.5px;font-weight:900;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:10px;white-space:nowrap;}
+
+.an-list{list-style:none;margin:22px 0 8px;text-align:left;}
+.an-list li{display:flex;gap:12px;align-items:center;font-size:15px;color:#9aaaa2;font-weight:700;margin-bottom:12px;transition:color .3s;}
+.an-list li .ic{width:24px;height:24px;border-radius:50%;border:2px solid #d5e2db;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;transition:all .3s;}
+.an-list li.done{color:var(--verde-escuro);}
+.an-list li.done .ic{background:var(--verde);border-color:var(--verde);color:#fff;}
+.an-list li.done .ic::after{content:'✓';}
+
+.proj-imgs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+.proj-imgs figure{margin:0;background:#fff;border:1px solid #e2ece7;border-radius:14px;overflow:hidden;}
+.proj-imgs img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block;}
+.proj-imgs figcaption{font-size:12.5px;font-weight:800;color:#4a5c53;padding:8px 6px;}
+.proj-imgs figure.bom figcaption{color:var(--verde);}
+.proj-meta{display:inline-block;background:#1f2d27;color:#fff;font-weight:800;font-size:13.5px;border-radius:20px;padding:7px 14px;margin:2px 0 6px;}
+
+.kelly{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid #e2ece7;border-radius:16px;padding:12px;margin:14px 0;text-align:left;}
+.kelly img{width:74px;height:74px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+.kelly .nm{font-weight:900;color:#1f2d27;font-size:15.5px;}
+.kelly .ds{font-size:13px;color:#5f6f68;line-height:1.45;margin-top:2px;}
+
+.vsl-pronto{display:inline-block;background:var(--verde-suave);color:var(--verde);font-weight:800;font-size:13.5px;border-radius:20px;padding:7px 14px;margin-top:6px;}
+.vsl-frame{position:relative;border-radius:14px;overflow:hidden;margin:0 0 18px;background:#000;}
+.vsl-frame iframe,.vsl-frame video{width:100%;aspect-ratio:9/16;max-height:78vh;border:0;display:block;}
+.oferta{background:#fff;border:2px solid var(--verde-claro);border-radius:18px;padding:22px 18px;margin-top:6px;text-align:center;}
+.of-tag{display:inline-block;background:var(--verde);color:#fff;font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;padding:5px 12px;border-radius:14px;}
+.of-tt{font-family:'Open Sans',sans-serif;font-size:21px;font-weight:900;color:var(--verde-escuro);margin:12px 0 12px;line-height:1.25;}
+.of-lista{list-style:none;text-align:left;margin:0 0 12px;}
+.of-lista li{display:flex;gap:10px;font-size:14.5px;color:#2b3b33;line-height:1.45;padding:9px 0;border-bottom:1px solid #eef3f0;}
+.of-lista li::before{content:'✓';color:var(--verde);font-weight:900;flex-shrink:0;}
+.of-lista.bonus li::before{content:'🎁';}
+.of-bonus-tt{font-size:12px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:var(--dourado);margin:14px 0 2px;text-align:left;}
+.of-preco{margin:16px 0 14px;}
+.of-preco .de{font-size:14px;color:#9aaaa2;text-decoration:line-through;}
+.of-preco .por{font-size:13px;color:#5f6f68;font-weight:700;margin-top:2px;}
+.of-preco .val{font-family:'Open Sans',sans-serif;font-size:44px;font-weight:900;color:var(--verde-escuro);line-height:1.1;}
+.of-preco .parc{font-size:14px;color:var(--verde);font-weight:800;}
+.of-rodape{font-size:12px;color:#8a9a92;margin-top:10px;}
+.of-garantia{width:100%;max-width:300px;display:block;margin:14px auto 0;border-radius:12px;}
+.of-aviso{font-size:11px;color:#a8b5ae;margin-top:12px;line-height:1.5;}
+
+@media(max-width:420px){
+  .fases{grid-template-columns:1fr;}
+  .brk-title{font-size:23px;}
+}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+/* ===== gerado a partir do quiz-caneta-zero.html: quiz 1 ===== */
+/* =========================================================
+   BANCO DE PERGUNTAS (reaproveitadas entre os quizzes)
+   ATENÇÃO: o Índice de saciedade (PESOS, mais abaixo) lê a POSIÇÃO da
+   opção. Ao reordenar opções de uma pergunta, reordene o peso junto.
+   ========================================================= */
+const IMG_CORPO_HOJE  = ['corpo-hoje-mulher-magra.jpg','corpo-hoje-mulher-gordinha.jpg','corpo-hoje-mulher-sobrepeso.jpg','corpo-hoje-mulher-definida.jpg'];
+const IMG_CORPO_SONHO = ['corpo-magra.jpg','corpo-definida.jpg','corpo-curvas.jpg','corpo-media.jpg'];
+
+const Q = {
+  nome: { t:'text', id:'nome', q:'Qual o seu nome?', ph:'Digite o seu primeiro nome' },
+  corpo_hoje: { t:'q', id:'corpo_hoje', q:a=>N(a,'como você descreveria o seu corpo hoje?'),
+    opts:['Magra, mas sem definição','Alguns quilos a mais, principalmente na barriga','Acima do peso, quero uma mudança grande','Já tenho uma base, quero refinar'],
+    imgs:IMG_CORPO_HOJE },
+  corpo_sonho: { t:'q', id:'corpo_sonho', q:'Qual é o seu corpo dos sonhos?',
+    opts:['Magra','Definida','Com curvas','Média'], imgs:IMG_CORPO_SONHO },
+  peso_muda: { t:'q', id:'peso_muda', q:'Como o seu peso costuma mudar?',
+    opts:['🪶 Tenho dificuldade para ganhar peso','🔄 Ganho e perco peso com facilidade','🐢 Ganho rápido e perco devagar'] },
+  canetinha: { t:'q', id:'canetinha', q:'Você usa ou já usou alguma canetinha emagrecedora?', sub:'Ozempic, Mounjaro, Wegovy, Saxenda...',
+    opts:['💉 Sim, estou usando agora','📉 Estou usando, mas parei de emagrecer','✋ Já usei, mas parei','🤔 Estou pensando em usar','🚫 Não uso e não pretendo usar'] },
+  fome_depois: { t:'q', id:'fome_depois', q:'Com que frequência você sente fome logo depois de comer?',
+    opts:['😣 Quase sempre','😐 Algumas vezes por semana','🙂 Raramente','😌 Nunca, saio satisfeita da mesa'] },
+  habitos: { t:'q', id:'habitos', multi:true, q:'Você tem algum destes hábitos?',
+    opts:['😟 Comer por ansiedade ou tédio','🍝 Exagerar nas refeições','🌙 Beliscar à noite','⏭️ Pular refeições e compensar depois','✅ Nenhum deles'] },
+  vontades: { t:'q', id:'vontades', multi:true, q:'Do que você mais sente vontade de comer?',
+    opts:['🍫 Doces','🍞 Pão e massas','🍟 Salgadinhos e frituras','🍔 Comida rápida','🥤 Refrigerante','🍷 Bebida alcoólica'] },
+  proteina: { t:'q', id:'proteina', q:'Tem proteína na maioria das suas refeições?', sub:'Carne, frango, peixe, ovos, queijo, iogurte',
+    opts:['❌ Quase nunca','🤏 Só no almoço','✅ Na maioria delas','💪 Em todas, sempre'] },
+  energia: { t:'q', id:'energia', q:'Como fica a sua energia ao longo do dia?',
+    opts:['🪫 Baixa quase o dia todo','😴 Despenca depois do almoço','〰️ Oscila bastante','🔋 Estável o dia inteiro'] },
+  sono: { t:'q', id:'sono', q:'Quantas horas você dorme por noite, em média?',
+    opts:['⚠️ Menos de 5 horas','😪 Entre 5 e 6 horas','😌 Entre 7 e 8 horas','😴 Mais de 8 horas'] },
+  estresse: { t:'q', id:'estresse', q:'Como está o seu nível de estresse no dia a dia?',
+    opts:['🔥 Muito alto, vivo no limite','😬 Alto na maior parte do tempo','🙂 Moderado, dá pra levar','😌 Baixo, estou tranquila'] },
+  treino_frequencia: { t:'q', id:'treino_frequencia', q:'Quantas vezes por semana você se exercita?',
+    opts:['😴 Nenhuma','🚶 1 ou 2 vezes','🏃 3 ou 4 vezes','💪 5 vezes ou mais'] },
+  agua: { t:'q', id:'agua', q:'Quanta água você bebe por dia?', sub:'1 copo médio tem cerca de 240 ml',
+    opts:['☕ Quase nada, tomo mais café ou chá','💧 Cerca de 2 copos','🥤 De 3 a 6 copos','🚰 Mais de 6 copos'] },
+  impediu: { t:'q', id:'impediu', multi:true, q:'O que mais atrapalhou você nas outras vezes?',
+    opts:['🍽️ Fome e ansiedade','🗺️ Não tinha um plano claro','⏰ Falta de tempo','🔁 Comecei e desisti no meio','🧬 Achei que era genética'] },
+  motivacao: { t:'q', id:'motivacao', multi:true, q:'O que mais motiva você a emagrecer agora?',
+    opts:['🪞 Gostar do que vejo no espelho','💃 Me sentir confiante no meu corpo','❤️ Ter saúde e viver mais','👧 Ter disposição para os filhos','👗 Voltar a usar as roupas que gosto','💪 Provar para mim mesma que consigo'] },
+  confianca: { t:'q', id:'confianca', q:a=>{ const m = Math.round(num('meta_peso')); return m ? `Quão confiante você está em chegar aos ${m} kg?` : 'Quão confiante você está em chegar na sua meta?'; },
+    opts:['💪 Acredito que consigo!','🤞 Estou insegura, mas vou tentar','😟 Ainda tenho muitas dúvidas'] },
+  peso:   { t:'ruler', id:'peso',   q:'Qual é o seu peso atual?', units:[{u:'kg',min:40,max:160,def:70},{u:'lb',min:88,max:352,def:154}] },
+  altura: { t:'ruler', id:'altura', q:'Qual é a sua altura?',     units:[{u:'cm',min:140,max:200,def:163},{u:'pol',min:55,max:79,def:64}] },
+  meta_peso: { t:'ruler', id:'meta_peso', q:'Qual peso você quer alcançar?',
+    units:[{u:'kg',min:40,max:160,def:()=>Math.max(40, Math.round((num('peso')||70)-6))},{u:'lb',min:88,max:352,def:143}] }
+};
+/* copia uma pergunta do banco, com ajustes (ex.: seção) */
+function P(id, extra){ return Object.assign({}, Q[id], extra||{}); }
+
+/* pesos do Índice de saciedade, na ORDEM das opções acima */
+let PESOS = {
+  fome_depois:       [0, 7,14,17],
+  proteina:          [0, 9,18,22],
+  sono:              [0, 7,17,14],
+  estresse:          [0, 5, 9,12],
+  treino_frequencia: [0, 7,14,18],
+  agua:              [0, 4, 9,14],
+  energia:           [0, 5, 7,14]
+};
+
+/* =========================================================
+   BIÓTIPO E FASES (quiz 2 e 3)
+   O biótipo vem só de "Como o seu peso costuma mudar?".
+   As 3 fases são os módulos reais do produto.
+   ========================================================= */
+const BIO = [
+  { nome:'Ectomorfo', foco:1, txt:'O seu corpo emagrece com facilidade, mas quando você come pouco ele leva músculo junto. O protocolo precisa tirar gordura protegendo a massa magra que você já tem.' },
+  { nome:'Mesomorfo', foco:2, txt:'O seu corpo responde rápido para os dois lados: emagrece fácil e engorda fácil. No seu caso, o mais importante é fazer o peso não voltar quando a rotina aperta.' },
+  { nome:'Endomorfo', foco:0, txt:'O seu corpo guarda com facilidade e solta devagar. No seu caso, controlar a fome e a saciedade pesa mais no resultado do que cortar comida.' }
+];
+function bio(){ return BIO[Math.max(0, idxDe('peso_muda'))] || BIO[2]; }
+
+const FASES = [
+  { nome:'Ativação',   txt:'A saciedade volta a funcionar com proteína, fibra e a ordem certa de comer.' },
+  { nome:'Blindagem',  txt:'Protege a sua massa magra para o metabolismo não desacelerar.' },
+  { nome:'Sem rebote', txt:'Ajusta a rotina para o peso não voltar quando o protocolo terminar.' }
+];
+function fasesHTML(foco){
+  return `<div class="fases">${FASES.map((f,i)=>`
+        <div class="fase${i===foco?' foco':''}">${i===foco?'<span class="selo">Foco no seu caso</span>':''}
+          <div class="n">Fase ${i+1}</div><div class="t">${f.nome}</div><p>${f.txt}</p>
+        </div>`).join('')}</div>`;
+}
+
+/* =========================================================
+   BLOCOS DE CONTEÚDO
+   ========================================================= */
+/* o 82% tem fonte: reportagem sobre o estudo SURMOUNT-4 (print na raiz) */
+function bloco82(){
+  return `
+      <div class="stat-card">
+        <div class="big">82%</div>
+        <div class="leg">das pessoas que pararam o Mounjaro recuperaram parte do peso perdido em até um ano.</div>
+        <img src="pesquisa-mounjaro.jpeg" alt="Reportagem: Mounjaro, 82% ganham peso após fim do tratamento" onerror="this.remove()">
+        <div class="fonte">Reportagem sobre o estudo SURMOUNT-4</div>
+      </div>`;
+}
+function blocoKelly(texto){
+  return `
+      <div class="kelly">
+        <img src="FotoKelly.jpg" alt="Nutri Kelly Firbida" onerror="this.remove()">
+        <div><div class="nm">Nutri Kelly Firbida</div><div class="ds">${texto}</div></div>
+      </div>`;
+}
+function blocoIndice(){
+  const v = calcIndice(), n = nivelIndice(v);
+  return `
+      <div class="indice">
+        <div class="k">Seu índice de saciedade natural</div>
+        <div class="v" style="color:${n.cor};">${v}<small>/100</small></div>
+        <div class="indice-bar"><span style="left:${Math.max(4,Math.min(96,v))}%;border-color:${n.cor};"></span></div>
+        <div class="nv" style="color:${n.cor};">Está ${n.txt}</div>
+        <div class="nota">Estimativa educativa calculada a partir das suas respostas.</div>
+      </div>`;
+}
+/* curva ilustrativa: sem números, só a forma (hoje x com o protocolo) */
+function chartHTML(titulo, rotIni, rotFim){
+  const v = calcIndice();
+  const y0 = Math.round(Math.max(70, Math.min(124, 132 - v)));
+  const d = `M24,${y0} C110,${y0} 170,34 276,26`;
+  return `
+      <div class="chart">
+        <div class="imc-tt" style="text-align:left;margin:0 0 6px 4px;">${titulo}</div>
+        <svg viewBox="0 0 300 150" aria-hidden="true">
+          <defs>
+            <linearGradient id="gLinha" x1="0" x2="1"><stop offset="0" stop-color="#e05a4e"/><stop offset=".5" stop-color="#f0c05a"/><stop offset="1" stop-color="#4caf82"/></linearGradient>
+            <linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4caf82" stop-opacity=".22"/><stop offset="1" stop-color="#4caf82" stop-opacity="0"/></linearGradient>
+          </defs>
+          <g stroke="#eef2ef" stroke-width="1"><line x1="10" y1="40" x2="290" y2="40"/><line x1="10" y1="75" x2="290" y2="75"/><line x1="10" y1="110" x2="290" y2="110"/></g>
+          <path d="${d} L276,140 L24,140 Z" fill="url(#gArea)"/>
+          <path d="${d}" stroke="url(#gLinha)" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <circle cx="24" cy="${y0}" r="7" fill="#e05a4e" stroke="#fff" stroke-width="3"/>
+          <circle cx="276" cy="26" r="7" fill="#4caf82" stroke="#fff" stroke-width="3"/>
+          <text x="24" y="${y0-14}" font-size="11" font-weight="800" fill="#c0574f" font-family="Lato,sans-serif">${rotIni}</text>
+          <text x="276" y="16" font-size="11" font-weight="800" fill="#2e7d5a" text-anchor="end" font-family="Lato,sans-serif">${rotFim}</text>
+        </svg>
+        <div class="leg"><span>Hoje</span><span>Dia 14</span></div>
+        <div class="nota">Gráfico ilustrativo</div>
+      </div>`;
+}
+
+/* ---------- PROJEÇÃO (quiz 2 e 3): datas reais, sem prometer quilos ---------- */
+const EVENTO_FRASE = { 'Praia ou viagem':'a sua viagem', 'Casamento':'o casamento', 'Aniversário':'o aniversário', 'Reencontro com amigos':'o reencontro', 'Evento de trabalho':'o seu evento' };
+function renderProj(){
+  const a = state.a, p = Math.round(num('peso')), m = Math.round(num('meta_peso'));
+  const fim = dataMais(14);
+  const ev = EVENTO_FRASE[semEmoji(a.evento)] || '';
+  const dEv = a.evento_data ? Math.ceil((new Date(a.evento_data+'T12:00:00') - new Date())/86400000) : 0;
+  const meta = (p && m && m<p) ? `Meta: eliminar ${p-m} kg` : (m ? `Meta: ${m} kg` : '');
+  app.innerHTML = frame(`
+      <h2 class="q-title" style="margin-top:16px;">${N(a,'esse é o protocolo que vai colocar você no caminho da sua meta')}</h2>
+      ${meta?`<div class="proj-meta">${meta}</div>`:''}
+      <p class="brk-text" style="margin-top:8px;">Os seus 14 dias começam hoje e terminam em <strong>${fmtData(fim)}</strong>.</p>
+      ${ev && dEv>0 ? `<p class="brk-text">Faltam <strong>${dEv} ${dEv===1?'dia':'dias'}</strong> para ${ev}. ${dEv>=14?'Dá tempo de fazer o protocolo inteiro antes.':'O protocolo começa a trabalhar a seu favor já no primeiro dia.'}</p>` : ''}
+      <div class="proj-imgs">
+        <figure><img src="projecao-hoje.jpg" alt="Você hoje" onerror="this.remove()"><figcaption>Você hoje</figcaption></figure>
+        <figure class="bom"><img src="projecao-protocolo.jpg" alt="Você depois dos 14 dias" onerror="this.remove()"><figcaption>Você depois dos 14 dias</figcaption></figure>
+      </div>
+      <p class="imc-nota" style="text-align:center;">Imagem ilustrativa. Resultados variam de pessoa para pessoa.</p>
+      <button class="btn" style="margin-top:18px;" onclick="go(1)">Continuar</button>`);
+}
+
+/* =========================================================
+   OFERTA (embaixo da mini-VSL)
+   ========================================================= */
+const OFERTA = {
+  titulo: 'Protocolo de 14 dias da Nutri Kelly',
+  itens: [
+    '<span><strong>Ativação do Gatilho GLP-1 Natural:</strong> o que comer e em que ordem para a sua saciedade voltar a funcionar</span>',
+    '<span><strong>Blindagem da Massa Magra:</strong> como emagrecer sem perder músculo</span>',
+    '<span><strong>Redução Sem Efeito Rebote:</strong> para o peso não voltar depois</span>',
+    '<span><strong>O Plano de 14 Dias:</strong> o passo a passo de cada dia</span>'
+  ],
+  bonus: [
+    '<span>Grupo VIP no WhatsApp</span>',
+    '<span>Cardápio semanal + lista de compras</span>',
+    '<span>Guia Anti Efeitos Colaterais</span>'
+  ],
+  cta: 'Quero o meu protocolo →'
+};
+
+/* =========================================================
+   QUIZ 1  (/quiz)  ·  protocolo personalizado + mini-VSL no final
+   O mecanismo (GLP-1 natural) fica escondido no começo: a pessoa entra
+   para receber um protocolo feito para o corpo dela. O diagnóstico só
+   fala do "hormônio da saciedade"; o nome GLP-1 aparece no vídeo e na oferta.
+   Só 2 quebras: "você não está sozinha" e "sua meta é possível".
+   ========================================================= */
+const QUIZ_ID = 'quiz1';
+const BRAND = { nome:'Protocolo Personalizado', sub:'Avaliação gratuita' };
+const INTRO = {
+  kicker: 'Avaliação gratuita · Nutri Kelly Firbida',
+  h1: 'Receba um protocolo de emagrecimento <span>montado para o seu corpo</span>',
+  sub: 'Responda a avaliação de 2 minutos e descubra o que está travando o seu resultado e o que fazer nos próximos 14 dias.'
+};
+const VSL = {
+  titulo: 'Assista ao vídeo antes de acessar o seu protocolo',
+  nomeVideo: 'O hormônio que repete o efeito da canetinha no seu corpo'
+};
+const PERFIL_CARDS = [];
+
+const STEPS = [
+  { t:'intro', id:'intro_idade' },
+  P('nome'),
+  P('corpo_hoje'),
+  { t:'q', id:'objetivo', multi:true, q:'Qual é o seu objetivo?',
+    opts:['🔥 Perder peso de uma vez por todas','💧 Desinchar e me sentir mais leve','⚖️ Emagrecer sem engordar de volta','🍽️ Controlar a fome e a vontade de doce','⚡ Ter mais energia e disposição'] },
+  P('corpo_sonho'),
+  { t:'q', id:'impacto', q:'Como o seu peso tem afetado a sua vida?',
+    opts:['😔 Minha autoestima e confiança estão baixas','😮‍💨 Me sinto cansada e sem disposição','😪 Evito certas roupas e fotos','🩺 Já apareceu nos meus exames','😓 Me sinto pouco atraente'] },
+  { t:'q', id:'tentativas', q:'Você já tentou emagrecer antes?',
+    opts:['🔁 Sim, emagreci, mas o peso voltou','📉 Sim, mas a barriga não saiu','💉 Usei canetinha e voltei a engordar','🙅 Nunca tentei de verdade'] },
+  P('impediu'),
+
+  /* ===== QUEBRA 1: você não está sozinha (prova real: 82%) ===== */
+  { t:'break', id:'nao_esta_sozinha', html:a=>{
+      const eco = tem('tentativas','Nunca') ? 'Você ainda não tentou de verdade'
+                : tem('tentativas','canetinha') ? 'Você marcou que voltou a engordar depois da canetinha'
+                : tem('tentativas','barriga') ? 'Você marcou que a barriga não saiu'
+                : 'Você marcou que o peso voltou';
+      return `
+      <div class="brk-title" style="margin-top:18px;">Você <span>não está sozinha</span></div>
+      <div class="brk-eco">${eco}</div>
+      <p class="brk-text">${tem('tentativas','Nunca') ? 'Então vale saber o que acontece com a maioria das mulheres que tentam, até com quem usa canetinha:' : 'Isso acontece com a maioria das mulheres que tentam emagrecer, até com quem usa canetinha:'}</p>
+      ${bloco82()}
+      <p class="brk-text">Não é falta de força de vontade. Quando a fome volta mais forte do que você, nenhuma dieta se segura por muito tempo.</p>
+      <p class="brk-red">Nas próximas perguntas vamos descobrir o que está travando o seu resultado.</p>`; } },
+
+  P('canetinha'),
+  P('fome_depois'),
+  P('habitos'),
+  P('vontades'),
+  P('proteina'),
+  P('energia'),
+  P('sono'),
+  P('estresse'),
+  P('treino_frequencia'),
+  P('peso'),
+  P('altura'),
+  P('meta_peso'),
+
+  /* ===== QUEBRA 2: sua meta é possível + quem monta o protocolo ===== */
+  { t:'break', id:'meta_possivel', btn:'Continuar teste gratuito', html:a=>{
+      const p = Math.round(num('peso')), m = Math.round(num('meta_peso')), d = p-m;
+      return `
+      <div class="brk-title" style="margin-top:18px;">${d>0 ? `Sua meta de eliminar <span>${d} kg</span> é totalmente possível` : 'Sua meta é <span>totalmente possível</span>'}</div>
+      <img src="projecao-protocolo.jpg" alt="" class="brk-img" style="max-height:300px;object-fit:cover;object-position:top;" onerror="this.remove()">
+      <p class="brk-text">Você não precisa de mais força de vontade. Precisa de um plano que trabalhe a favor do seu corpo, e não contra ele.</p>
+      ${blocoKelly('Nutricionista há 18 anos. É ela quem monta o seu protocolo, a partir das respostas que você está dando aqui.')}
+      <p class="brk-red">Faltam só 3 perguntas para fechar o seu diagnóstico.</p>`; } },
+
+  { t:'q', id:'futuro', q:'Se nada mudar, como você se imagina daqui a um ano?',
+    opts:['😓 Ainda mais insatisfeita com o meu corpo','🤒 Com a saúde pior','😪 Me sentindo pra baixo por causa do peso','🔁 Presa no mesmo efeito sanfona'] },
+  { t:'q', id:'acompanhamento', q:'Você acha que, com um protocolo feito para o seu corpo, teria um resultado melhor?',
+    opts:['✅ Sim, com toda certeza','💸 Sim, mas imagino que seja caro','🤷 Já tive acompanhamento e nada mudou'] },
+  { t:'q', id:'compromisso', q:'Você está disposta a seguir o protocolo da Nutri Kelly nos próximos 14 dias?',
+    opts:['✅ Sim, eu preciso mudar','✔️ Estou disposta a pelo menos tentar'] },
+
+  { t:'analyzing', id:'analise', dur:6000, itens:[
+      'Analisando as suas respostas',
+      'Identificando a causa da sua fome fora de hora',
+      'Calculando o seu índice de saciedade natural',
+      'Montando o seu protocolo personalizado'] },
+  { t:'diag', id:'diagnostico' },
+  { t:'vsl', id:'vsl' }
+];
+
+/* ---------- DIAGNÓSTICO (ponto de atenção, estilo inlead) ---------- */
+function pontosDe(a){
+  const p = [];
+  const fd = idxDe('fome_depois');
+  if(fd===0) p.push('Você sente fome <strong>quase sempre</strong> logo depois de comer, o sinal mais claro de saciedade baixa.');
+  else if(fd===1) p.push('A fome volta logo depois de comer <strong>algumas vezes por semana</strong>.');
+  if(tem('vontades','Doces')) p.push('A <strong>vontade de doce</strong> aparece com força no seu dia.');
+  if(tem('habitos','noite')) p.push('Você <strong>belisca à noite</strong>, quando a saciedade do dia já acabou.');
+  else if(tem('habitos','ansiedade')) p.push('Você <strong>come por ansiedade ou tédio</strong>, e não por fome de verdade.');
+  const pr = idxDe('proteina'); if(pr===0 || pr===1) p.push('Tem <strong>pouca proteína</strong> nas suas refeições, e ela é um dos estímulos mais fortes de saciedade.');
+  const so = idxDe('sono'); if(so===0 || so===1) p.push('Você dorme <strong>menos de 7 horas</strong>, e noites curtas aumentam a fome no dia seguinte.');
+  const es = idxDe('estresse'); if(es===0 || es===1) p.push('O seu <strong>estresse está alto</strong>, e ele também puxa a fome e a vontade de doce.');
+  if(tem('canetinha','parei de emagrecer')) p.push('A canetinha <strong>parou de fazer efeito</strong> para você.');
+  else if(tem('canetinha','Já usei')) p.push('Você <strong>parou a canetinha</strong>, que é o momento em que a fome costuma voltar.');
+  if(!p.length) p.push('A sua rotina já tem uma boa base. O que falta é organizar os estímulos certos todos os dias.');
+  return p.slice(0,4);
+}
+function renderDiag(){
+  const a = state.a, nm = nomeDe(a), v = calcIndice(), bom = nivelIndice(v).txt==='BOM';
+  app.innerHTML = frame(`
+      <div class="alerta">⚠️ Ponto de atenção${nm?', '+nm:''}</div>
+      ${blocoIndice()}
+      <p class="diag-text">Com base nas suas respostas, identificamos que ${bom
+        ? '<mark>o seu corpo tem uma boa base de saciedade, mas ainda não usa tudo o que pode</mark>. Falta organizar os estímulos certos no dia a dia.'
+        : '<mark>o hormônio que controla a sua saciedade está trabalhando abaixo do que poderia</mark>. É por isso que a fome volta, mesmo quando você se esforça.'}</p>
+      ${chartHTML('A sua saciedade nos 14 dias','Você hoje','Com o protocolo')}
+      <div class="brk-kicker" style="text-align:left;">O que mais pesou nas suas respostas</div>
+      <ul class="pontos">${pontosDe(a).map(t=>`<li><span>${t}</span></li>`).join('')}</ul>
+      <ul class="check-box">
+        <li><span>Essa fome tem uma causa específica, e ela responde a <strong>método</strong>, não a força de vontade.</span></li>
+        <li><span>O seu corpo já produz o <strong>mesmo hormônio que a canetinha imita</strong>. O protocolo mostra como estimular essa produção com o que você come.</span></li>
+        <li><span>O seu protocolo de 14 dias foi montado a partir <strong>dessas respostas</strong>.</span></li>
+      </ul>
+      <button class="btn" style="margin-top:8px;" onclick="go(1)">Ver o meu protocolo →</button>`, { semVoltar:true, pct:100 });
+  px('DiagnosticoGerado');
+}
+const TELAS = { diag:renderDiag };
+
+/* =========================================================
+   CONFIG  (troque aqui)
+   ========================================================= */
+const CHECKOUT_URL = "https://payment.ticto.app/O49D90BBF"; // R$29,90
+/* Cole aqui o código de incorporação do vídeo (VTurb, YouTube, Panda...).
+   Vazio, aparece um quadro no lugar do vídeo. */
+const VSL_EMBED = '';
+/* Segundos até a oferta aparecer embaixo do vídeo. 0 = aparece na hora.
+   Quando o vídeo estiver no ar, coloque o segundo do pitch. */
+const CTA_DELAY_S = 0;
+
+/* ===== Rastreamento Meta Pixel (seguro, não quebra se o pixel não carregar) ===== */
+function px(evento, padrao){
+  try{ if(typeof fbq==='function'){ padrao ? fbq('track', evento) : fbq('trackCustom', evento); } }catch(e){}
+}
+/* mesmo evento para o GA4 e para o Pixel, com o nome do quiz junto */
+function track(evento, params){
+  params = Object.assign({ quiz: QUIZ_ID }, params||{});
+  try{ if(typeof gtag==='function') gtag('event', evento, params); }catch(e){}
+  try{ if(typeof fbq==='function') fbq('trackCustom', evento, params); }catch(e){}
+}
+
+/* =========================================================
+   ESTADO E FLUXO
+   O fluxo é a própria lista STEPS: a ordem dela é a ordem das telas.
+   Perguntas: t = 'q' (escolha, multi:true para várias), 'text', 'ruler', 'date'.
+   Telas de conteúdo: 'break', 'analyzing', e as telas próprias de cada quiz.
+   showIf(a) esconde uma tela quando a resposta anterior não pede ela.
+   ========================================================= */
+const QTYPES = ['q','text','ruler','date'];
+const state = { idx:0, a:{ sexo:'Mulher' } };
+const app = document.getElementById('app');
+const QS = STEPS.filter(s=>QTYPES.includes(s.t));
+const TOTAL_Q = QS.length;
+
+const track_estado = { etapa:0, rotulo:'intro', concluiu:false, respondidas:0 };
+
+function visivel(s){ return !s.showIf || s.showIf(state.a); }
+function qNum(s){ return QS.indexOf(s)+1; }
+function pctAtual(){
+  let n = 0;
+  for(let i=0;i<=state.idx;i++){ if(QTYPES.includes(STEPS[i].t)) n = qNum(STEPS[i]); }
+  return Math.round((n/TOTAL_Q)*100);
+}
+
+function go(d){
+  let i = state.idx + d;
+  /* pula telas escondidas e, voltando, pula a tela de análise (ela avança sozinha) */
+  while(i>0 && i<STEPS.length-1 && (!visivel(STEPS[i]) || (d<0 && STEPS[i].t==='analyzing'))) i += d;
+  state.idx = Math.max(0, Math.min(STEPS.length-1, i));
+  render();
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+function trackEtapa(s){
+  const num = QTYPES.includes(s.t) ? qNum(s) : track_estado.etapa;
+  const rotulo = s.id || s.t;
+  track_estado.etapa = Math.max(track_estado.etapa, num);
+  track_estado.rotulo = rotulo;
+  if(s.t==='vsl') track_estado.concluiu = true;
+  track('quiz_etapa', { etapa:num, etapa_id:rotulo, tipo:s.t, posicao:state.idx, total_perguntas:TOTAL_Q });
+}
+function trackResposta(qid, valor){
+  track_estado.respondidas++;
+  const s = QS.find(x=>x.id===qid);
+  track('quiz_resposta', { pergunta:qid, etapa: s ? qNum(s) : 0, resposta: Array.isArray(valor) ? valor.join(' | ') : String(valor) });
+}
+window.addEventListener('pagehide', function(){
+  if(track_estado.concluiu) return;
+  track('quiz_abandono', { etapa:track_estado.etapa, etapa_id:track_estado.rotulo, respondidas:track_estado.respondidas });
+});
+
+/* =========================================================
+   AJUDANTES
+   ========================================================= */
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function txt(v){ return typeof v==='function' ? v(state.a) : (v||''); }
+function nomeDe(a){ return a.nome && a.nome!=='você' ? esc(a.nome) : ''; }
+/* "Ana, como..." ou "Como..." quando não há nome */
+function N(a, resto){ const n = nomeDe(a); return n ? `${n}, ${resto}` : resto.charAt(0).toUpperCase()+resto.slice(1); }
+function num(id){ return state.a[id+'_n'] || 0; }
+function tem(id, trecho){ const v = state.a[id]; return Array.isArray(v) ? v.some(x=>x.includes(trecho)) : String(v||'').includes(trecho); }
+function idxDe(id){ const i = state.a[id+'_i']; return typeof i==='number' ? i : -1; }
+function semEmoji(s){ return String(s||'').replace(/^[^A-Za-zÀ-ÿ0-9+]+/,'').trim(); }
+function imgDe(id){
+  const s = QS.find(x=>x.id===id), i = idxDe(id);
+  return (s && s.imgs && i>=0) ? s.imgs[i] : '';
+}
+function dataMais(dias){ const d = new Date(); d.setDate(d.getDate()+dias); return d; }
+function fmtData(d){ return d.toLocaleDateString('pt-BR', { day:'numeric', month:'long' }); }
+
+const IDADE_OPTS = ['Entre 18 e 29 anos','Entre 30 e 39 anos','Entre 40 e 49 anos','+50 anos'];
+const IDADE_IMGS = ['idade-18-29.jpg','idade-30-39.jpg','idade-40-49.jpg','idade-50-mais.jpg'];
+function idadeAnos(){
+  if(num('idade_anos')) return num('idade_anos');
+  return [24,35,45,55][idxDe('idade')] || 35;
+}
+
+function calcIMC(){ const p = num('peso'), h = num('altura')/100; return (p && h) ? p/(h*h) : 0; }
+function faixaIMC(v){
+  if(v < 18.5) return { txt:'Abaixo do ideal', cor:'#5b8fd1' };
+  if(v < 25)   return { txt:'Dentro do ideal', cor:'#4caf82' };
+  if(v < 30)   return { txt:'Acima do ideal',  cor:'#d9962f' };
+  return { txt:'Bem acima do ideal', cor:'#c0574f' };
+}
+
+/* ===== ÍNDICE DE SACIEDADE NATURAL (0 a 100) =====
+   Não é exame nem promessa: é a rotina que a própria pessoa descreveu
+   devolvida como nota. Cada quiz define PESOS na mesma ordem das opções.
+   Pergunta que não existe no quiz não entra na conta. */
+function calcIndice(){
+  let soma = 0, max = 0;
+  for(const id in PESOS){
+    const i = idxDe(id);
+    if(i >= 0){ soma += (PESOS[id][i] || 0); max += Math.max(...PESOS[id]); }
+  }
+  return max ? Math.round((soma/max)*100) : 0;
+}
+function nivelIndice(v){
+  if(v < 40) return { txt:'BAIXO', cor:'#c0574f' };
+  if(v < 65) return { txt:'MÉDIO', cor:'#c8973a' };
+  return { txt:'BOM', cor:'#4caf82' };
+}
+
+/* =========================================================
+   MOLDURA DAS TELAS
+   ========================================================= */
+function frame(inner, o){
+  o = o || {};
+  const s = STEPS[state.idx];
+  const sec = s.sec || BRAND.sub;
+  const voltar = (state.idx>0 && !o.semVoltar) ? `<button class="back-btn" onclick="go(-1)" aria-label="Voltar">←</button>` : '';
+  return `
+  <div class="wrap fade">
+    <div class="card-quiz${o.centro?' centro':''}">
+      ${voltar}<div class="brand"><span class="brand-nome">${BRAND.nome}</span></div>
+      <div class="brand-sub">${sec}</div>
+      <div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:${o.pct!=null?o.pct:pctAtual()}%"></div></div>
+      ${inner}
+    </div>
+  </div>`;
+}
+
+function render(){
+  const s = STEPS[state.idx];
+  const R = Object.assign({
+    intro:renderIntro, q:renderQ, text:renderText, ruler:renderRuler, date:renderDate,
+    break:renderBreak, analyzing:renderAnalyzing, perfil:renderPerfil, vsl:renderVsl
+  }, TELAS);
+  (R[s.t] || renderIntro)(s);
+  trackEtapa(s);
+}
+
+/* ---------- ABERTURA (idade já com as opções, sem botão de CTA) ---------- */
+function renderIntro(){
+  const a = state.a;
+  app.innerHTML = `
+  <div class="wrap fade">
+    <div class="card-quiz centro" style="padding-top:52px;padding-bottom:42px;">
+      <div class="intro-kicker">${INTRO.kicker}</div>
+      <h1 class="intro-h1">${INTRO.h1}</h1>
+      <p class="intro-sub">${INTRO.sub}</p>
+      <h2 class="intro-h1" style="font-size:24px;margin:26px 0 0;">${INTRO.pergunta||'Qual a sua idade?'}</h2>
+      <p class="intro-toque">Toque para começar</p>
+      <div class="opts grid2">
+        ${IDADE_OPTS.map((o,i)=>`<div class="idade-card" onclick="pickIdade(${i})"><img src="${IDADE_IMGS[i]}" alt="${o}" class="idade-img" onerror="this.style.display='none'"><button class="opt${a.idade===o?' sel':''}" data-i="${i}"><span class="opt-radio"></span><span>${o}</span></button></div>`).join('')}
+      </div>
+      <p style="font-size:13px;color:#8aa79a;margin-top:18px;">✅ Tempo estimado: 2 minutos</p>
+    </div>
+  </div>`;
+}
+function pickIdade(i){
+  state.a.idade = IDADE_OPTS[i]; state.a.idade_i = i;
+  trackResposta('idade', IDADE_OPTS[i]);
+  marcar(i);
+  px('QuizIniciado');
+  setTimeout(()=>go(1), 360);
+}
+function marcar(i){
+  const btns = app.querySelectorAll('.opt');
+  btns.forEach(b=>b.classList.remove('sel'));
+  const b = app.querySelector(`.opt[data-i="${i}"]`); if(b) b.classList.add('sel');
+  btns.forEach(b=>b.style.pointerEvents='none');
+}
+
+/* ---------- PERGUNTA DE ESCOLHA (única ou múltipla) ---------- */
+function renderQ(s){
+  const a = state.a, multi = !!s.multi;
+  const sel = multi ? (a[s.id]||[]) : a[s.id];
+  const marcada = o => multi ? sel.includes(o) : sel===o;
+  const sub = s.sub ? txt(s.sub) : (multi ? 'Pode marcar mais de uma opção' : '');
+  let opts;
+  if(s.imgs){
+    opts = `<div class="opts photo">${s.opts.map((o,i)=>`<div class="opt-row" onclick="pick(${i})"><img src="${s.imgs[i]}" alt="" class="opt-row-img" onerror="this.style.display='none'"><button class="opt${marcada(o)?' sel':''}" data-i="${i}"><span class="opt-radio"></span><span>${o}</span></button></div>`).join('')}</div>`;
+  } else {
+    opts = `<div class="opts${s.opts.length>5||multi?' compact':''}">${s.opts.map((o,i)=>`<button class="opt${multi?' chk':''}${marcada(o)?' sel':''}" data-i="${i}" onclick="pick(${i})"><span class="opt-radio"></span><span>${o}</span></button>`).join('')}</div>`;
+  }
+  app.innerHTML = frame(`
+      <h2 class="q-title${sub?' tight':''}">${txt(s.q)}</h2>
+      ${sub?`<p class="q-sub">${sub}</p>`:''}
+      ${opts}
+      ${multi?`<button class="btn" id="mNext" style="margin-top:14px;" ${sel.length?'':'disabled'}>Continuar →</button>`:''}`);
+  if(multi) document.getElementById('mNext').onclick = ()=>{ trackResposta(s.id, state.a[s.id]||[]); go(1); };
+}
+function pick(i){
+  const s = STEPS[state.idx], o = s.opts[i], a = state.a;
+  if(!s.multi){
+    a[s.id] = o; a[s.id+'_i'] = i;
+    trackResposta(s.id, o);
+    marcar(i);
+    setTimeout(()=>go(1), 360);
+    return;
+  }
+  /* "Nenhum..." desmarca as outras, e marcar outra desmarca o "Nenhum" */
+  const nenhum = x => /^\W*Nenhum/i.test(semEmoji(x)) || /^Nenhum/i.test(semEmoji(x));
+  let sel = a[s.id] || [];
+  if(sel.includes(o)) sel = sel.filter(x=>x!==o);
+  else sel = nenhum(o) ? [o] : [...sel.filter(x=>!nenhum(x)), o];
+  a[s.id] = sel;
+  app.querySelectorAll('.opt').forEach(b=>b.classList.toggle('sel', sel.includes(s.opts[+b.dataset.i])));
+  const btn = document.getElementById('mNext'); if(btn) btn.disabled = !sel.length;
+}
+
+/* ---------- PERGUNTA DE TEXTO (nome) ---------- */
+function renderText(s){
+  const a = state.a;
+  const val = a[s.id] && a[s.id]!=='você' ? a[s.id] : '';
+  app.innerHTML = frame(`
+      <h2 class="q-title">${txt(s.q)}</h2>
+      <input type="text" class="text-input" id="txtField" placeholder="${s.ph||''}" value="${esc(val)}" autocomplete="given-name">
+      <button class="btn" id="txtNext">Continuar →</button>`);
+  const field = document.getElementById('txtField');
+  setTimeout(()=>field.focus(), 60);
+  function enviar(){ state.a[s.id] = (field.value.trim()||'você'); trackResposta(s.id, 'preenchido'); go(1); }
+  document.getElementById('txtNext').onclick = enviar;
+  field.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); enviar(); } });
+}
+
+/* ---------- PERGUNTA COM RÉGUA (peso, altura, meta, idade) ----------
+   guarda o texto em a[id] ("70 kg") e o número já em kg/cm/anos em a[id+'_n'] */
+function renderRuler(s){
+  const a = state.a;
+  const def0 = typeof s.units[0].def==='function' ? s.units[0].def(a) : s.units[0].def;
+  const u0 = Object.assign({}, s.units[0], { def:def0 });
+  app.innerHTML = frame(`
+      <h2 class="q-title" style="text-align:center;">${txt(s.q)}</h2>
+      <p class="ruler-sub" style="text-align:center;">${s.sub?txt(s.sub):'Arraste para ajustar'}</p>
+      ${s.units.length>1?`<div style="text-align:center;"><div class="unit-toggle" id="uToggle">${s.units.map((u,i)=>`<button type="button" class="ut${i===0?' active':''}" data-i="${i}">${u.u}</button>`).join('')}</div></div>`:''}
+      <div class="ruler-val" style="text-align:center;"><span id="rVal">${u0.def}</span><small id="rUnit">${u0.u}</small></div>
+      <div class="ruler-track">
+        <div class="ruler-line"></div>
+        <div class="ruler-ticks" id="rTicks"></div>
+        <div class="ruler-pointer" id="rPointer"></div>
+        <input type="range" class="ruler-input" id="rRange" min="${u0.min}" max="${u0.max}" step="${u0.step||1}" value="${u0.def}">
+      </div>
+      <div class="ruler-labels" id="rLabels"></div>
+      <button class="btn" id="rNext" style="margin-top:24px;">Continuar</button>`);
+  let uIdx = 0;
+  const rangeEl = document.getElementById('rRange'), valEl = document.getElementById('rVal');
+  const unitEl = document.getElementById('rUnit'), pointer = document.getElementById('rPointer'), labels = document.getElementById('rLabels');
+  let t = ''; for(let i=0;i<=40;i++) t += `<span class="tk${i%5===0?' maj':''}"></span>`;
+  document.getElementById('rTicks').innerHTML = t;
+  const setLabels = c => { labels.innerHTML = `<span>${c.min}</span><span>${Math.round((c.min+c.max)/2)}</span><span>${c.max}</span>`; };
+  function update(){
+    const c = s.units[uIdx], v = parseFloat(rangeEl.value);
+    valEl.textContent = Math.round(v);
+    pointer.style.left = (((v-c.min)/(c.max-c.min))*100)+'%';
+  }
+  const CONV = { lb:v=>v*2.2046, kg:v=>v/2.2046, pol:v=>v/2.54, cm:v=>v*2.54 };
+  rangeEl.addEventListener('input', update);
+  document.querySelectorAll('#uToggle .ut').forEach(b=>{
+    b.onclick = ()=>{
+      const ni = parseInt(b.dataset.i,10); if(ni===uIdx) return;
+      const to = s.units[ni], conv = (CONV[to.u]||(v=>v))(parseFloat(rangeEl.value));
+      uIdx = ni;
+      document.querySelectorAll('#uToggle .ut').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      rangeEl.min = to.min; rangeEl.max = to.max; rangeEl.step = to.step||1;
+      rangeEl.value = Math.min(to.max, Math.max(to.min, Math.round(conv)));
+      unitEl.textContent = to.u; setLabels(to); update();
+    };
+  });
+  setLabels(u0); update();
+  document.getElementById('rNext').onclick = ()=>{
+    const u = s.units[uIdx].u, v = Math.round(parseFloat(rangeEl.value));
+    a[s.id] = v+' '+u;
+    a[s.id+'_n'] = u==='lb' ? v/2.2046 : u==='pol' ? v*2.54 : v;
+    trackResposta(s.id, a[s.id]);
+    go(1);
+  };
+}
+
+/* ---------- PERGUNTA DE DATA ---------- */
+function renderDate(s){
+  const a = state.a, hoje = new Date().toISOString().slice(0,10);
+  app.innerHTML = frame(`
+      <h2 class="q-title">${txt(s.q)}</h2>
+      ${s.sub?`<p class="q-sub">${txt(s.sub)}</p>`:''}
+      <input type="date" class="text-input" id="dField" min="${hoje}" value="${a[s.id]||''}" style="text-align:center;">
+      <button class="btn" id="dNext" ${a[s.id]?'':'disabled'}>Continuar →</button>
+      <button class="btn btn-ghost" id="dPular">Ainda não sei a data</button>`);
+  const f = document.getElementById('dField'), b = document.getElementById('dNext');
+  f.addEventListener('input', ()=>{ b.disabled = !f.value; });
+  b.onclick = ()=>{ a[s.id] = f.value; trackResposta(s.id, 'preenchido'); go(1); };
+  document.getElementById('dPular').onclick = ()=>{ a[s.id] = ''; trackResposta(s.id, 'sem data'); go(1); };
+}
+
+/* ---------- QUEBRA (tela de conteúdo entre perguntas) ---------- */
+function renderBreak(s){
+  app.innerHTML = frame(`
+      ${txt(s.html)}
+      <button class="btn" style="margin-top:18px;" onclick="go(1)">${s.btn||'Continuar'}</button>`, { centro:s.centro });
+}
+
+/* ---------- ANALISANDO (checklist + barra com curva smootherstep) ---------- */
+function renderAnalyzing(s){
+  const itens = (typeof s.itens==='function' ? s.itens(state.a) : s.itens) || ['Analisando suas respostas'];
+  app.innerHTML = frame(`
+      <div class="analise-title" style="margin-top:22px;">${s.titulo||'Analisando suas respostas'}</div>
+      <ul class="an-list">${itens.map((t,i)=>`<li id="an${i}"><span class="ic"></span><span>${t}</span></li>`).join('')}</ul>
+      <div class="lib-box">
+        <div class="lib-pct" id="libPct">0%</div>
+        <div class="lib-bar"><div class="lib-fill" id="libFill"></div></div>
+      </div>
+      ${s.extra?txt(s.extra):''}`, { semVoltar:true });
+  const DUR = s.dur || 5000;
+  const pctEl = document.getElementById('libPct'), fillEl = document.getElementById('libFill');
+  const t0 = performance.now(); let ultimo = -1;
+  const meu = state.idx;
+  function tick(now){
+    if(state.idx!==meu) return;
+    const t = Math.min(1, (now-t0)/DUR);
+    const e = t*t*t*(t*(t*6-15)+10);
+    const pct = Math.round(e*100);
+    if(pct!==ultimo){ pctEl.textContent = pct+'%'; ultimo = pct; }
+    fillEl.style.width = (e*100)+'%';
+    itens.forEach((_,i)=>{ if(e >= (i+1)/itens.length - 0.001){ const li = document.getElementById('an'+i); if(li) li.classList.add('done'); } });
+    if(t<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  setTimeout(()=>{ if(state.idx===meu) go(1); }, DUR+250);
+}
+
+/* ---------- PERFIL METABÓLICO (IMC real + o que a pessoa respondeu) ---------- */
+function blocoIMC(){
+  const v = calcIMC(); if(!v) return '';
+  const f = faixaIMC(v);
+  const pos = Math.max(0, Math.min(100, ((v-15)/(40-15))*100));
+  return `
+      <div class="imc-box">
+        <div class="imc-tt">Índice de Massa Corporal (IMC)</div>
+        <div class="imc-bar"><span class="imc-tag" style="left:${pos}%;">O seu · ${v.toFixed(1).replace('.',',')}</span><span class="imc-pin" style="left:${pos}%;border-color:${f.cor};"></span></div>
+        <div class="imc-esc"><span>Abaixo</span><span>Ideal</span><span>Acima</span><span>Bem acima</span></div>
+        <p class="imc-faixa" style="color:${f.cor};">${f.txt}</p>
+        <p class="imc-nota">O IMC é só uma referência e não substitui uma avaliação profissional.</p>
+      </div>`;
+}
+function renderPerfil(s){
+  const a = state.a;
+  const cards = (PERFIL_CARDS||[]).map(([k,fn])=>{ const v = fn(a); return v ? `<div class="mini-card"><div class="k">${k}</div><div class="v">${v}</div></div>` : ''; }).join('');
+  const foto = imgDe('corpo_hoje');
+  app.innerHTML = frame(`
+      <h2 class="q-title" style="margin-top:16px;">${N(a,'aqui está o seu perfil metabólico')}</h2>
+      ${blocoIMC()}
+      <div class="mini-cards">${cards}</div>
+      ${foto?`<img src="${foto}" alt="" class="brk-img" style="max-height:340px;object-fit:cover;object-position:top;">`:''}
+      <button class="btn" style="margin-top:16px;" onclick="go(1)">Continuar</button>`);
+}
+
+/* ---------- MINI-VSL + OFERTA (última tela) ---------- */
+function ofertaHTML(){
+  return `
+      <div class="oferta" id="oferta">
+        <div class="of-tag">O seu protocolo personalizado</div>
+        <h3 class="of-tt">${OFERTA.titulo}</h3>
+        <ul class="of-lista">${OFERTA.itens.map(t=>`<li>${t}</li>`).join('')}</ul>
+        <div class="of-bonus-tt">E de presente</div>
+        <ul class="of-lista bonus">${OFERTA.bonus.map(t=>`<li>${t}</li>`).join('')}</ul>
+        <div class="of-preco">
+          <div class="de">De R$ 97,90</div>
+          <div class="por">por apenas</div>
+          <div class="val">R$ 29,90</div>
+          <div class="parc">ou 5x de R$ 6,62</div>
+        </div>
+        <a class="btn" href="${CHECKOUT_URL}" onclick="px('InitiateCheckout', true)">${OFERTA.cta}</a>
+        <p class="of-rodape">Acesso imediato · Compra segura pela Ticto · Garantia de 7 dias</p>
+        <img src="Garantia7dias.png" alt="Garantia de 7 dias" class="of-garantia" onerror="this.remove()">
+        <p class="of-aviso">Material educativo, não substitui acompanhamento médico ou nutricional. Resultados variam de pessoa para pessoa.</p>
+      </div>`;
+}
+function renderVsl(){
+  const a = state.a;
+  const video = VSL_EMBED
+    ? `<div class="vsl-frame">${VSL_EMBED}</div>`
+    : `<div class="video-box"><div class="play">▶</div><div class="vlabel">Nutri Kelly Firbida</div><div class="vname">${VSL.nomeVideo}</div><div class="vhint">assista com o som ligado</div></div>`;
+  app.innerHTML = `
+  <div class="wrap fade">
+    <div class="card-quiz centro">
+      <div class="brand"><span class="brand-nome">${BRAND.nome}</span></div>
+      <div class="vsl-pronto">✅ ${N(a,'o seu protocolo está pronto')}</div>
+      <h2 class="q-title" style="margin:10px 0 16px;">${VSL.titulo}</h2>
+      ${video}
+      <div id="ofertaSlot" style="${CTA_DELAY_S>0?'display:none;':''}">${ofertaHTML()}</div>
+    </div>
+  </div>`;
+  if(CTA_DELAY_S>0) setTimeout(()=>{ const el = document.getElementById('ofertaSlot'); if(el) el.style.display = ''; }, CTA_DELAY_S*1000);
+  px('VslVista');
+}
+
+/* start */
+render();
+</script>
+
+<!-- ===== POP-UP DE SAÍDA (BOTÃO VOLTAR) ===== -->
+<div class="saida-overlay" id="saida-overlay" role="dialog" aria-modal="true" aria-labelledby="saida-titulo">
+  <div class="saida-modal">
+    <button class="saida-fechar" id="saida-fechar" aria-label="Fechar">&times;</button>
+    <div class="saida-selo">Espere um segundo</div>
+    <h3 class="saida-titulo" id="saida-titulo">Você ganhou <span>33% de desconto</span></h3>
+    <p class="saida-sub">É a única vez que esse valor aparece. Fechando esta janela, o preço volta ao normal.</p>
+
+    <div class="saida-de">De R$ 107,90</div>
+    <div class="saida-por">Por apenas</div>
+    <div class="saida-val">R$ 19,90</div>
+    <div class="saida-economia">Você economiza R$97,90 + R$10,00</div>
+
+    <a href="#" class="btn" id="saida-btn">Quero o método com desconto &rarr;</a>
+    <button class="saida-recusa" id="saida-recusa">Não quero o desconto, prefiro pagar o valor cheio</button>
+    <p class="saida-rodape">Acesso imediato &bull; Compra segura pela Ticto &bull; Garantia de 7 dias</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  /* Link do checkout da oferta com desconto (R$19,90). */
+  var CHECKOUT_DESCONTO = 'https://payment.ticto.app/O1376B6BC';
+
+  var overlay = document.getElementById('saida-overlay');
+  var btn     = document.getElementById('saida-btn');
+  var armado  = false;   /* so empilha o estado depois de um gesto real do usuario */
+  var usado   = false;   /* uma camada so: depois de exibido, o voltar funciona normal */
+
+  function jaExibido() {
+    try { return sessionStorage.getItem('cz_saida') === '1'; } catch (e) { return false; }
+  }
+
+  function marcarExibido() {
+    try { sessionStorage.setItem('cz_saida', '1'); } catch (e) {}
+  }
+
+  /* O pop-up so vale na tela final do quiz (a mini landing com a oferta).
+     Durante as perguntas o botao voltar funciona normalmente. */
+  function naMiniLanding() {
+    try { return STEPS[state.idx] && STEPS[state.idx].t === 'vsl'; }
+    catch (e) { return false; }
+  }
+
+  function armar() {
+    if (armado || usado || jaExibido() || !naMiniLanding()) return;
+    try { history.pushState({ cz: 1 }, ''); armado = true; } catch (err) {}
+  }
+
+  function abrir() {
+    overlay.classList.add('aberto');
+    document.body.style.overflow = 'hidden';
+    usado = true;
+    marcarExibido();
+    if (typeof px === 'function') { px('ExitOffer'); }
+  }
+
+  function fechar() {
+    overlay.classList.remove('aberto');
+    document.body.style.overflow = '';
+  }
+
+  window.addEventListener('popstate', function () {
+    if (usado || jaExibido() || !armado) return;   /* so abre se foi armado na mini landing */
+    abrir();
+  });
+
+  /* apenas gestos que contam como user activation no Chrome: scroll NAO conta */
+  ['pointerdown', 'mousedown', 'click', 'touchstart', 'keydown'].forEach(function (evt) {
+    window.addEventListener(evt, armar, { passive: true });   /* sem 'once': arma quando a pessoa chegar na mini landing */
+  });
+
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    if (typeof px === 'function') { px('ExitOfferClick'); }
+    window.location.href = CHECKOUT_DESCONTO;
+  });
+
+  /* ===== RETORNO DO CHECKOUT =====
+     Quem aperta voltar no checkout da Ticto cai de novo nesta pagina. */
+  function marcarIdaAoCheckout(e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href*="payment.ticto.app"]') : null;
+    if (!a || a.id === 'saida-btn') return;
+    try { sessionStorage.setItem('cz_check', '1'); } catch (err) {}
+  }
+
+  document.addEventListener('click', marcarIdaAoCheckout, true);
+
+  window.addEventListener('pageshow', function () {
+    var voltou = false;
+    try { voltou = sessionStorage.getItem('cz_check') === '1'; } catch (err) {}
+    if (!voltou) return;
+    try { sessionStorage.removeItem('cz_check'); } catch (err) {}
+    setTimeout(abrir, 400);
+  });
+
+  document.getElementById('saida-fechar').addEventListener('click', fechar);
+  document.getElementById('saida-recusa').addEventListener('click', fechar);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) fechar(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('aberto')) fechar();
+  });
+})();
+</script>
+</body>
+</html>

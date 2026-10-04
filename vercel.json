@@ -1,6 +1,9 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/quiz-caneta-zero.html" },
-    { "source": "/caneta", "destination": "/caneta.html" }
+    { "source": "/caneta", "destination": "/caneta.html" },
+    { "source": "/quiz", "destination": "/quiz-1.html" },
+    { "source": "/quiz/2", "destination": "/quiz-2.html" },
+    { "source": "/quiz/3", "destination": "/quiz-3.html" }
   ]
 }

@@ -95,6 +95,17 @@ depois. Ainda não foi corrigida — avisar antes de mexer, é decisão do usuá
 - **Personalização**: várias telas montam frase a partir de `state.answers`. Ao remover
   uma pergunta, procure por `a.<id>` antes.
 
+## Quizzes novos (/quiz, /quiz/2, /quiz/3)
+
+- `quiz-1.html` → `/quiz`: protocolo personalizado, mecanismo GLP-1 escondido no começo, só 2
+  quebras, diagnóstico "ponto de atenção" (estilo inlead) e mini-VSL + oferta no final.
+- `quiz-2.html` → `/quiz/2`: mecanismo no estilo Cariani (biótipo + perfil metabólico com IMC +
+  3 fases, com a fase de foco pelo biótipo).
+- `quiz-3.html` → `/quiz/3`: as mesmas etapas do quiz do Cariani, na mesma ordem, adaptadas.
+- Os três usam o mesmo motor: o fluxo é a lista `STEPS` (a ordem dela é a ordem das telas, sem
+  `num` manual). `VSL_EMBED` e `CTA_DELAY_S` no topo do script ligam o vídeo e o atraso da oferta.
+- Têm `<base href="/">` porque `/quiz/2` quebraria as imagens relativas.
+
 ## Medição do funil (instalada, falta ligar)
 
 - `GA_ID` no topo do arquivo está **vazio de propósito**. Cole o ID `G-XXXXXXXXXX` da
